@@ -21,17 +21,20 @@ public class ShipmentRecordServiceImpl implements ShipmentRecordService {
     }
 
     public ShipmentRecordEntity updateShipmentStatus(Long id, String status) {
-        ShipmentRecordEntity s = repository.findById(id).orElseThrow();
-        s.setStatus(status);
-        return repository.save(s);
+        ShipmentRecordEntity shipment = repository.findById(id).orElse(null);
+        if (shipment != null) {
+            shipment.setStatus(status);
+            return repository.save(shipment);
+        }
+        return null;
     }
 
     public ShipmentRecordEntity getShipmentById(Long id) {
         return repository.findById(id).orElse(null);
     }
 
-    public ShipmentRecordEntity getShipmentByCode(String code) {
-        return repository.findByShipmentCode(code);
+    public ShipmentRecordEntity getShipmentByCode(String shipmentCode) {
+        return repository.findByShipmentCode(shipmentCode);
     }
 
     public List<ShipmentRecordEntity> getAllShipments() {
