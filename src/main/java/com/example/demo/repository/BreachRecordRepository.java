@@ -1,8 +1,10 @@
+
+package com.example.demo.repository;
+
+import com.example.demo.entity.AlertRecordEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
-import java.util.Optional;
 
-public interface BreachRecordRepository
-        extends JpaRepository<BreachRecordEntity, Long> {
-    List<BreachRecordEntity> findByShipmentId(Long shipmentId);
+public interface BreachRecordRepository extends JpaRepository<BreachRecordRepository, Long> {
+    List<BreachRecordRepository> findByShipmentId(Long shipmentId);
 }
