@@ -1,8 +1,11 @@
-import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import java.util.List;
+package com.example.demo.controller;
 
+import com.example.demo.entity.BreachRecordEntity;
+import com.example.demo.service.BreachDetectionService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/breaches")
@@ -16,8 +19,8 @@ public class BreachRecordController {
     }
 
     @PostMapping
-    public BreachRecordEntity log(@RequestBody BreachRecordEntity b) {
-        return service.logBreach(b);
+    public BreachRecordEntity create(@RequestBody BreachRecordEntity breach) {
+        return service.logBreach(breach);
     }
 
     @PutMapping("/{id}/resolve")
@@ -25,8 +28,13 @@ public class BreachRecordController {
         return service.resolveBreach(id);
     }
 
+    @GetMapping("/{id}")
+    public BreachRecordEntity getById(@PathVariable Long id) {
+        return service.getBreachById(id);
+    }
+
     @GetMapping
-    public List<BreachRecordEntity> all() {
+    public List<BreachRecordEntity> getAll() {
         return service.getAllBreaches();
     }
 }
