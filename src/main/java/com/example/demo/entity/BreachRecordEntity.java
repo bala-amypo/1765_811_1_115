@@ -11,9 +11,14 @@ public class BreachRecordEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private Long shipmentId;
-    private String breachType;
-    private String timestamp;
+    private String message;
+    private boolean resolved; // ✅ ADD THIS
+
+    // getters & setters
+}
+
 
     public BreachRecordEntity() {}
 
