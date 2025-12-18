@@ -20,11 +20,11 @@ public class TemperatureSensorLogEntity {
     private Double temperatureValue;
     private String location; // optional
 
-    public TemperatureSensorLogEntity() {
+    public TemperatureLogEntity() {
         this.recordedAt = LocalDateTime.now(); // default to now
     }
 
-    public TemperatureSensorLogEntity(Long id, Long shipmentId, String sensorId,
+    public TemperatureLogEntity(Long id, Long shipmentId, String sensorId,
             LocalDateTime recordedAt, Double temperatureValue, String location) {
         this.id = id;
         this.shipmentId = shipmentId;
