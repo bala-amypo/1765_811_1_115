@@ -1,45 +1,43 @@
 // package com.example.demo.controller;
 
-// import com.example.demo.entity.ShipmentRecordEntity;
-// import com.example.demo.service.ShipmentRecordService;
-// import io.swagger.v3.oas.annotations.tags.Tag;
+// import java.util.List;
+
+// import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.web.bind.annotation.*;
 
-// import java.util.List;
+// import com.example.demo.entity.ShipmentRecordEntity;
+// import com.example.demo.service.ShipmentRecordService;
 
 // @RestController
 // @RequestMapping("/api/shipments")
-// @Tag(name = "Shipments")
 // public class ShipmentRecordController {
 
-//     private final ShipmentRecordService service;
-
-//     public ShipmentRecordController(ShipmentRecordService service) {
-//         this.service = service;
-//     }
+//     @Autowired
+//     private ShipmentRecordService service;
 
 //     @PostMapping
-//     public ShipmentRecordEntity create(@RequestBody ShipmentRecordEntity shipment) {
-//         return service.createShipment(shipment);
+//     public ShipmentRecordEntity addShipment(@RequestBody ShipmentRecordEntity shipment) {
+//         return service.addShipment(shipment);
 //     }
 
-//     @PutMapping("/{id}/status")
-//     public ShipmentRecordEntity updateStatus(@PathVariable Long id, @RequestParam String status) {
-//         return service.updateShipmentStatus(id, status);
+//     @GetMapping
+//     public List<ShipmentRecordEntity> getAllShipments() {
+//         return service.getAllShipments();
 //     }
 
 //     @GetMapping("/{id}")
-//     public ShipmentRecordEntity getById(@PathVariable Long id) {
+//     public ShipmentRecordEntity getShipmentById(@PathVariable Long id) {
 //         return service.getShipmentById(id);
 //     }
 
 //     @GetMapping("/code/{code}")
-//     public ShipmentRecordEntity getByCode(@PathVariable String code) {
+//     public ShipmentRecordEntity getShipmentByCode(@PathVariable String code) {
 //         return service.getShipmentByCode(code);
 //     }
 
-//     @GetMapping
-//     public List<ShipmentRecordEntity> getAll() {
-//         return service.getAllShipments();
+//     @DeleteMapping("/{id}")
+//     public String deleteShipment(@PathVariable Long id) {
+//         service.deleteShipment(id);
+//         return "Shipment deleted successfully";
 //     }
 // }

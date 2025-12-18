@@ -1,43 +1,42 @@
 // package com.example.demo.service.impl;
 
+// import java.util.List;
+
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.stereotype.Service;
+
 // import com.example.demo.entity.ShipmentRecordEntity;
 // import com.example.demo.repository.ShipmentRecordRepository;
 // import com.example.demo.service.ShipmentRecordService;
-// import org.springframework.stereotype.Service;
-
-// import java.util.List;
 
 // @Service
 // public class ShipmentRecordServiceImpl implements ShipmentRecordService {
 
-//     private final ShipmentRecordRepository repository;
+//     @Autowired
+//     private ShipmentRecordRepository repository;
 
-//     public ShipmentRecordServiceImpl(ShipmentRecordRepository repository) {
-//         this.repository = repository;
-//     }
-
-//     public ShipmentRecordEntity createShipment(ShipmentRecordEntity shipment) {
+//     @Override
+//     public ShipmentRecordEntity addShipment(ShipmentRecordEntity shipment) {
 //         return repository.save(shipment);
 //     }
 
-//     public ShipmentRecordEntity updateShipmentStatus(Long id, String status) {
-//         ShipmentRecordEntity shipment = repository.findById(id).orElse(null);
-//         if (shipment != null) {
-//             shipment.setStatus(status);
-//             return repository.save(shipment);
-//         }
-//         return null;
+//     @Override
+//     public List<ShipmentRecordEntity> getAllShipments() {
+//         return repository.findAll();
 //     }
 
+//     @Override
 //     public ShipmentRecordEntity getShipmentById(Long id) {
 //         return repository.findById(id).orElse(null);
 //     }
 
+//     @Override
 //     public ShipmentRecordEntity getShipmentByCode(String shipmentCode) {
 //         return repository.findByShipmentCode(shipmentCode);
 //     }
 
-//     public List<ShipmentRecordEntity> getAllShipments() {
-//         return repository.findAll();
+//     @Override
+//     public void deleteShipment(Long id) {
+//         repository.deleteById(id);
 //     }
 // }

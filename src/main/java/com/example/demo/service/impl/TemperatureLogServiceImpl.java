@@ -1,34 +1,32 @@
 // package com.example.demo.service.impl;
 
+// import java.util.List;
+
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.stereotype.Service;
+
 // import com.example.demo.entity.TemperatureSensorLogEntity;
 // import com.example.demo.repository.TemperatureSensorLogRepository;
 // import com.example.demo.service.TemperatureLogService;
-// import org.springframework.stereotype.Service;
-
-// import java.util.List;
 
 // @Service
 // public class TemperatureLogServiceImpl implements TemperatureLogService {
 
-//     private final TemperatureSensorLogRepository repository;
+//     @Autowired
+//     private TemperatureSensorLogRepository repository;
 
-//     public TemperatureLogServiceImpl(TemperatureSensorLogRepository repository) {
-//         this.repository = repository;
-//     }
-
-//     public TemperatureSensorLogEntity recordLog(TemperatureSensorLogEntity log) {
+//     @Override
+//     public TemperatureSensorLogEntity saveLog(TemperatureSensorLogEntity log) {
 //         return repository.save(log);
 //     }
 
-//     public TemperatureSensorLogEntity getLogById(Long id) {
-//         return repository.findById(id).orElse(null);
-//     }
-
-//     public List<TemperatureSensorLogEntity> getLogsByShipment(Long shipmentId) {
-//         return repository.findByShipmentId(shipmentId);
-//     }
-
+//     @Override
 //     public List<TemperatureSensorLogEntity> getAllLogs() {
 //         return repository.findAll();
+//     }
+
+//     @Override
+//     public List<TemperatureSensorLogEntity> getLogsByShipmentId(Long shipmentId) {
+//         return repository.findByShipmentId(shipmentId);
 //     }
 // }
