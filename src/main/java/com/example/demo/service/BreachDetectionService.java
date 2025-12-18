@@ -5,11 +5,13 @@ import com.example.demo.entity.BreachRecordEntity;
 
 public interface BreachDetectionService {
 
-    BreachRecordEntity createBreach(BreachRecordEntity breach);
+    BreachRecordEntity logBreach(BreachRecordEntity breach);
 
     List<BreachRecordEntity> getAllBreaches();
 
     BreachRecordEntity getBreachById(Long id);
 
-    void resolveBreach(Long id);   // ✅ ADD THIS
+    List<BreachRecordEntity> getBreachesByShipmentId(Long shipmentId);
+
+    void deleteBreachById(Long id);
 }
