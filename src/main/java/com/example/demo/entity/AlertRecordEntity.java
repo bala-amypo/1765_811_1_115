@@ -3,6 +3,8 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+
+
 @Entity
 @Table(name = "alert_records")
 public class AlertRecordEntity {
