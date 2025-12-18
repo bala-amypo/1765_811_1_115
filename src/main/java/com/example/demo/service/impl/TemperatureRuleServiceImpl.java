@@ -1,5 +1,12 @@
+package com.example.demo.service.impl;
+
+import com.example.demo.entity.TemperatureRuleEntity;
+import com.example.demo.repository.TemperatureRuleRepository;
+import com.example.demo.service.TemperatureRuleService;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
+
 @Service
 public class TemperatureRuleServiceImpl implements TemperatureRuleService {
 
@@ -11,27 +18,22 @@ public class TemperatureRuleServiceImpl implements TemperatureRuleService {
 
     public TemperatureRuleEntity createRule(TemperatureRuleEntity rule) {
         if (rule.getMinTemp() >= rule.getMaxTemp()) {
-            throw new IllegalArgumentException("Invalid temperature range");
+            throw new IllegalArgumentException("Min temperature must be less than max temperature");
         }
         return repository.save(rule);
     }
 
     public TemperatureRuleEntity updateRule(Long id, TemperatureRuleEntity rule) {
-        TemperatureRuleEntity r = repository.findById(id).orElseThrow();
-        r.setMinTemp(rule.getMinTemp());
-        r.setMaxTemp(rule.getMaxTemp());
-        r.setActive(rule.getActive());
-        return repository.save(r);
+        rule.setId(id);
+        return repository.save(rule);
     }
 
     public List<TemperatureRuleEntity> getActiveRules() {
-        return repository.findAll().stream()
-                .filter(TemperatureRuleEntity::getActive)
-                .toList();
+        return repository.findByActiveTrue();
     }
 
-    public TemperatureRuleEntity getRuleForProduct(String productType) {
-        return repository.findApplicableRule(productType, java.time.LocalDate.now());
+    public List<TemperatureRuleEntity> getRulesByProduct(String productType) {
+        return repository.findByProductType(productType);
     }
 
     public List<TemperatureRuleEntity> getAllRules() {
