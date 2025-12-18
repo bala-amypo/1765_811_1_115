@@ -16,11 +16,27 @@ public class BreachDetectionServiceImpl implements BreachDetectionService {
     private BreachRecordRepository repository;
 
     @Override
-    public void resolveBreach(Long id) {
-        BreachRecordEntity breach = repository.findById(id).orElse(null);
-        if (breach != null) {
-            breach.setResolved(true);
-            repository.save(breach);
-        }
+    public BreachRecordEntity logBreach(BreachRecordEntity breach) {
+        return repository.save(breach);
+    }
+
+    @Override
+    public List<BreachRecordEntity> getAllBreaches() {
+        return repository.findAll();
+    }
+
+    @Override
+    public BreachRecordEntity getBreachById(Long id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<BreachRecordEntity> getBreachesByShipmentId(Long shipmentId) {
+        return repository.findByShipmentId(shipmentId);
+    }
+
+    @Override
+    public void deleteBreachById(Long id) {
+        repository.deleteById(id);
     }
 }
