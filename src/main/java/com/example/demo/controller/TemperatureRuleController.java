@@ -1,3 +1,8 @@
+import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/rules")
 @Tag(name = "Temperature Rules")
