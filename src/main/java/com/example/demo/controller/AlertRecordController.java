@@ -1,8 +1,11 @@
-import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import java.util.List;
+package com.example.demo.controller;
 
+import com.example.demo.entity.AlertRecordEntity;
+import com.example.demo.service.AlertService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/alerts")
@@ -16,17 +19,22 @@ public class AlertRecordController {
     }
 
     @PostMapping
-    public AlertRecordEntity trigger(@RequestBody AlertRecordEntity a) {
-        return service.triggerAlert(a);
+    public AlertRecordEntity create(@RequestBody AlertRecordEntity alert) {
+        return service.triggerAlert(alert);
     }
 
     @PutMapping("/{id}/acknowledge")
-    public AlertRecordEntity ack(@PathVariable Long id) {
+    public AlertRecordEntity acknowledge(@PathVariable Long id) {
         return service.acknowledgeAlert(id);
     }
 
+    @GetMapping("/{id}")
+    public AlertRecordEntity getById(@PathVariable Long id) {
+        return service.getAlertById(id);
+    }
+
     @GetMapping
-    public List<AlertRecordEntity> all() {
+    public List<AlertRecordEntity> getAll() {
         return service.getAllAlerts();
     }
 }
