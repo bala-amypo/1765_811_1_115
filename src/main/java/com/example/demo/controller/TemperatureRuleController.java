@@ -1,6 +1,10 @@
-import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
+package com.example.demo.controller;
+
+import com.example.demo.entity.TemperatureRuleEntity;
+import com.example.demo.service.TemperatureRuleService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -19,13 +23,13 @@ public class TemperatureRuleController {
         return service.createRule(rule);
     }
 
-    @GetMapping("/active")
-    public List<TemperatureRuleEntity> active() {
-        return service.getActiveRules();
+    @PutMapping("/{id}")
+    public TemperatureRuleEntity update(@PathVariable Long id, @RequestBody TemperatureRuleEntity rule) {
+        return service.updateRule(id, rule);
     }
 
     @GetMapping
-    public List<TemperatureRuleEntity> all() {
+    public List<TemperatureRuleEntity> getAll() {
         return service.getAllRules();
     }
 }
