@@ -11,7 +11,7 @@ import com.example.demo.repository.TemperatureSensorLogRepository;
 import com.example.demo.service.TemperatureSensorLogService;
 
 @Service
-public class TemperatureSensorLogServiceImpl implements TemperatureSensorLogService {
+public class TemperatureSensorLogServiceImpl implements TemperatureLogService {
 
     @Autowired
     TemperatureSensorLogRepository repo;
