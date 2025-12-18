@@ -1,6 +1,10 @@
-import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
+package com.example.demo.controller;
+
+import com.example.demo.entity.TemperatureSensorLogEntity;
+import com.example.demo.service.TemperatureLogService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -19,13 +23,18 @@ public class TemperatureLogController {
         return service.recordLog(log);
     }
 
+    @GetMapping("/{id}")
+    public TemperatureSensorLogEntity getById(@PathVariable Long id) {
+        return service.getLogById(id);
+    }
+
     @GetMapping("/shipment/{shipmentId}")
-    public List<TemperatureSensorLogEntity> byShipment(@PathVariable Long shipmentId) {
+    public List<TemperatureSensorLogEntity> getByShipment(@PathVariable Long shipmentId) {
         return service.getLogsByShipment(shipmentId);
     }
 
     @GetMapping
-    public List<TemperatureSensorLogEntity> all() {
+    public List<TemperatureSensorLogEntity> getAll() {
         return service.getAllLogs();
     }
 }
