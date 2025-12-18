@@ -6,18 +6,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.TemperatureSensorLogEntity;
+import com.example.demo.entity.TemperatureLogEntity;
 import com.example.demo.repository.TemperatureSensorLogRepository;
-import com.example.demo.service.TemperatureSensorLogService;
+import com.example.demo.service.TemperatureLogService;
 
 @Service
-public class TemperatureSensorLogServiceImpl implements TemperatureLogService {
+public class TemperatureLogServiceImpl implements TemperatureLogService {
 
     @Autowired
     TemperatureSensorLogRepository repo;
 
     @Override
-    public TemperatureSensorLogEntity addTemperatureLog(TemperatureSensorLogEntity log) {
+    public TemperatureLogEntity addTemperatureLog(TemperatureLogEntity log) {
         if (log.getRecordedAt() == null) {
             log.setRecordedAt(LocalDateTime.now());
         }
@@ -25,12 +25,12 @@ public class TemperatureSensorLogServiceImpl implements TemperatureLogService {
     }
 
     @Override
-    public List<TemperatureSensorLogEntity> getTemperatureLogs() {
+    public List<TemperatureLogEntity> getTemperatureLogs() {
         return repo.findAll();
     }
 
     @Override
-    public TemperatureSensorLogEntity getTemperatureLogById(Long id) {
+    public TemperatureLogEntity getTemperatureLogById(Long id) {
         return repo.findById(id).orElse(null);
     }
 

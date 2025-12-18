@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.entity.TemperatureSensorLogEntity;
-import com.example.demo.service.TemperatureSensorLogService;
+import com.example.demo.entity.TemperatureLogEntity;
+import com.example.demo.service.TemperatureLogService;
 
 @RestController
 public class TemperatureLogController {
