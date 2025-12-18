@@ -17,28 +17,28 @@ import com.example.demo.service.TemperatureLogService;
 public class TemperatureLogController {
 
     @Autowired
-    TemperatureSensorLogService service;
+    TemperatureLogService service;
 
     @PostMapping("/addTemperatureLog")
-    public TemperatureSensorLogEntity addTemperatureLog(
-            @RequestBody TemperatureSensorLogEntity log) {
+    public TemperatureLogEntity addTemperatureLog(
+            @RequestBody TemperatureLogEntity log) {
         return service.addTemperatureLog(log);
     }
 
     @GetMapping("/getTemperatureLogs")
-    public List<TemperatureSensorLogEntity> getTemperatureLogs() {
+    public List<TemperatureLogEntity> getTemperatureLogs() {
         return service.getTemperatureLogs();
     }
 
     @GetMapping("/getTemperatureLog/{id}")
-    public TemperatureSensorLogEntity getTemperatureLogById(
+    public TemperatureLogEntity getTemperatureLogById(
             @PathVariable Long id) {
         return service.getTemperatureLogById(id);
     }
 
     @DeleteMapping("/deleteTemperatureLog/{id}")
     public String deleteTemperatureLogById(@PathVariable Long id) {
-        TemperatureSensorLogEntity log = service.getTemperatureLogById(id);
+        TemperatureLogEntity log = service.getTemperatureLogById(id);
         if (log != null) {
             service.deleteTemperatureLogById(id);
             return "Temperature log deleted successfully.";
