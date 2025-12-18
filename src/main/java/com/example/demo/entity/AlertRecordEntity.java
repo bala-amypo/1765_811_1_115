@@ -1,36 +1,38 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
-@Table(name = "alert_records")
 public class AlertRecordEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Long shipmentId;
-    private Long breachId;
     private String alertType;
     private String message;
-    private LocalDateTime sentAt;
-    private Boolean acknowledged;
 
     public AlertRecordEntity() {}
 
-    @PrePersist
-    public void prePersist() {
-        this.sentAt = LocalDateTime.now();
-        this.acknowledged = false;
+    public AlertRecordEntity(Long id, Long shipmentId, String alertType, String message) {
+        this.id = id;
+        this.shipmentId = shipmentId;
+        this.alertType = alertType;
+        this.message = message;
     }
 
-    // Getters & Setters
     public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
     public Long getShipmentId() { return shipmentId; }
     public void setShipmentId(Long shipmentId) { this.shipmentId = shipmentId; }
 
-    public Boolean getAcknowledged() { return acknowledged; }
-    public void setAcknowledged(Boolean acknowledged) { this.acknowledged = acknowledged; }
+    public String getAlertType() { return alertType; }
+    public void setAlertType(String alertType) { this.alertType = alertType; }
+
+    public String getMessage() { return message; }
+    public void setMessage(String message) { this.message = message; }
 }
