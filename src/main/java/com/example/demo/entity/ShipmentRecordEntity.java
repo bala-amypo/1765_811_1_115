@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "shipmentCode"))
-public class ShipmentRecord {
+public class ShipmentRecordEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
