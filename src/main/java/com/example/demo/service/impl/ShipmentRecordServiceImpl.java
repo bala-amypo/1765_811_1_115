@@ -1,42 +1,26 @@
 
 package com.example.demo.service.impl;
 
-import java.time.LocalDateTime;
+import com.example.demo.repository.ShipmentRecordRepository;
+import com.example.demo.service.ShipmentRecordService;
+import com.example.demo.entity.ShipmentRecord;
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.TemperatureSensorLogEntity;
-import com.example.demo.repository.TemperatureSensorLogRepository;
-import com.example.demo.service.TemperatureSensorLogService;
-
 @Service
-public class TemperatureSensorLogServiceImpl implements TemperatureSensorLogService {
+public class ShipmentRecordServiceImpl implements ShipmentRecordService {
+    private final ShipmentRecordRepository repo;
 
-    @Autowired
-    TemperatureSensorLogRepository repo;
-
-    @Override
-    public TemperatureSensorLogEntity addTemperatureLog(TemperatureSensorLogEntity log) {
-        if (log.getRecordedAt() == null) {
-            log.setRecordedAt(LocalDateTime.now());
-        }
-        return repo.save(log);
+    public ShipmentRecordServiceImpl(ShipmentRecordRepository repo) {
+        this.repo = repo;
     }
 
-    @Override
-    public List<TemperatureSensorLogEntity> getTemperatureLogs() {
-        return repo.findAll();
+    public ShipmentRecord createShipment(ShipmentRecord s) { return repo.save(s); }
+    public ShipmentRecord updateShipmentStatus(Long id, String status) {
+        ShipmentRecord s = repo.findById(id).orElseThrow();
+        s.setStatus(status);
+        return repo.save(s);
     }
-
-    @Override
-    public TemperatureSensorLogEntity getTemperatureLogById(Long id) {
-        return repo.findById(id).orElse(null);
-    }
-
-    @Override
-    public void deleteTemperatureLogById(Long id) {
-        repo.deleteById(id);
-    }
+    public ShipmentRecord getShipmentById(Long id) { return repo.findById(id).orElseThrow(); }
+    public List<ShipmentRecord> getAllShipments() { return repo.findAll(); }
 }
