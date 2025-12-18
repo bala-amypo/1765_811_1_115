@@ -11,7 +11,7 @@ public interface TemperatureRuleService {
 
     List<TemperatureRuleEntity> getActiveRules();
 
-    TemperatureRuleEntity getRuleForProduct(String productType);
+    List<TemperatureRuleEntity> getRulesByProduct(String productType);
 
     List<TemperatureRuleEntity> getAllRules();
 }
