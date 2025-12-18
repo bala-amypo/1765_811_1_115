@@ -1,13 +1,13 @@
-// package com.example.demo.service;
+package com.example.demo.service;
 
-// import java.util.List;
-// import com.example.demo.entity.TemperatureSensorLogEntity;
+import java.util.List;
+import com.example.demo.entity.TemperatureSensorLogEntity;
 
-// public interface TemperatureLogService {
+public interface TemperatureLogService {
 
-//     TemperatureSensorLogEntity saveLog(TemperatureSensorLogEntity log);
+    TemperatureSensorLogEntity saveLog(TemperatureSensorLogEntity log);
 
-//     List<TemperatureSensorLogEntity> getAllLogs();
+    List<TemperatureSensorLogEntity> getAllLogs();
 
-//     List<TemperatureSensorLogEntity> getLogsByShipmentId(Long shipmentId);
-// }
+    List<TemperatureSensorLogEntity> getLogsByShipmentId(Long shipmentId);
+}

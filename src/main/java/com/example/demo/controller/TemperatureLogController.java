@@ -1,34 +1,34 @@
-// package com.example.demo.controller;
+package com.example.demo.controller;
 
-// import java.util.List;
+import java.util.List;
 
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-// import com.example.demo.entity.TemperatureSensorLogEntity;
-// import com.example.demo.service.TemperatureLogService;
+import com.example.demo.entity.TemperatureSensorLogEntity;
+import com.example.demo.service.TemperatureLogService;
 
-// @RestController
-// @RequestMapping("/api/temperature-logs")
-// public class TemperatureLogController {
+@RestController
+@RequestMapping("/api/temperature-logs")
+public class TemperatureLogController {
 
-//     @Autowired
-//     private TemperatureLogService service;
+    @Autowired
+    private TemperatureLogService service;
 
-//     @PostMapping
-//     public TemperatureSensorLogEntity saveLog(
-//             @RequestBody TemperatureSensorLogEntity log) {
-//         return service.saveLog(log);
-//     }
+    @PostMapping
+    public TemperatureSensorLogEntity saveLog(
+            @RequestBody TemperatureSensorLogEntity log) {
+        return service.saveLog(log);
+    }
 
-//     @GetMapping
-//     public List<TemperatureSensorLogEntity> getAllLogs() {
-//         return service.getAllLogs();
-//     }
+    @GetMapping
+    public List<TemperatureSensorLogEntity> getAllLogs() {
+        return service.getAllLogs();
+    }
 
-//     @GetMapping("/shipment/{shipmentId}")
-//     public List<TemperatureSensorLogEntity> getLogsByShipment(
-//             @PathVariable Long shipmentId) {
-//         return service.getLogsByShipmentId(shipmentId);
-//     }
-// }
+    @GetMapping("/shipment/{shipmentId}")
+    public List<TemperatureSensorLogEntity> getLogsByShipment(
+            @PathVariable Long shipmentId) {
+        return service.getLogsByShipmentId(shipmentId);
+    }
+}
