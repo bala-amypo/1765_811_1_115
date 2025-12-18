@@ -1,26 +1,40 @@
-
 package com.example.demo.service.impl;
 
+import com.example.demo.entity.ShipmentRecordEntity;
 import com.example.demo.repository.ShipmentRecordRepository;
 import com.example.demo.service.ShipmentRecordService;
-import com.example.demo.entity.ShipmentRecord;
-import java.util.List;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ShipmentRecordServiceImpl implements ShipmentRecordService {
-    private final ShipmentRecordRepository repo;
 
-    public ShipmentRecordServiceImpl(ShipmentRecordRepository repo) {
-        this.repo = repo;
+    private final ShipmentRecordRepository repository;
+
+    public ShipmentRecordServiceImpl(ShipmentRecordRepository repository) {
+        this.repository = repository;
     }
 
-    public ShipmentRecord createShipment(ShipmentRecord s) { return repo.save(s); }
-    public ShipmentRecord updateShipmentStatus(Long id, String status) {
-        ShipmentRecord s = repo.findById(id).orElseThrow();
+    public ShipmentRecordEntity createShipment(ShipmentRecordEntity shipment) {
+        return repository.save(shipment);
+    }
+
+    public ShipmentRecordEntity updateShipmentStatus(Long id, String status) {
+        ShipmentRecordEntity s = repository.findById(id).orElseThrow();
         s.setStatus(status);
-        return repo.save(s);
+        return repository.save(s);
     }
-    public ShipmentRecord getShipmentById(Long id) { return repo.findById(id).orElseThrow(); }
-    public List<ShipmentRecord> getAllShipments() { return repo.findAll(); }
+
+    public ShipmentRecordEntity getShipmentById(Long id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    public ShipmentRecordEntity getShipmentByCode(String code) {
+        return repository.findByShipmentCode(code);
+    }
+
+    public List<ShipmentRecordEntity> getAllShipments() {
+        return repository.findAll();
+    }
 }
