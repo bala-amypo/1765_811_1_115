@@ -1,5 +1,12 @@
+package com.example.demo.service.impl;
+
+import com.example.demo.entity.AlertRecordEntity;
+import com.example.demo.repository.AlertRecordRepository;
+import com.example.demo.service.AlertService;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
+
 @Service
 public class AlertServiceImpl implements AlertService {
 
@@ -14,9 +21,16 @@ public class AlertServiceImpl implements AlertService {
     }
 
     public AlertRecordEntity acknowledgeAlert(Long id) {
-        AlertRecordEntity a = repository.findById(id).orElseThrow();
-        a.setAcknowledged(true);
-        return repository.save(a);
+        AlertRecordEntity alert = repository.findById(id).orElse(null);
+        if (alert != null) {
+            alert.setAcknowledged(true);
+            return repository.save(alert);
+        }
+        return null;
+    }
+
+    public AlertRecordEntity getAlertById(Long id) {
+        return repository.findById(id).orElse(null);
     }
 
     public List<AlertRecordEntity> getAlertsByShipment(Long shipmentId) {
