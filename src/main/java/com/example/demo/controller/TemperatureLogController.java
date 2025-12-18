@@ -1,40 +1,34 @@
 // package com.example.demo.controller;
 
-// import com.example.demo.entity.TemperatureSensorLogEntity;
-// import com.example.demo.service.TemperatureLogService;
-// import io.swagger.v3.oas.annotations.tags.Tag;
-// import org.springframework.web.bind.annotation.*;
-
 // import java.util.List;
 
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.web.bind.annotation.*;
+
+// import com.example.demo.entity.TemperatureSensorLogEntity;
+// import com.example.demo.service.TemperatureLogService;
+
 // @RestController
-// @RequestMapping("/api/logs")
-// @Tag(name = "Temperature Logs")
+// @RequestMapping("/api/temperature-logs")
 // public class TemperatureLogController {
 
-//     private final TemperatureLogService service;
-
-//     public TemperatureLogController(TemperatureLogService service) {
-//         this.service = service;
-//     }
+//     @Autowired
+//     private TemperatureLogService service;
 
 //     @PostMapping
-//     public TemperatureSensorLogEntity create(@RequestBody TemperatureSensorLogEntity log) {
-//         return service.recordLog(log);
-//     }
-
-//     @GetMapping("/{id}")
-//     public TemperatureSensorLogEntity getById(@PathVariable Long id) {
-//         return service.getLogById(id);
-//     }
-
-//     @GetMapping("/shipment/{shipmentId}")
-//     public List<TemperatureSensorLogEntity> getByShipment(@PathVariable Long shipmentId) {
-//         return service.getLogsByShipment(shipmentId);
+//     public TemperatureSensorLogEntity saveLog(
+//             @RequestBody TemperatureSensorLogEntity log) {
+//         return service.saveLog(log);
 //     }
 
 //     @GetMapping
-//     public List<TemperatureSensorLogEntity> getAll() {
+//     public List<TemperatureSensorLogEntity> getAllLogs() {
 //         return service.getAllLogs();
+//     }
+
+//     @GetMapping("/shipment/{shipmentId}")
+//     public List<TemperatureSensorLogEntity> getLogsByShipment(
+//             @PathVariable Long shipmentId) {
+//         return service.getLogsByShipmentId(shipmentId);
 //     }
 // }

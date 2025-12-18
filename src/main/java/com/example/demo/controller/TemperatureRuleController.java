@@ -1,35 +1,34 @@
 // package com.example.demo.controller;
 
-// import com.example.demo.entity.TemperatureRuleEntity;
-// import com.example.demo.service.TemperatureRuleService;
-// import io.swagger.v3.oas.annotations.tags.Tag;
-// import org.springframework.web.bind.annotation.*;
-
 // import java.util.List;
 
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.web.bind.annotation.*;
+
+// import com.example.demo.entity.TemperatureRuleEntity;
+// import com.example.demo.service.TemperatureRuleService;
+
 // @RestController
-// @RequestMapping("/api/rules")
-// @Tag(name = "Temperature Rules")
+// @RequestMapping("/api/temperature-rules")
 // public class TemperatureRuleController {
 
-//     private final TemperatureRuleService service;
-
-//     public TemperatureRuleController(TemperatureRuleService service) {
-//         this.service = service;
-//     }
+//     @Autowired
+//     private TemperatureRuleService service;
 
 //     @PostMapping
-//     public TemperatureRuleEntity create(@RequestBody TemperatureRuleEntity rule) {
-//         return service.createRule(rule);
+//     public TemperatureRuleEntity saveRule(
+//             @RequestBody TemperatureRuleEntity rule) {
+//         return service.saveRule(rule);
 //     }
 
-//     @PutMapping("/{id}")
-//     public TemperatureRuleEntity update(@PathVariable Long id, @RequestBody TemperatureRuleEntity rule) {
-//         return service.updateRule(id, rule);
+//     @GetMapping("/active")
+//     public List<TemperatureRuleEntity> getActiveRules() {
+//         return service.getActiveRules();
 //     }
 
-//     @GetMapping
-//     public List<TemperatureRuleEntity> getAll() {
-//         return service.getAllRules();
+//     @GetMapping("/product/{productType}")
+//     public List<TemperatureRuleEntity> getRulesByProduct(
+//             @PathVariable String productType) {
+//         return service.getRulesByProductType(productType);
 //     }
 // }
