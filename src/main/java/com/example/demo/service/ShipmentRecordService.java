@@ -11,7 +11,7 @@ public interface ShipmentRecordService {
 
     ShipmentRecordEntity getShipmentById(Long id);
 
-    ShipmentRecordEntity getShipmentByCode(String code);
+    ShipmentRecordEntity getShipmentByCode(String shipmentCode);
 
     List<ShipmentRecordEntity> getAllShipments();
 }
