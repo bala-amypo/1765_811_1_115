@@ -1,13 +1,13 @@
-// package com.example.demo.service;
+package com.example.demo.service;
 
-// import java.util.List;
-// import com.example.demo.entity.TemperatureRuleEntity;
+import java.util.List;
+import com.example.demo.entity.TemperatureRuleEntity;
 
-// public interface TemperatureRuleService {
+public interface TemperatureRuleService {
 
-//     TemperatureRuleEntity saveRule(TemperatureRuleEntity rule);
+    TemperatureRuleEntity saveRule(TemperatureRuleEntity rule);
 
-//     List<TemperatureRuleEntity> getActiveRules();
+    List<TemperatureRuleEntity> getActiveRules();
 
-//     List<TemperatureRuleEntity> getRulesByProductType(String productType);
-// }
+    List<TemperatureRuleEntity> getRulesByProductType(String productType);
+}

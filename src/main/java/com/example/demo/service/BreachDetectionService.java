@@ -1,17 +1,17 @@
-// package com.example.demo.service;
+package com.example.demo.service;
 
-// import java.util.List;
-// import com.example.demo.entity.BreachRecordEntity;
+import java.util.List;
+import com.example.demo.entity.BreachRecordEntity;
 
-// public interface BreachDetectionService {
+public interface BreachDetectionService {
 
-//     BreachRecordEntity logBreach(BreachRecordEntity breach);
+    BreachRecordEntity logBreach(BreachRecordEntity breach);
 
-//     List<BreachRecordEntity> getAllBreaches();
+    List<BreachRecordEntity> getAllBreaches();
 
-//     BreachRecordEntity getBreachById(Long id);
+    BreachRecordEntity getBreachById(Long id);
 
-//     List<BreachRecordEntity> getBreachesByShipmentId(Long shipmentId);
+    List<BreachRecordEntity> getBreachesByShipmentId(Long shipmentId);
 
-//     void deleteBreachById(Long id);
-// }
+    void deleteBreachById(Long id);
+}
