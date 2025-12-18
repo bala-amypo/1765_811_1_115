@@ -1,3 +1,8 @@
+package com.example.demo.service;
+
+import java.util.List;
+import com.example.demo.entity.BreachRecordEntity;
+
 public interface BreachDetectionService {
 
     BreachRecordEntity createBreach(BreachRecordEntity breach);
