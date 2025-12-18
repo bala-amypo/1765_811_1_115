@@ -9,6 +9,8 @@ public interface AlertService {
 
     AlertRecordEntity acknowledgeAlert(Long id);
 
+    AlertRecordEntity getAlertById(Long id);
+
     List<AlertRecordEntity> getAlertsByShipment(Long shipmentId);
 
     List<AlertRecordEntity> getAllAlerts();
