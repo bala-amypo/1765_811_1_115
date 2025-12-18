@@ -1,17 +1,12 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.AlertRecordEntity;
 import java.util.List;
+import com.example.demo.entity.AlertRecordEntity;
 
 public interface AlertService {
-
-    AlertRecordEntity triggerAlert(AlertRecordEntity alert);
-
-    AlertRecordEntity acknowledgeAlert(Long id);
-
-    AlertRecordEntity getAlertById(Long id);
-
-    List<AlertRecordEntity> getAlertsByShipment(Long shipmentId);
-
+    AlertRecordEntity addAlert(AlertRecordEntity alert);
     List<AlertRecordEntity> getAllAlerts();
+    AlertRecordEntity getAlertById(Long id);
+    List<AlertRecordEntity> getAlertsByShipmentId(Long shipmentId);
+    void deleteAlertById(Long id);
 }
