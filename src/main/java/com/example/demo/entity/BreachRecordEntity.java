@@ -1,38 +1,39 @@
-// package com.example.demo.entity;
+package com.example.demo.entity;
 
-// import jakarta.persistence.*;
-// import java.time.LocalDateTime;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
-// @Entity
-// @Table(name = "breach_records")
-// public class BreachRecordEntity {
+@Entity
+public class BreachRecordEntity {
 
-//     @Id
-//     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//     private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private Long shipmentId;
+    private String breachType;
+    private String timestamp;
 
-//     private Long shipmentId;
-//     private Long logId;
-//     private String breachType;
-//     private Double breachValue;
-//     private String severity;
-//     private String details;
-//     private LocalDateTime detectedAt;
-//     private Boolean resolved;
+    public BreachRecordEntity() {}
 
-//     public BreachRecordEntity() {}
+    public BreachRecordEntity(Long id, Long shipmentId, String breachType, String timestamp) {
+        this.id = id;
+        this.shipmentId = shipmentId;
+        this.breachType = breachType;
+        this.timestamp = timestamp;
+    }
 
-//     @PrePersist
-//     public void prePersist() {
-//         this.detectedAt = LocalDateTime.now();
-//         this.resolved = false;
-//     }
+    // Getters and Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-//     // Getters & Setters
-//     public Long getId() { return id; }
-//     public Long getShipmentId() { return shipmentId; }
-//     public void setShipmentId(Long shipmentId) { this.shipmentId = shipmentId; }
+    public Long getShipmentId() { return shipmentId; }
+    public void setShipmentId(Long shipmentId) { this.shipmentId = shipmentId; }
 
-//     public Boolean getResolved() { return resolved; }
-//     public void setResolved(Boolean resolved) { this.resolved = resolved; }
-// }
+    public String getBreachType() { return breachType; }
+    public void setBreachType(String breachType) { this.breachType = breachType; }
+
+    public String getTimestamp() { return timestamp; }
+    public void setTimestamp(String timestamp) { this.timestamp = timestamp; }
+}
