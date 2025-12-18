@@ -1,16 +1,27 @@
-@RestController
-@RequestMapping("/auth")
-@Tag(name = "Authentication")
-public class AuthController {
+@Service
+public class AlertServiceImpl implements AlertService {
 
-    private final UserService userService;
+    private final AlertRecordRepository repository;
 
-    public AuthController(UserService userService) {
-        this.userService = userService;
+    public AlertServiceImpl(AlertRecordRepository repository) {
+        this.repository = repository;
     }
 
-    @PostMapping("/register")
-    public UserEntity register(@RequestBody RegisterRequest request) {
-        return userService.registerUser(request);
+    public AlertRecordEntity triggerAlert(AlertRecordEntity alert) {
+        return repository.save(alert);
+    }
+
+    public AlertRecordEntity acknowledgeAlert(Long id) {
+        AlertRecordEntity a = repository.findById(id).orElseThrow();
+        a.setAcknowledged(true);
+        return repository.save(a);
+    }
+
+    public List<AlertRecordEntity> getAlertsByShipment(Long shipmentId) {
+        return repository.findByShipmentId(shipmentId);
+    }
+
+    public List<AlertRecordEntity> getAllAlerts() {
+        return repository.findAll();
     }
 }
