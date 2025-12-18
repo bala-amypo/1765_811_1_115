@@ -1,18 +1,10 @@
-import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.List;
-import java.util.Optional;
 
-public interface UserRepository
-        extends JpaRepository<UserEntity, Long> {
-    boolean existsByEmail(String email);
-    Optional<UserEntity> findByEmail(String email);
-}
 package com.example.demo.repository;
 
 import com.example.demo.entity.AlertRecordEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
-public interface AlertRecordRepository extends JpaRepository<AlertRecordEntity, Long> {
-    List<AlertRecordEntity> findByShipmentId(Long shipmentId);
+public interface UserRepository extends JpaRepository<UserRepository, Long> {
+    List<UserRepository> findByShipmentId(Long shipmentId);
 }
