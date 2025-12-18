@@ -22,11 +22,11 @@ import com.example.demo.entity.TemperatureSensorLogEntity;
 
 public interface TemperatureLogService {
 
-    TemperatureSensorLogEntity addTemperatureLog(TemperatureSensorLogEntity log);
+    TemperatureLogEntity addTemperatureLog(TemperatureLogEntity log);
 
-    List<TemperatureSensorLogEntity> getTemperatureLogs();
+    List<TemperatureLogEntity> getTemperatureLogs();
 
-    TemperatureSensorLogEntity getTemperatureLogById(Long id);
+    TemperatureLogEntity getTemperatureLogById(Long id);
 
     void deleteTemperatureLogById(Long id);
 }
