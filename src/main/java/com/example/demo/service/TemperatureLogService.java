@@ -1,41 +1,16 @@
-package com.example.demo.service.impl;
+package com.example.demo.service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.example.demo.entity.TemperatureLogEntity;
-import com.example.demo.repository.TemperatureLogRepository;
-import com.example.demo.service.TemperatureLogService;
 
-@Service
-public class TemperatureLogServiceImpl implements TemperatureLogService {
+public interface TemperatureLogService {
 
-    @Autowired
-    TemperatureLogRepository repo;
+    TemperatureLogEntity addTemperatureLog(TemperatureLogEntity log);
 
-    @Override
-    public TemperatureLogEntity addTemperatureLog(TemperatureLogEntity log) {
-        if (log.getRecordedAt() == null) {
-            log.setRecordedAt(LocalDateTime.now());
-        }
-        return repo.save(log);
-    }
+    List<TemperatureLogEntity> getTemperatureLogs();
 
-    @Override
-    public List<TemperatureLogEntity> getTemperatureLogs() {
-        return repo.findAll();
-    }
+    TemperatureLogEntity getTemperatureLogById(Long id);
 
-    @Override
-    public TemperatureLogEntity getTemperatureLogById(Long id) {
-        return repo.findById(id).orElse(null);
-    }
-
-    @Override
-    public void deleteTemperatureLogById(Long id) {
-        repo.deleteById(id);
-    }
+    void deleteTemperatureLogById(Long id);
 }
