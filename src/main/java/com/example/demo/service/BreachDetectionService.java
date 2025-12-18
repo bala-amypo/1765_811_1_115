@@ -7,11 +7,11 @@ public interface BreachDetectionService {
 
     BreachRecordEntity logBreach(BreachRecordEntity breach);
 
-    List<BreachRecordEntity> getBreachesByShipment(Long shipmentId);
-
     BreachRecordEntity resolveBreach(Long id);
 
     BreachRecordEntity getBreachById(Long id);
+
+    List<BreachRecordEntity> getBreachesByShipment(Long shipmentId);
 
     List<BreachRecordEntity> getAllBreaches();
 }
