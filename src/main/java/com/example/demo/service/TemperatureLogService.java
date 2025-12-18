@@ -7,9 +7,9 @@ public interface TemperatureLogService {
 
     TemperatureSensorLogEntity recordLog(TemperatureSensorLogEntity log);
 
-    List<TemperatureSensorLogEntity> getLogsByShipment(Long shipmentId);
-
     TemperatureSensorLogEntity getLogById(Long id);
+
+    List<TemperatureSensorLogEntity> getLogsByShipment(Long shipmentId);
 
     List<TemperatureSensorLogEntity> getAllLogs();
 }
