@@ -8,7 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class TemperatureLogEntity {
+public class TemperatureSensorLogEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,15 +20,61 @@ public class TemperatureLogEntity {
     private Double temperatureValue;
     private String location; // optional
 
-    public TemperatureLogEntity() {
-        this.recordedAt = LocalDateTime.now(); // default now
+    public TemperatureSensorLogEntity() {
+        this.recordedAt = LocalDateTime.now(); // default to now
     }
 
-    public TemperatureLogEntity(Long id, Long shipmentId, String sensorId,
-import com.example.demo.entity.TemperatureLogEntity;
+    public TemperatureSensorLogEntity(Long id, Long shipmentId, String sensorId,
+            LocalDateTime recordedAt, Double temperatureValue, String location) {
+        this.id = id;
+        this.shipmentId = shipmentId;
+        this.sensorId = sensorId;
+        this.recordedAt = recordedAt != null ? recordedAt : LocalDateTime.now();
+        this.temperatureValue = temperatureValue;
+        this.location = location;
+    }
 
-@Repository
-public interface TemperatureLogRepository
-        extends JpaRepository<TemperatureLogEntity, Long> {
+    public Long getId() {
+        return id;
+    }
 
+    public Long getShipmentId() {
+        return shipmentId;
+    }
+
+    public void setShipmentId(Long shipmentId) {
+        this.shipmentId = shipmentId;
+    }
+
+    public String getSensorId() {
+        return sensorId;
+    }
+
+    public void setSensorId(String sensorId) {
+        this.sensorId = sensorId;
+    }
+
+    public LocalDateTime getRecordedAt() {
+        return recordedAt;
+    }
+
+    public void setRecordedAt(LocalDateTime recordedAt) {
+        this.recordedAt = recordedAt;
+    }
+
+    public Double getTemperatureValue() {
+        return temperatureValue;
+    }
+
+    public void setTemperatureValue(Double temperatureValue) {
+        this.temperatureValue = temperatureValue;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 }
