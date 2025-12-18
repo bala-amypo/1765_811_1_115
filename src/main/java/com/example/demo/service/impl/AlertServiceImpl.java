@@ -1,43 +1,42 @@
 package com.example.demo.service.impl;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.example.demo.entity.AlertRecordEntity;
 import com.example.demo.repository.AlertRecordRepository;
 import com.example.demo.service.AlertService;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class AlertServiceImpl implements AlertService {
 
-    private final AlertRecordRepository repository;
+    @Autowired
+    private AlertRecordRepository repository;
 
-    public AlertServiceImpl(AlertRecordRepository repository) {
-        this.repository = repository;
-    }
-
-    public AlertRecordEntity triggerAlert(AlertRecordEntity alert) {
+    @Override
+    public AlertRecordEntity addAlert(AlertRecordEntity alert) {
         return repository.save(alert);
     }
 
-    public AlertRecordEntity acknowledgeAlert(Long id) {
-        AlertRecordEntity alert = repository.findById(id).orElse(null);
-        if (alert != null) {
-            alert.setAcknowledged(true);
-            return repository.save(alert);
-        }
-        return null;
+    @Override
+    public List<AlertRecordEntity> getAllAlerts() {
+        return repository.findAll();
     }
 
+    @Override
     public AlertRecordEntity getAlertById(Long id) {
         return repository.findById(id).orElse(null);
     }
 
-    public List<AlertRecordEntity> getAlertsByShipment(Long shipmentId) {
+    @Override
+    public List<AlertRecordEntity> getAlertsByShipmentId(Long shipmentId) {
         return repository.findByShipmentId(shipmentId);
     }
 
-    public List<AlertRecordEntity> getAllAlerts() {
-        return repository.findAll();
+    @Override
+    public void deleteAlertById(Long id) {
+        repository.deleteById(id);
     }
 }
