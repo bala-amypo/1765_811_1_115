@@ -22,28 +22,17 @@ public class BreachRecordEntity {
 
     public BreachRecordEntity() {}
 
-    public BreachRecordEntity(Long shipmentId, Long logId, String breachType,
-                              Double breachValue, String severity, String details) {
-        this.shipmentId = shipmentId;
-        this.logId = logId;
-        this.breachType = breachType;
-        this.breachValue = breachValue;
-        this.severity = severity;
-        this.details = details;
-    }
-
     @PrePersist
-    public void onDetect() {
-        detectedAt = LocalDateTime.now();
-        if (resolved == null) resolved = false;
+    public void prePersist() {
+        this.detectedAt = LocalDateTime.now();
+        this.resolved = false;
     }
 
     // Getters & Setters
     public Long getId() { return id; }
     public Long getShipmentId() { return shipmentId; }
     public void setShipmentId(Long shipmentId) { this.shipmentId = shipmentId; }
-    public Long getLogId() { return logId; }
-    public void setLogId(Long logId) { this.logId = logId; }
+
     public Boolean getResolved() { return resolved; }
     public void setResolved(Boolean resolved) { this.resolved = resolved; }
 }

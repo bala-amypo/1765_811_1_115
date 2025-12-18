@@ -3,8 +3,6 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-
-
 @Entity
 @Table(name = "alert_records")
 public class AlertRecordEntity {
@@ -22,22 +20,17 @@ public class AlertRecordEntity {
 
     public AlertRecordEntity() {}
 
-    public AlertRecordEntity(Long shipmentId, Long breachId,
-                             String alertType, String message) {
-        this.shipmentId = shipmentId;
-        this.breachId = breachId;
-        this.alertType = alertType;
-        this.message = message;
-    }
-
     @PrePersist
-    public void onSend() {
-        sentAt = LocalDateTime.now();
-        if (acknowledged == null) acknowledged = false;
+    public void prePersist() {
+        this.sentAt = LocalDateTime.now();
+        this.acknowledged = false;
     }
 
     // Getters & Setters
     public Long getId() { return id; }
+    public Long getShipmentId() { return shipmentId; }
+    public void setShipmentId(Long shipmentId) { this.shipmentId = shipmentId; }
+
     public Boolean getAcknowledged() { return acknowledged; }
     public void setAcknowledged(Boolean acknowledged) { this.acknowledged = acknowledged; }
 }
