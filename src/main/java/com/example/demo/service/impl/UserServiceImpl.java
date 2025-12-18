@@ -1,5 +1,12 @@
+package com.example.demo.service.impl;
+
+import com.example.demo.dto.RegisterRequest;
+import com.example.demo.entity.UserEntity;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.service.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -12,15 +19,9 @@ public class UserServiceImpl implements UserService {
     }
 
     public UserEntity registerUser(RegisterRequest request) {
-        if (repository.existsByEmail(request.email)) {
-            throw new RuntimeException("Email already exists");
-        }
-        UserEntity user = new UserEntity(
-                request.fullName,
-                request.email,
-                passwordEncoder.encode(request.password),
-                "MONITOR"
-        );
+        UserEntity user = new UserEntity();
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         return repository.save(user);
     }
 
