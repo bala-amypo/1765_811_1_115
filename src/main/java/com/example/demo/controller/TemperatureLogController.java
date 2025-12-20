@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.entity.TemperatureSensorLogEntity;
+import com.example.demo.entity.TemperatureSensorLog;
 import com.example.demo.service.TemperatureLogService;
 
 @RestController
@@ -16,18 +16,18 @@ public class TemperatureLogController {
     private TemperatureLogService service;
 
     @PostMapping
-    public TemperatureSensorLogEntity saveLog(
-            @RequestBody TemperatureSensorLogEntity log) {
+    public TemperatureSensorLog saveLog(
+            @RequestBody TemperatureSensorLog log) {
         return service.saveLog(log);
     }
 
     @GetMapping
-    public List<TemperatureSensorLogEntity> getAllLogs() {
+    public List<TemperatureSensorLog> getAllLogs() {
         return service.getAllLogs();
     }
 
     @GetMapping("/shipment/{shipmentId}")
-    public List<TemperatureSensorLogEntity> getLogsByShipment(
+    public List<TemperatureSensorLog> getLogsByShipment(
             @PathVariable Long shipmentId) {
         return service.getLogsByShipmentId(shipmentId);
     }
