@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.ShipmentRecordEntity;
+import com.example.demo.entity.ShipmentRecord;
 import com.example.demo.repository.ShipmentRecordRepository;
 import com.example.demo.service.ShipmentRecordService;
 
@@ -16,22 +16,22 @@ public class ShipmentRecordServiceImpl implements ShipmentRecordService {
     private ShipmentRecordRepository repository;
 
     @Override
-    public ShipmentRecordEntity addShipment(ShipmentRecordEntity shipment) {
+    public ShipmentRecord addShipment(ShipmentRecord shipment) {
         return repository.save(shipment);
     }
 
     @Override
-    public List<ShipmentRecordEntity> getAllShipments() {
+    public List<ShipmentRecord> getAllShipments() {
         return repository.findAll();
     }
 
     @Override
-    public ShipmentRecordEntity getShipmentById(Long id) {
+    public ShipmentRecord getShipmentById(Long id) {
         return repository.findById(id).orElse(null);
     }
 
     @Override
-    public ShipmentRecordEntity getShipmentByCode(String shipmentCode) {
+    public ShipmentRecord getShipmentByCode(String shipmentCode) {
         return repository.findByShipmentCode(shipmentCode);
     }
 
