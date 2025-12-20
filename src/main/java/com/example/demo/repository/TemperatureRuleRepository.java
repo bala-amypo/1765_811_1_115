@@ -3,13 +3,13 @@ package com.example.demo.repository;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.example.demo.entity.TemperatureRuleEntity;
+import com.example.demo.entity.TemperatureRule;
 
 @Repository
 public interface TemperatureRuleRepository
-        extends JpaRepository<TemperatureRuleEntity, Long> {
+        extends JpaRepository<TemperatureRule, Long> {
 
-    List<TemperatureRuleEntity> findByActiveTrue();
+    List<TemperatureRule> findByActiveTrue();
 
-    List<TemperatureRuleEntity> findByProductType(String productType);
+    List<TemperatureRule> findByProductType(String productType);
 }
