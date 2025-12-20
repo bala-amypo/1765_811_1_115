@@ -16,7 +16,7 @@ public class AlertRecordController {
     private AlertService alertService;
 
     @PostMapping
-    public AlertRecordEntity addAlert(@RequestBody AlertRecordEntity alert) {
+    public AlertRecord addAlert(@RequestBody AlertRecord alert) {
         return alertService.addAlert(alert);
     }
 
