@@ -3,7 +3,7 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
-public class TemperatureRuleEntity {
+public class TemperatureRule{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,9 +14,9 @@ public class TemperatureRuleEntity {
     private double maxTemp;
     private boolean active;
 
-    public TemperatureRuleEntity() {}
+    public TemperatureRule() {}
 
-    public TemperatureRuleEntity(Long id, String productType,
+    public TemperatureRule(Long id, String productType,
                                  double minTemp, double maxTemp, boolean active) {
         this.id = id;
         this.productType = productType;

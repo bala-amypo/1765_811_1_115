@@ -3,7 +3,7 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
-public class ShipmentRecordEntity {
+public class ShipmentRecord{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,9 +14,9 @@ public class ShipmentRecordEntity {
     private String destination;
     private String productType;
 
-    public ShipmentRecordEntity() {}
+    public ShipmentRecord() {}
 
-    public ShipmentRecordEntity(Long id, String shipmentCode, String origin,
+    public ShipmentRecord(Long id, String shipmentCode, String origin,
                                 String destination, String productType) {
         this.id = id;
         this.shipmentCode = shipmentCode;
