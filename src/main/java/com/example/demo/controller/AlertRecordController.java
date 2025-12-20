@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.entity.AlertRecordEntity;
+import com.example.demo.entity.AlertRecord;
 import com.example.demo.service.AlertService;
 
 @RestController
@@ -21,23 +21,23 @@ public class AlertRecordController {
     }
 
     @GetMapping
-    public List<AlertRecordEntity> getAllAlerts() {
+    public List<AlertRecord> getAllAlerts() {
         return alertService.getAllAlerts();
     }
 
     @GetMapping("/{id}")
-    public AlertRecordEntity getAlertById(@PathVariable Long id) {
+    public AlertRecord getAlertById(@PathVariable Long id) {
         return alertService.getAlertById(id);
     }
 
     @GetMapping("/shipment/{shipmentId}")
-    public List<AlertRecordEntity> getAlertsByShipmentId(@PathVariable Long shipmentId) {
+    public List<AlertRecord> getAlertsByShipmentId(@PathVariable Long shipmentId) {
         return alertService.getAlertsByShipmentId(shipmentId);
     }
 
     @DeleteMapping("/{id}")
     public String deleteAlert(@PathVariable Long id) {
-        AlertRecordEntity alert = alertService.getAlertById(id);
+        AlertRecord alert = alertService.getAlertById(id);
         if (alert != null) {
             alertService.deleteAlertById(id);
             return "Alert deleted successfully.";
