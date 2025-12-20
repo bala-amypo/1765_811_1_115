@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class TemperatureSensorLogEntity {
+public class TemperatureSensorLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,9 +14,9 @@ public class TemperatureSensorLogEntity {
     private double temperature;
     private LocalDateTime loggedAt;
 
-    public TemperatureSensorLogEntity() {}
+    public TemperatureSensorLog() {}
 
-    public TemperatureSensorLogEntity(Long id, Long shipmentId,
+    public TemperatureSensorLog(Long id, Long shipmentId,
                                       double temperature, LocalDateTime loggedAt) {
         this.id = id;
         this.shipmentId = shipmentId;
