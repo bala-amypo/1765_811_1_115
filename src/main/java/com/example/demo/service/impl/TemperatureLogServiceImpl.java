@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.TemperatureSensorLogEntity;
+import com.example.demo.entity.TemperatureSensorLog;
 import com.example.demo.repository.TemperatureSensorLogRepository;
 import com.example.demo.service.TemperatureLogService;
 
@@ -16,17 +16,17 @@ public class TemperatureLogServiceImpl implements TemperatureLogService {
     private TemperatureSensorLogRepository repository;
 
     @Override
-    public TemperatureSensorLogEntity saveLog(TemperatureSensorLogEntity log) {
+    public TemperatureSensorLog saveLog(TemperatureSensorLog log) {
         return repository.save(log);
     }
 
     @Override
-    public List<TemperatureSensorLogEntity> getAllLogs() {
+    public List<TemperatureSensorLog> getAllLogs() {
         return repository.findAll();
     }
 
     @Override
-    public List<TemperatureSensorLogEntity> getLogsByShipmentId(Long shipmentId) {
+    public List<TemperatureSensorLog> getLogsByShipmentId(Long shipmentId) {
         return repository.findByShipmentId(shipmentId);
     }
 }
