@@ -15,9 +15,9 @@ public class AlertRecord {
     private String alertType;
     private String message;
 
-    public AlertRecordEntity() {}
+    public AlertRecord() {}
 
-    public AlertRecordEntity(Long id, Long shipmentId, String alertType, String message) {
+    public AlertRecord(Long id, Long shipmentId, String alertType, String message) {
         this.id = id;
         this.shipmentId = shipmentId;
         this.alertType = alertType;
