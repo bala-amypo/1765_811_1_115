@@ -29,12 +29,12 @@ public class BreachRecordController {
     // }
 
     @GetMapping("/{id}")
-    public BreachRecordEntity getById(@PathVariable Long id) {
+    public BreachRecord getById(@PathVariable Long id) {
         return service.getBreachById(id);
     }
 
     @GetMapping
-    public List<BreachRecordEntity> getAll() {
+    public List<BreachRecord> getAll() {
         return service.getAllBreaches();
     }
 }
