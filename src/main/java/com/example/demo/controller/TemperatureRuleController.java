@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.entity.TemperatureRuleEntity;
+import com.example.demo.entity.TemperatureRule;
 import com.example.demo.service.TemperatureRuleService;
 
 @RestController
@@ -16,18 +16,18 @@ public class TemperatureRuleController {
     private TemperatureRuleService service;
 
     @PostMapping
-    public TemperatureRuleEntity saveRule(
-            @RequestBody TemperatureRuleEntity rule) {
+    public TemperatureRule saveRule(
+            @RequestBody TemperatureRule rule) {
         return service.saveRule(rule);
     }
 
     @GetMapping("/active")
-    public List<TemperatureRuleEntity> getActiveRules() {
+    public List<TemperatureRule> getActiveRules() {
         return service.getActiveRules();
     }
 
     @GetMapping("/product/{productType}")
-    public List<TemperatureRuleEntity> getRulesByProduct(
+    public List<TemperatureRule> getRulesByProduct(
             @PathVariable String productType) {
         return service.getRulesByProductType(productType);
     }
