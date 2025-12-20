@@ -3,11 +3,11 @@ package com.example.demo.repository;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.example.demo.entity.TemperatureSensorLogEntity;
+import com.example.demo.entity.TemperatureSensorLog;
 
 @Repository
 public interface TemperatureSensorLogRepository
-        extends JpaRepository<TemperatureSensorLogEntity, Long> {
+        extends JpaRepository<TemperatureSensorLog, Long> {
 
-    List<TemperatureSensorLogEntity> findByShipmentId(Long shipmentId);
+    List<TemperatureSensorLog> findByShipmentId(Long shipmentId);
 }
