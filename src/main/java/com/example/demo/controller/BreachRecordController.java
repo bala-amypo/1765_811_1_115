@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.BreachRecordEntity;
+import com.example.demo.entity.BreachRecord;
 import com.example.demo.service.BreachDetectionService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ public class BreachRecordController {
     }
 
     @PostMapping
-    public BreachRecordEntity create(@RequestBody BreachRecordEntity breach) {
+    public BreachRecord create(@RequestBody BreachRecord breach) {
         return service.logBreach(breach);
     }
 
