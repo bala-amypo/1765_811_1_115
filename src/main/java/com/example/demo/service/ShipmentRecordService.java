@@ -1,17 +1,17 @@
 package com.example.demo.service;
 
 import java.util.List;
-import com.example.demo.entity.ShipmentRecordEntity;
+import com.example.demo.entity.ShipmentRecord;
 
 public interface ShipmentRecordService {
 
-    ShipmentRecordEntity addShipment(ShipmentRecordEntity shipment);
+    ShipmentRecord addShipment(ShipmentRecord shipment);
 
-    List<ShipmentRecordEntity> getAllShipments();
+    List<ShipmentRecord> getAllShipments();
 
-    ShipmentRecordEntity getShipmentById(Long id);
+    ShipmentRecord getShipmentById(Long id);
 
-    ShipmentRecordEntity getShipmentByCode(String shipmentCode);
+    ShipmentRecord getShipmentByCode(String shipmentCode);
 
     void deleteShipment(Long id);
 }
