@@ -15,9 +15,9 @@ public class BreachRecord {
     private String breachType;
     private String timestamp;
 
-    public BreachRecordEntity() {}
+    public BreachRecord() {}
 
-    public BreachRecordEntity(Long id, Long shipmentId, String breachType, String timestamp) {
+    public BreachRecord(Long id, Long shipmentId, String breachType, String timestamp) {
         this.id = id;
         this.shipmentId = shipmentId;
         this.breachType = breachType;
