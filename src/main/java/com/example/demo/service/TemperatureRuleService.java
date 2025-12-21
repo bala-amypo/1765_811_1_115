@@ -11,6 +11,7 @@
 
 //     List<TemperatureRule> getRulesByProductType(String productType);
 // }
+
 package com.example.demo.service;
 
 import java.util.List;
