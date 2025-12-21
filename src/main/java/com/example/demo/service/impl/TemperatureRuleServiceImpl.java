@@ -104,7 +104,8 @@ public class TemperatureRuleServiceImpl implements TemperatureRuleService {
     public TemperatureRule getRuleForProduct(String productType) {
 
         TemperatureRule rule =
-                repository.findApplicableRule(productType, LocalDate.now());
+        repository.findApplicableRule(productType);
+
 
         if (rule == null) {
             throw new ResourceNotFoundException(
