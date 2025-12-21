@@ -32,14 +32,14 @@ public class BreachDetectionServiceImpl implements BreachDetectionService {
     // }
 
 @Override
-public BreachRecordOnly getBreachById(Long id) {
+public BreachRecord getBreachById(Long id) {
     return repository.findById(id)
             .orElseThrow(() ->
                 new ResourceNotFoundException("Breach not found with id: " + id));
 }
 @Override
-public BreachRecordOnly resolveBreach(Long id) {
-    BreachRecordOnly breach = repository.findById(id)
+public BreachRecord resolveBreach(Long id) {
+    BreachRecord breach = repository.findById(id)
             .orElseThrow(() ->
                 new ResourceNotFoundException("Breach not found with id: " + id));
 
