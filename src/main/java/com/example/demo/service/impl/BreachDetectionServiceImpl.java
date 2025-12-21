@@ -49,4 +49,9 @@ public class BreachDetectionServiceImpl
         breach.setResolved(true);
         return repository.save(breach);
     }
+    @Override
+public void deleteBreachById(Long id) {
+    repository.deleteById(id);
+}
+
 }
