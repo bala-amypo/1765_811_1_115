@@ -58,4 +58,11 @@ public BreachRecord resolveBreach(Long id) {
     public void deleteBreachById(Long id) {
         repository.deleteById(id);
     }
+
+@Override
+    public BreachRecord resolveBreach(Long id) {
+        BreachRecord breach = getBreachById(id);
+        breach.setResolved(true);
+        return repository.save(breach);
+    }
 }
