@@ -14,6 +14,7 @@ public class BreachRecord {
     private Long shipmentId;
     private String breachType;
     private String timestamp;
+    private Boolean resolved; 
 
     public BreachRecord() {}
 
