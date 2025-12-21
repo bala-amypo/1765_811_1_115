@@ -15,7 +15,6 @@
 // }
 package com.example.demo.repository;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -33,10 +32,9 @@ public interface TemperatureRuleRepository extends JpaRepository<TemperatureRule
     @Query("""
         SELECT t FROM TemperatureRule t
         WHERE t.productType = :productType
-        AND t.active = true
+          AND t.active = true
     """)
     TemperatureRule findApplicableRule(
-        @Param("productType") String productType,
-        @Param("date") LocalDate date
+        @Param("productType") String productType
     );
 }
