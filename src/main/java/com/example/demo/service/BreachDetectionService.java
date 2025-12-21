@@ -12,6 +12,6 @@ public interface BreachDetectionService {
     BreachRecord getBreachById(Long id);
 
     List<BreachRecord> getBreachesByShipmentId(Long shipmentId);
-
+    BreachRecord resolveBreach(Long id);
     void deleteBreachById(Long id);
 }
