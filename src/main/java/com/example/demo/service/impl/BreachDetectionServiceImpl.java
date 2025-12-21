@@ -37,6 +37,15 @@ public BreachRecordOnly getBreachById(Long id) {
             .orElseThrow(() ->
                 new ResourceNotFoundException("Breach not found with id: " + id));
 }
+@Override
+public BreachRecordOnly resolveBreach(Long id) {
+    BreachRecordOnly breach = repository.findById(id)
+            .orElseThrow(() ->
+                new ResourceNotFoundException("Breach not found with id: " + id));
+
+    breach.setResolved(true);
+    return repository.save(breach);
+}
 
 
 

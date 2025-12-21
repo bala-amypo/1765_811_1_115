@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.example.demo.entity.TemperatureRule;
 import com.example.demo.repository.TemperatureRuleRepository;
 import com.example.demo.service.TemperatureRuleService;
+import com.example.demo.exception.BadRequestException;
+
 
 @Service
 public class TemperatureRuleServiceImpl implements TemperatureRuleService {
@@ -20,6 +22,11 @@ public class TemperatureRuleServiceImpl implements TemperatureRuleService {
         return repository.save(rule);
     }
 
+if (rule.getMinTemp() >= rule.getMaxTemp()) {
+    throw new BadRequestException(
+        "Minimum temperature must be less than maximum temperature"
+    );
+}
     @Override
     public List<TemperatureRule> getActiveRules() {
         return repository.findByActiveTrue();
