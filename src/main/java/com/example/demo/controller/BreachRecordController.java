@@ -23,11 +23,6 @@ public class BreachRecordController {
         return service.logBreach(breach);
     }
 
-    // @PutMapping("/{id}/resolve")
-    // public BreachRecordEntity resolve(@PathVariable Long id) {
-    //     return service.resolveBreach(id);
-    // }
-
     @GetMapping("/{id}")
     public BreachRecord getById(@PathVariable Long id) {
         return service.getBreachById(id);
