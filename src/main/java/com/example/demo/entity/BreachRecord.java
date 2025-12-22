@@ -25,7 +25,6 @@ public class BreachRecord {
         this.timestamp = timestamp;
     }
 
-    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
