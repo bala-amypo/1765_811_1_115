@@ -1,34 +1,38 @@
 package com.example.demo.controller;
 
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.entity.TemperatureRule;
 import com.example.demo.service.TemperatureRuleService;
 
 @RestController
-@RequestMapping("/api/temperature-rules")
+@RequestMapping("/api/rules")
 public class TemperatureRuleController {
 
-    @Autowired
-    private TemperatureRuleService service;
+    private final TemperatureRuleService service;
+
+    public TemperatureRuleController(TemperatureRuleService service) {
+        this.service = service;
+    }
 
     @PostMapping
-    public TemperatureRule saveRule(
-            @RequestBody TemperatureRule rule) {
-        return service.saveRule(rule);
+    public TemperatureRule create(@RequestBody TemperatureRule rule) {
+        return service.createRule(rule);
     }
 
     @GetMapping("/active")
-    public List<TemperatureRule> getActiveRules() {
+    public List<TemperatureRule> getActive() {
         return service.getActiveRules();
     }
 
     @GetMapping("/product/{productType}")
-    public List<TemperatureRule> getRulesByProduct(
-            @PathVariable String productType) {
-        return service.getRulesByProductType(productType);
+    public TemperatureRule getRule(@PathVariable String productType) {
+        return service.getRuleForProduct(productType);
+    }
+
+    @GetMapping
+    public List<TemperatureRule> getAll() {
+        return service.getAllRules();
     }
 }

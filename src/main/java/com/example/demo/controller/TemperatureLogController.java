@@ -1,34 +1,30 @@
 package com.example.demo.controller;
 
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.entity.TemperatureSensorLog;
 import com.example.demo.service.TemperatureLogService;
 
 @RestController
-@RequestMapping("/api/temperature-logs")
+@RequestMapping("/api/logs")
 public class TemperatureLogController {
 
-    @Autowired
-    private TemperatureLogService service;
+    private final TemperatureLogService service;
 
-    @PostMapping
-    public TemperatureSensorLog saveLog(
-            @RequestBody TemperatureSensorLog log) {
-        return service.saveLog(log);
+    public TemperatureLogController(TemperatureLogService service) {
+        this.service = service;
     }
 
-    @GetMapping
-    public List<TemperatureSensorLog> getAllLogs() {
-        return service.getAllLogs();
+    @PostMapping
+    public TemperatureSensorLog record(@RequestBody TemperatureSensorLog log) {
+        return service.recordLog(log);
     }
 
     @GetMapping("/shipment/{shipmentId}")
-    public List<TemperatureSensorLog> getLogsByShipment(
+    public List<TemperatureSensorLog> getByShipment(
             @PathVariable Long shipmentId) {
-        return service.getLogsByShipmentId(shipmentId);
+        return service.getLogsByShipment(shipmentId);
     }
 }
+    

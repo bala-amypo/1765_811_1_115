@@ -1,15 +1,13 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.BreachRecord;
-import com.example.demo.service.BreachDetectionService;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import com.example.demo.entity.BreachRecord;
+import com.example.demo.service.BreachDetectionService;
 
 @RestController
 @RequestMapping("/api/breaches")
-@Tag(name = "Breaches")
 public class BreachRecordController {
 
     private final BreachDetectionService service;
@@ -19,17 +17,17 @@ public class BreachRecordController {
     }
 
     @PostMapping
-    public BreachRecord create(@RequestBody BreachRecord breach) {
+    public BreachRecord log(@RequestBody BreachRecord breach) {
         return service.logBreach(breach);
     }
 
-    @GetMapping("/{id}")
-    public BreachRecord getById(@PathVariable Long id) {
-        return service.getBreachById(id);
+    @PutMapping("/{id}/resolve")
+    public BreachRecord resolve(@PathVariable Long id) {
+        return service.resolveBreach(id);
     }
 
-    @GetMapping
-    public List<BreachRecord> getAll() {
-        return service.getAllBreaches();
+    @GetMapping("/shipment/{shipmentId}")
+    public List<BreachRecord> getByShipment(@PathVariable Long shipmentId) {
+        return service.getBreachesByShipment(shipmentId);
     }
 }

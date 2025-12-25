@@ -1,8 +1,6 @@
 package com.example.demo.controller;
 
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.entity.ShipmentRecord;
@@ -12,32 +10,32 @@ import com.example.demo.service.ShipmentRecordService;
 @RequestMapping("/api/shipments")
 public class ShipmentRecordController {
 
-    @Autowired
-    private ShipmentRecordService service;
+    private final ShipmentRecordService service;
+
+    public ShipmentRecordController(ShipmentRecordService service) {
+        this.service = service;
+    }
 
     @PostMapping
-    public ShipmentRecord addShipment(@RequestBody ShipmentRecord shipment) {
-        return service.addShipment(shipment);
+    public ShipmentRecord create(@RequestBody ShipmentRecord shipment) {
+        return service.createShipment(shipment);
+    }
+
+    @PutMapping("/{id}/status")
+    public ShipmentRecord updateStatus(
+            @PathVariable Long id,
+            @RequestParam String status) {
+        return service.updateShipmentStatus(id, status);
+    }
+
+    @GetMapping("/code/{shipmentCode}")
+    public ShipmentRecord getByCode(@PathVariable String shipmentCode) {
+        return service.getShipmentByCode(shipmentCode)
+                .orElseThrow(() -> new RuntimeException("Shipment not found"));
     }
 
     @GetMapping
-    public List<ShipmentRecord> getAllShipments() {
+    public List<ShipmentRecord> getAll() {
         return service.getAllShipments();
-    }
-
-    @GetMapping("/{id}")
-    public ShipmentRecord getShipmentById(@PathVariable Long id) {
-        return service.getShipmentById(id);
-    }
-
-    @GetMapping("/code/{code}")
-    public ShipmentRecord getShipmentByCode(@PathVariable String code) {
-        return service.getShipmentByCode(code);
-    }
-
-    @DeleteMapping("/{id}")
-    public String deleteShipment(@PathVariable Long id) {
-        service.deleteShipment(id);
-        return "Shipment deleted successfully";
     }
 }

@@ -4,9 +4,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.dto.AuthResponse;
 import com.example.demo.dto.LoginRequest;
 import com.example.demo.dto.RegisterRequest;
+import com.example.demo.dto.AuthResponse;
 import com.example.demo.entity.User;
 import com.example.demo.security.JwtUtil;
 import com.example.demo.service.UserService;
@@ -19,7 +19,6 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
 
-    // ✅ Constructor Injection
     public AuthController(UserService userService,
                           AuthenticationManager authenticationManager,
                           JwtUtil jwtUtil) {
@@ -36,19 +35,19 @@ public class AuthController {
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
 
-        User savedUser = userService.registerUser(user);
+        User saved = userService.registerUser(user);
 
         String token = jwtUtil.generateToken(
-                savedUser.getId(),
-                savedUser.getEmail(),
-                savedUser.getRole()
+                saved.getId(),
+                saved.getEmail(),
+                saved.getRole()
         );
 
         return new AuthResponse(
                 token,
-                savedUser.getId(),
-                savedUser.getEmail(),
-                savedUser.getRole()
+                saved.getId(),
+                saved.getEmail(),
+                saved.getRole()
         );
     }
 
