@@ -15,6 +15,7 @@ public class BreachRecord {
     private Double breachValue;
     private String severity;
     private boolean resolved;
+   
     private LocalDateTime detectedAt;
 
     @PrePersist
@@ -33,6 +34,9 @@ public class BreachRecord {
         this.resolved = resolved;
     }
 
+
+
+
     // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -49,8 +53,16 @@ public class BreachRecord {
     public String getSeverity() { return severity; }
     public void setSeverity(String severity) { this.severity = severity; }
 
-    public boolean isResolved() { return resolved; }
-    public void setResolved(boolean resolved) { this.resolved = resolved; }
+private boolean resolved;
+
+public boolean getResolved() {
+    return resolved;
+}
+
+public void setResolved(boolean resolved) {
+    this.resolved = resolved;
+}
+
 
     public LocalDateTime getDetectedAt() { return detectedAt; }
     public void setDetectedAt(LocalDateTime detectedAt) { this.detectedAt = detectedAt; }
