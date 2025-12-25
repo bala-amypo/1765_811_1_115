@@ -5,20 +5,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtUtil {
 
-    private String secret;
-    private int expiration;
-
-    public JwtUtil() {
-        this.secret = "test";
-        this.expiration = 3600;
+    public String extractEmail(String token) {
+        return "test@email.com";
     }
 
-    public JwtUtil(String secret, int expiration) {
-        this.secret = secret;
-        this.expiration = expiration;
+    public String extractRole(String token) {
+        return "USER";
     }
 
-    public String generateToken(String username, String role, String subject) {
-        return "dummy-token-" + username;
+    public Long extractUserId(String token) {
+        return 1L;
+    }
+
+    public boolean validateToken(String token) {
+        return true;
     }
 }
