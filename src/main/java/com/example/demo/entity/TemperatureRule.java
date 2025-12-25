@@ -22,7 +22,11 @@ public class TemperatureRule {
 
     public TemperatureRule() {}
 
-    // Getters & Setters
+public TemperatureRule(String productType, int minTemp) {
+    this.productType = productType;
+    this.minTemp = minTemp;
+}
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
