@@ -6,31 +6,31 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "alert_records")
 public class AlertRecord {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long shipmentId;
     private Long breachId;
-
-    private String alertType;
-    private String message;
-
+    private boolean acknowledged;
     private LocalDateTime sentAt;
-    private Boolean acknowledged;
-
-    public AlertRecord() {}
 
     @PrePersist
     public void prePersist() {
-        this.sentAt = LocalDateTime.now();
-        if (this.acknowledged == null) {
-            this.acknowledged = false;
-        }
+        acknowledged = false;
+        sentAt = LocalDateTime.now();
     }
 
-    // Getters & Setters
+    public AlertRecord() {}
+
+    public AlertRecord(Long shipmentId, Long breachId, boolean acknowledged, LocalDateTime sentAt) {
+        this.shipmentId = shipmentId;
+        this.breachId = breachId;
+        this.acknowledged = acknowledged;
+        this.sentAt = sentAt;
+    }
+
+    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -40,15 +40,9 @@ public class AlertRecord {
     public Long getBreachId() { return breachId; }
     public void setBreachId(Long breachId) { this.breachId = breachId; }
 
-    public String getAlertType() { return alertType; }
-    public void setAlertType(String alertType) { this.alertType = alertType; }
-
-    public String getMessage() { return message; }
-    public void setMessage(String message) { this.message = message; }
+    public boolean isAcknowledged() { return acknowledged; }
+    public void setAcknowledged(boolean acknowledged) { this.acknowledged = acknowledged; }
 
     public LocalDateTime getSentAt() { return sentAt; }
     public void setSentAt(LocalDateTime sentAt) { this.sentAt = sentAt; }
-
-    public Boolean getAcknowledged() { return acknowledged; }
-    public void setAcknowledged(Boolean acknowledged) { this.acknowledged = acknowledged; }
 }
