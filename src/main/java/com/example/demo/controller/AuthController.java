@@ -26,25 +26,25 @@ public class AuthController {
         user.setPassword(request.getPassword());
         user.setRole("USER");
 
-        return ResponseEntity.ok(userService.registerUser(user));
+        // Save user
+        User savedUser = userService.registerUser(user);
+
+        // Set token (dummy for now)
+        savedUser.setToken("dummy-token");
+
+        return ResponseEntity.ok(savedUser);
     }
-    User user = userService.findByEmail(request.getEmail());
-
-user.setToken("dummy-token");
-
-return ResponseEntity.ok(user);
-
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest request) {
 
         User user = userService.findByEmail(request.getEmail());
 
-        if (!user.getPassword().equals(request.getPassword())) {
+        if (user == null || !user.getPassword().equals(request.getPassword())) {
             return ResponseEntity.badRequest().body("Invalid credentials");
         }
 
-        // ✅ Simple response (NO JWT)
+        // ✅ Simple login success response (no JWT yet)
         return ResponseEntity.ok("Login successful");
     }
 }
