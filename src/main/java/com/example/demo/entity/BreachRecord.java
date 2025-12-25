@@ -53,9 +53,11 @@ public class BreachRecord {
     public String getSeverity() { return severity; }
     public void setSeverity(String severity) { this.severity = severity; }
 
-private boolean resolved;
-
 public boolean getResolved() {
+    return resolved;
+}
+
+public boolean isResolved() {
     return resolved;
 }
 

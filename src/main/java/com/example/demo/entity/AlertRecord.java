@@ -40,8 +40,20 @@ public class AlertRecord {
     public Long getBreachId() { return breachId; }
     public void setBreachId(Long breachId) { this.breachId = breachId; }
 
-    public boolean isAcknowledged() { return acknowledged; }
-    public void setAcknowledged(boolean acknowledged) { this.acknowledged = acknowledged; }
+    private boolean acknowledged;
+
+public boolean isAcknowledged() {
+    return acknowledged;
+}
+
+public boolean getAcknowledged() {
+    return acknowledged;
+}
+
+public void setAcknowledged(boolean acknowledged) {
+    this.acknowledged = acknowledged;
+}
+
 
     public LocalDateTime getSentAt() { return sentAt; }
     public void setSentAt(LocalDateTime sentAt) { this.sentAt = sentAt; }
