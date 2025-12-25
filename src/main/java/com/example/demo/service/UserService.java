@@ -1,11 +1,10 @@
-// package com.example.demo.service;
+package com.example.demo.service;
 
-// import com.example.demo.dto.RegisterRequest;
-// import com.example.demo.entity.UserEntity;
+import com.example.demo.entity.User;
 
-// public interface UserService {
+public interface UserService {
 
-//     UserEntity registerUser(RegisterRequest request);
+    User registerUser(User user);
 
-//     UserEntity findByEmail(String email);
-// }
+    User findByEmail(String email);
+}
