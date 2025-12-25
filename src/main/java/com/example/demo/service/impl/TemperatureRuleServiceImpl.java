@@ -22,8 +22,7 @@ public class TemperatureRuleServiceImpl implements TemperatureRuleService {
     @Override
     public TemperatureRule createRule(TemperatureRule rule) {
         if (rule.getMinTemp() >= rule.getMaxTemp()) {
-            throw new BadRequestException(
-                    "Minimum temperature must be less than maximum temperature");
+            throw new BadRequestException("Minimum temperature must be less than maximum temperature");
         }
         return repository.save(rule);
     }
@@ -35,8 +34,7 @@ public class TemperatureRuleServiceImpl implements TemperatureRuleService {
 
     @Override
     public Optional<TemperatureRule> getRuleForProduct(String productType) {
-        TemperatureRule rule = repository.findByProductType(productType).orElse(null);
-        return Optional.ofNullable(rule);
+        return repository.findByProductType(productType);
     }
 
     @Override

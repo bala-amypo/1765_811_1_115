@@ -1,44 +1,32 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.entity.TemperatureRule;
 import com.example.demo.service.TemperatureRuleService;
 
 @RestController
-@RequestMapping("/api/rules")
+@RequestMapping("/api/temperature-rules")
 public class TemperatureRuleController {
 
-    private final TemperatureRuleService service;
-
-    public TemperatureRuleController(TemperatureRuleService service) {
-        this.service = service;
-    }
-
-    @PostMapping
-    public TemperatureRule create(@RequestBody TemperatureRule rule) {
-        return service.createRule(rule);
-    }
+    @Autowired
+    private TemperatureRuleService temperatureRuleService;
 
     @GetMapping("/active")
-    public List<TemperatureRule> getActive() {
-        return service.getActiveRules();
+    public ResponseEntity<List<TemperatureRule>> getActiveRules() {
+        List<TemperatureRule> rules = temperatureRuleService.getActiveRules();
+        return ResponseEntity.ok(rules);
     }
 
-    @GetMapping("/rules/{productType}")
-public ResponseEntity<TemperatureRule> getRule(@PathVariable String productType) {
-    Optional<TemperatureRule> optionalRule = temperatureRuleService.getRuleForProduct(productType);
-    if (optionalRule.isPresent()) {
-        return ResponseEntity.ok(optionalRule.get());
-    } else {
-        return ResponseEntity.notFound().build();
-    }
-}
-
-
-    @GetMapping
-    public List<TemperatureRule> getAll() {
-        return service.getAllRules();
+    @GetMapping("/{productType}")
+    public ResponseEntity<TemperatureRule> getRuleForProduct(@PathVariable String productType) {
+        Optional<TemperatureRule> ruleOpt = temperatureRuleService.getRuleForProduct(productType);
+        return ruleOpt.map(ResponseEntity::ok)
+                      .orElse(ResponseEntity.notFound().build());
     }
 }
