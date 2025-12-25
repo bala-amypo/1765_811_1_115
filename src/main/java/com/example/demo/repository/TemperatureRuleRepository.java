@@ -20,8 +20,7 @@ public interface TemperatureRuleRepository
           AND t.active = true
           AND :date BETWEEN t.effectiveFrom AND t.effectiveTo
     """)
-    TemperatureRule findApplicableRule(
-            @Param("productType") String productType,
-            @Param("date") LocalDate date
+   TemperatureRule findApplicableRule(String productType);
+
     );
 }

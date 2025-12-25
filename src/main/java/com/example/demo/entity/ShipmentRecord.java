@@ -101,7 +101,9 @@ public class ShipmentRecord {
     public void setStatus(String status) {
         this.status = status;
     }
-
+    public void setId(Long id) {
+    this.id = id;
+}
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
