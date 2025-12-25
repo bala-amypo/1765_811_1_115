@@ -1,13 +1,12 @@
 package com.example.demo.controller;
 
-import java.util.List;
-import org.springframework.web.bind.annotation.*;
-
 import com.example.demo.entity.ShipmentRecord;
 import com.example.demo.service.ShipmentRecordService;
+import org.springframework.web.bind.annotation.*;
+import java.util.*;
 
 @RestController
-@RequestMapping("/api/shipments")
+@RequestMapping("/shipments")
 public class ShipmentRecordController {
 
     private final ShipmentRecordService service;
@@ -17,21 +16,19 @@ public class ShipmentRecordController {
     }
 
     @PostMapping
-    public ShipmentRecord create(@RequestBody ShipmentRecord shipment) {
+    public ShipmentRecord createShipment(@RequestBody ShipmentRecord shipment) {
         return service.createShipment(shipment);
     }
 
     @PutMapping("/{id}/status")
-    public ShipmentRecord updateStatus(
-            @PathVariable Long id,
-            @RequestParam String status) {
+    public ShipmentRecord updateStatus(@PathVariable Long id,
+                                       @RequestParam String status) {
         return service.updateShipmentStatus(id, status);
     }
 
-    @GetMapping("/code/{shipmentCode}")
-    public ShipmentRecord getByCode(@PathVariable String shipmentCode) {
-        return service.getShipmentByCode(shipmentCode)
-                .orElseThrow(() -> new RuntimeException("Shipment not found"));
+    @GetMapping("/{code}")
+    public Optional<ShipmentRecord> getByCode(@PathVariable String code) {
+        return service.getShipmentByCode(code);
     }
 
     @GetMapping

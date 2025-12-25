@@ -3,10 +3,8 @@ package com.example.demo.controller;
 import com.example.demo.entity.TemperatureRule;
 import com.example.demo.service.TemperatureRuleService;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/rules")
@@ -18,27 +16,20 @@ public class TemperatureRuleController {
         this.service = service;
     }
 
-    // CREATE RULE
     @PostMapping
-    public TemperatureRule createRule(@RequestBody TemperatureRule rule) {
+    public TemperatureRule create(@RequestBody TemperatureRule rule) {
         return service.createRule(rule);
     }
 
-    // GET ACTIVE RULES
     @GetMapping("/active")
-    public List<TemperatureRule> getActiveRules() {
+    public List<TemperatureRule> activeRules() {
         return service.getActiveRules();
     }
 
-    // GET RULE FOR PRODUCT + DATE
     @GetMapping("/product/{productType}")
-    public Optional<TemperatureRule> getRuleForProduct(
+    public Optional<TemperatureRule> getRule(
             @PathVariable String productType,
-            @RequestParam(required = false) String date) {
-
-        LocalDate ruleDate =
-                (date == null) ? LocalDate.now() : LocalDate.parse(date);
-
-        return service.getRuleForProduct(productType, ruleDate);
+            @RequestParam LocalDate date) {
+        return service.getRuleForProduct(productType, date);
     }
 }

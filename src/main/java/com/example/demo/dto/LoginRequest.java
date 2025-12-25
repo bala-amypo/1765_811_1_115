@@ -1,32 +1,12 @@
 package com.example.demo.dto;
-public class LoginRequest {
 
+public class LoginRequest {
     private String email;
     private String password;
 
-    // REQUIRED BY TEST
-    public String getEmail() {
-        return email;
-    }
+    public String getEmail() { return email; }
+    public String getPassword() { return password; }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    // REQUIRED BY CONTROLLER (alias)
-    public String getUsername() {
-        return email;
-    }
-
-    public void setUsername(String username) {
-        this.email = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public void setEmail(String email) { this.email = email; }
+    public void setPassword(String password) { this.password = password; }
 }

@@ -1,13 +1,12 @@
 package com.example.demo.controller;
 
-import java.util.List;
-import org.springframework.web.bind.annotation.*;
-
 import com.example.demo.entity.AlertRecord;
 import com.example.demo.service.AlertService;
+import org.springframework.web.bind.annotation.*;
+import java.util.*;
 
 @RestController
-@RequestMapping("/api/alerts")
+@RequestMapping("/alerts")
 public class AlertRecordController {
 
     private final AlertService service;
@@ -22,7 +21,7 @@ public class AlertRecordController {
     }
 
     @GetMapping("/shipment/{shipmentId}")
-    public List<AlertRecord> getByShipment(@PathVariable Long shipmentId) {
+    public List<AlertRecord> getAlerts(@PathVariable Long shipmentId) {
         return service.getAlertsByShipment(shipmentId);
     }
 }

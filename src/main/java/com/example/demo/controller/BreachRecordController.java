@@ -1,13 +1,12 @@
 package com.example.demo.controller;
 
-import java.util.List;
-import org.springframework.web.bind.annotation.*;
-
 import com.example.demo.entity.BreachRecord;
 import com.example.demo.service.BreachDetectionService;
+import org.springframework.web.bind.annotation.*;
+import java.util.*;
 
 @RestController
-@RequestMapping("/api/breaches")
+@RequestMapping("/breaches")
 public class BreachRecordController {
 
     private final BreachDetectionService service;

@@ -3,39 +3,20 @@ package com.example.demo.dto;
 public class AuthResponse {
 
     private String token;
+    private Long userId;
+    private String email;
     private String role;
 
-    public AuthResponse() {
-    }
-
-    public AuthResponse(String token) {
+    public AuthResponse(String token, Long userId,
+                        String email, String role) {
         this.token = token;
-    }
-
-    // REQUIRED by AuthController
-    public AuthResponse(String token, String role) {
-        this.token = token;
+        this.userId = userId;
+        this.email = email;
         this.role = role;
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    // Used by tests expecting ResponseEntity.getBody()
-    public AuthResponse getBody() {
-        return this;
-    }
+    public String getToken() { return token; }
+    public Long getUserId() { return userId; }
+    public String getEmail() { return email; }
+    public String getRole() { return role; }
 }
