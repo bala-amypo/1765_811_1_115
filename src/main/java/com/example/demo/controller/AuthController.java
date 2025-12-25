@@ -1,11 +1,13 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.AuthResponse;
 import com.example.demo.dto.LoginRequest;
 import com.example.demo.dto.RegisterRequest;
 import com.example.demo.security.JwtUtil;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
+@RequestMapping("/auth")
 public class AuthController {
 
     private final JwtUtil jwtUtil;
@@ -14,11 +16,23 @@ public class AuthController {
         this.jwtUtil = jwtUtil;
     }
 
-    public String login(LoginRequest request) {
-        return jwtUtil.generateToken("test@example.com");
+    @PostMapping("/login")
+    public AuthResponse login(LoginRequest request) {
+        String token = jwtUtil.generateToken(
+                request.getUsername(),
+                "ROLE_USER",
+                request.getUsername()
+        );
+        return new AuthResponse(token, request.getUsername());
     }
 
-    public String register(RegisterRequest request) {
-        return "registered";
+    @PostMapping("/register")
+    public AuthResponse register(RegisterRequest request) {
+        String token = jwtUtil.generateToken(
+                request.getUsername(),
+                request.getRole(),
+                request.getUsername()
+        );
+        return new AuthResponse(token, request.getUsername());
     }
 }
