@@ -11,78 +11,36 @@ public class TemperatureRule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String productType;
+    private Double minTemp;
+    private Double maxTemp;
 
-    @Column(nullable = false)
-    private double minTemp;
+    private Boolean active;
 
-    @Column(nullable = false)
-    private double maxTemp;
+    private LocalDate effectiveFrom;
+    private LocalDate effectiveTo;
 
-    @Column(nullable = false)
-    private boolean active = true;
-
-    private LocalDate startDate;
-    private LocalDate endDate;
-
-    // 🔹 Constructors
     public TemperatureRule() {}
 
-    // 🔹 Getters and Setters
-    public Long getId() {
-        return id;
-    }
+    // Getters & Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getProductType() { return productType; }
+    public void setProductType(String productType) { this.productType = productType; }
 
-    public String getProductType() {
-        return productType;
-    }
+    public Double getMinTemp() { return minTemp; }
+    public void setMinTemp(Double minTemp) { this.minTemp = minTemp; }
 
-    public void setProductType(String productType) {
-        this.productType = productType;
-    }
+    public Double getMaxTemp() { return maxTemp; }
+    public void setMaxTemp(Double maxTemp) { this.maxTemp = maxTemp; }
 
-    public double getMinTemp() {
-        return minTemp;
-    }
+    public Boolean getActive() { return active; }
+    public void setActive(Boolean active) { this.active = active; }
 
-    public void setMinTemp(double minTemp) {
-        this.minTemp = minTemp;
-    }
+    public LocalDate getEffectiveFrom() { return effectiveFrom; }
+    public void setEffectiveFrom(LocalDate effectiveFrom) { this.effectiveFrom = effectiveFrom; }
 
-    public double getMaxTemp() {
-        return maxTemp;
-    }
-
-    public void setMaxTemp(double maxTemp) {
-        this.maxTemp = maxTemp;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
+    public LocalDate getEffectiveTo() { return effectiveTo; }
+    public void setEffectiveTo(LocalDate effectiveTo) { this.effectiveTo = effectiveTo; }
 }
