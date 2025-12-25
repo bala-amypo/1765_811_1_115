@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "alert_records")
 public class AlertRecord {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,45 +16,27 @@ public class AlertRecord {
     private boolean acknowledged;
     private LocalDateTime sentAt;
 
-    @PrePersist
-    public void prePersist() {
-        acknowledged = false;
-        sentAt = LocalDateTime.now();
-    }
-
     public AlertRecord() {}
 
-    public AlertRecord(Long shipmentId, Long breachId, boolean acknowledged, LocalDateTime sentAt) {
+    public AlertRecord(Long shipmentId, Long breachId,
+                       boolean acknowledged, LocalDateTime sentAt) {
         this.shipmentId = shipmentId;
         this.breachId = breachId;
         this.acknowledged = acknowledged;
         this.sentAt = sentAt;
     }
 
-    // Getters and Setters
+    @PrePersist
+    public void prePersist() {
+        this.acknowledged = false;
+        if (this.sentAt == null) {
+            this.sentAt = LocalDateTime.now();
+        }
+    }
+
     public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
     public Long getShipmentId() { return shipmentId; }
-    public void setShipmentId(Long shipmentId) { this.shipmentId = shipmentId; }
-
     public Long getBreachId() { return breachId; }
-    public void setBreachId(Long breachId) { this.breachId = breachId; }
-
-
-public boolean isAcknowledged() {
-    return acknowledged;
-}
-
-public boolean getAcknowledged() {
-    return acknowledged;
-}
-
-public void setAcknowledged(boolean acknowledged) {
-    this.acknowledged = acknowledged;
-}
-
-
+    public boolean isAcknowledged() { return acknowledged; }
     public LocalDateTime getSentAt() { return sentAt; }
-    public void setSentAt(LocalDateTime sentAt) { this.sentAt = sentAt; }
 }
