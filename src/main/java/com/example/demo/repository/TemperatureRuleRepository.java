@@ -1,13 +1,15 @@
 package com.example.demo.repository;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.example.demo.entity.TemperatureRule;
+import java.util.List;
 
-public interface TemperatureRuleRepository extends JpaRepository<TemperatureRule, Long> {
+public interface TemperatureRuleRepository {
+
+    TemperatureRule save(TemperatureRule rule);
+
+    List<TemperatureRule> findAll();
+
     List<TemperatureRule> findByActiveTrue();
-    Optional<TemperatureRule> findByProductType(String productType);
+
+    TemperatureRule findByProductType(String productType);
 }
