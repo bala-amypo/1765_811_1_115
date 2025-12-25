@@ -1,43 +1,63 @@
-package com.example.demo.entity;
-
-import jakarta.persistence.*;
-
 @Entity
-@Table(name = "breach_records")
 public class BreachRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long shipmentId;
     private Long logId;
-    private Double breachValue;
+    private Long shipmentId;
+    private double breachValue;
     private String severity;
     private boolean resolved;
 
-    public BreachRecord() {}
+    // ===== REQUIRED GETTERS & SETTERS =====
 
-    public BreachRecord(Long shipmentId, Long logId,
-                        Double breachValue, String severity, boolean resolved) {
-        this.shipmentId = shipmentId;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Long getLogId() {
+        return logId;
+    }
+
+    public void setLogId(long logId) {
         this.logId = logId;
+    }
+
+    public Long getShipmentId() {
+        return shipmentId;
+    }
+
+    public void setShipmentId(long shipmentId) {
+        this.shipmentId = shipmentId;
+    }
+
+    public double getBreachValue() {
+        return breachValue;
+    }
+
+    public void setBreachValue(double breachValue) {
         this.breachValue = breachValue;
+    }
+
+    public String getSeverity() {
+        return severity;
+    }
+
+    public void setSeverity(String severity) {
         this.severity = severity;
+    }
+
+    public boolean getResolved() {
+        return resolved;
+    }
+
+    public void setResolved(boolean resolved) {
         this.resolved = resolved;
     }
-
-    @PrePersist
-    public void prePersist() {
-        this.resolved = false;
-    }
-
-    public Long getId() { return id; }
-    public Long getShipmentId() { return shipmentId; }
-    public Long getLogId() { return logId; }
-    public Double getBreachValue() { return breachValue; }
-    public String getSeverity() { return severity; }
-    public boolean isResolved() { return resolved; }
-
-    public void setResolved(boolean resolved) { this.resolved = resolved; }
 }

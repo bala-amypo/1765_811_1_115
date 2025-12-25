@@ -6,6 +6,19 @@ public class AuthResponse {
     private Long userId;
     private String email;
     private String role;
+    
+
+    public AuthResponse(String token) {
+        this.token = token;
+    }
+
+    public String getBody() {
+        return token;
+    }
+
+    public void setBody(String token) {
+        this.token = token;
+    }
 
     public AuthResponse(String token, Long userId,
                         String email, String role) {
