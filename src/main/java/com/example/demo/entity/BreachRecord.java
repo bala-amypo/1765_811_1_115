@@ -1,47 +1,90 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "breach_records")
 public class BreachRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private Long shipmentId;
+    private Long logId;
+
     private String breachType;
-    private String timestamp;
-    private Boolean resolved; 
+    private Double breachValue;
+    private String severity;
+    private String details;
+
+    private LocalDateTime detectedAt;
+
+    private Boolean resolved;
 
     public BreachRecord() {}
 
-    public BreachRecord(Long id, Long shipmentId, String breachType, String timestamp) {
-        this.id = id;
+    public BreachRecord(Long shipmentId, Long logId,
+                        Double breachValue, String severity, boolean resolved) {
         this.shipmentId = shipmentId;
-        this.breachType = breachType;
-        this.timestamp = timestamp;
+        this.logId = logId;
+        this.breachValue = breachValue;
+        this.severity = severity;
+        this.resolved = resolved;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    @PrePersist
+    public void prePersist() {
+        this.resolved = false;
+        this.detectedAt = LocalDateTime.now();
+    }
 
-    public Long getShipmentId() { return shipmentId; }
-    public void setShipmentId(Long shipmentId) { this.shipmentId = shipmentId; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getBreachType() { return breachType; }
-    public void setBreachType(String breachType) { this.breachType = breachType; }
-
-    public String getTimestamp() { return timestamp; }
-    public void setTimestamp(String timestamp) { this.timestamp = timestamp; }
-
+    public Long getShipmentId() {
+        return shipmentId;
+    }
+    
+    public void setShipmentId(Long shipmentId) {
+        this.shipmentId = shipmentId;
+    }
+    
+    public Long getLogId() {
+        return logId;
+    }
+    
+    public void setLogId(Long logId) {
+        this.logId = logId;
+    }
+    
+    public Double getBreachValue() {
+        return breachValue;
+    }
+    
+    public void setBreachValue(Double breachValue) {
+        this.breachValue = breachValue;
+    }
+    
+    public String getSeverity() {
+        return severity;
+    }
+    
+    public void setSeverity(String severity) {
+        this.severity = severity;
+    }
+    
     public Boolean getResolved() {
         return resolved;
     }
-
+    
     public void setResolved(Boolean resolved) {
         this.resolved = resolved;
+    }
+
+    public LocalDateTime getDetectedAt() {
+        return detectedAt;
     }
 }
