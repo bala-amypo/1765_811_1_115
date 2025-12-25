@@ -1,18 +1,17 @@
-package com.example.demo.repository;
-
-import com.example.demo.entity.*;
-import org.springframework.data.jpa.repository.JpaRepository;
-import java.time.LocalDate;
-import java.util.*;
-
 @Repository
-public interface TemperatureRuleRepository extends JpaRepository<TemperatureRule, Long> {
+public interface TemperatureRuleRepository
+        extends JpaRepository<TemperatureRule, Long> {
 
-    @Query("SELECT r FROM TemperatureRule r WHERE r.shipmentType = :type")
+    List<TemperatureRule> findByActiveTrue();
+
+    @Query("""
+        SELECT r FROM TemperatureRule r
+        WHERE r.productType = :productType
+        AND :temperature BETWEEN r.minTemp AND r.maxTemp
+        AND r.active = true
+    """)
     TemperatureRule findApplicableRule(
-        @Param("type") String type,
-        @Param("value") Object value
+        @Param("productType") String productType,
+        @Param("temperature") Double temperature
     );
-    Optional<TemperatureRule> findByProductTypeAndEffectiveFromLessThanEqualAndEffectiveToGreaterThanEqual(
-            String productType, LocalDate from, LocalDate to);
 }
