@@ -34,15 +34,14 @@ public class TemperatureRuleServiceImpl implements TemperatureRuleService {
         return repository.findByActiveTrue();
     }
 
-    @Override
-    public TemperatureRule getRuleForProduct(String productType) {
-        TemperatureRule rule = repository.findApplicableRule(productType, LocalDate.now());
-        if (rule == null) {
-            throw new ResourceNotFoundException(
-                    "No active temperature rule found for product type: " + productType);
-        }
-        return rule;
-    }
+    import java.util.Optional;
+
+@Override
+public Optional<TemperatureRule> getRuleForProduct(String productType) {
+    TemperatureRule rule = ruleRepository.findByProductType(productType); // your repo call
+    return Optional.ofNullable(rule); // wrap in Optional
+}
+
 
     @Override
     public List<TemperatureRule> getAllRules() {

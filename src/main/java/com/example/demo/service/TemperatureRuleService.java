@@ -1,15 +1,9 @@
-package com.example.demo.service;
-
 import java.util.List;
-import java.util.Optional; // <-- import Optional
-import com.example.demo.entity.TemperatureRule;
+import java.util.Optional;  // <- import Optional
 
 public interface TemperatureRuleService {
     TemperatureRule createRule(TemperatureRule rule);
     List<TemperatureRule> getActiveRules();
-
-    // Change this line:
-    Optional<TemperatureRule> getRuleForProduct(String productType);
-
+    Optional<TemperatureRule> getRuleForProduct(String productType); // <- change return type
     List<TemperatureRule> getAllRules();
 }
