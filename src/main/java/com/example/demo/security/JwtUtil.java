@@ -1,30 +1,54 @@
 package com.example.demo.security;
 
-import org.springframework.stereotype.Component;
+import io.jsonwebtoken.*;
+import java.util.Date;
 
-@Component
 public class JwtUtil {
 
-    // Used by AuthController
-    public String generateToken(String email, String role, String userId) {
-        // Simple deterministic token for tests
-        return email + "|" + role + "|" + userId;
+    private final String secretKey;
+    private final long expirationMillis;
+
+    public JwtUtil(String secretKey, long expirationMillis) {
+        this.secretKey = secretKey;
+        this.expirationMillis = expirationMillis;
     }
 
-    // Used by tests
+    public String generateToken(Long userId, String email, String role) {
+        return Jwts.builder()
+                .setSubject(email)
+                .claim("userId", userId)
+                .claim("role", role)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + expirationMillis))
+                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .compact();
+    }
+
     public String extractEmail(String token) {
-        return token.split("\\|")[0];
+        return getClaims(token).getSubject();
     }
 
     public String extractRole(String token) {
-        return token.split("\\|")[1];
+        return getClaims(token).get("role", String.class);
     }
 
-    public String extractUserId(String token) {
-        return token.split("\\|")[2];
+    public Long extractUserId(String token) {
+        return getClaims(token).get("userId", Long.class);
     }
 
     public boolean validateToken(String token) {
-        return token != null && token.split("\\|").length == 3;
+        try {
+            getClaims(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private Claims getClaims(String token) {
+        return Jwts.parser()
+                .setSigningKey(secretKey)
+                .parseClaimsJws(token)
+                .getBody();
     }
 }
