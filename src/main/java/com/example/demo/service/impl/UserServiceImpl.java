@@ -1,6 +1,5 @@
 package com.example.demo.service.impl;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.User;
@@ -13,13 +12,10 @@ import com.example.demo.service.UserService;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
 
-    // ✅ REQUIRED constructor signature (order matters!)
-    public UserServiceImpl(UserRepository userRepository,
-                           PasswordEncoder passwordEncoder) {
+    // ✅ SIMPLE constructor (NO security)
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -29,7 +25,7 @@ public class UserServiceImpl implements UserService {
             throw new BadRequestException("Email already exists");
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        // ❌ NO password encoding
         return userRepository.save(user);
     }
 
