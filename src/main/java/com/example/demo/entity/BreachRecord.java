@@ -11,80 +11,83 @@ public class BreachRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long shipmentId;
-    private Long logId;
+    private String shipmentId;
+    private String productType;
+    private double recordedTemperature;
 
-    private String breachType;
-    private Double breachValue;
-    private String severity;
-    private String details;
+    private double minAllowedTemp;
+    private double maxAllowedTemp;
 
-    private LocalDateTime detectedAt;
+    private LocalDateTime breachTime;
 
-    private Boolean resolved;
+    @Column(nullable = false)
+    private boolean resolved = false;
 
+    // 🔹 Constructors
     public BreachRecord() {}
 
-    public BreachRecord(Long shipmentId, Long logId,
-                        Double breachValue, String severity, boolean resolved) {
-        this.shipmentId = shipmentId;
-        this.logId = logId;
-        this.breachValue = breachValue;
-        this.severity = severity;
-        this.resolved = resolved;
-    }
-
-    @PrePersist
-    public void prePersist() {
-        this.resolved = false;
-        this.detectedAt = LocalDateTime.now();
-    }
-
+    // 🔹 Getters and Setters
     public Long getId() {
         return id;
     }
 
-    public Long getShipmentId() {
-        return shipmentId;
-    }
-    
-    public void setShipmentId(Long shipmentId) {
-        this.shipmentId = shipmentId;
-    }
-    
-    public Long getLogId() {
-        return logId;
-    }
-    
-    public void setLogId(Long logId) {
-        this.logId = logId;
-    }
-    
-    public Double getBreachValue() {
-        return breachValue;
-    }
-    
-    public void setBreachValue(Double breachValue) {
-        this.breachValue = breachValue;
-    }
-    
-    public String getSeverity() {
-        return severity;
-    }
-    
-    public void setSeverity(String severity) {
-        this.severity = severity;
-    }
-    
-    public Boolean getResolved() {
-        return resolved;
-    }
-    
-    public void setResolved(Boolean resolved) {
-        this.resolved = resolved;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public LocalDateTime getDetectedAt() {
-        return detectedAt;
+    public String getShipmentId() {
+        return shipmentId;
+    }
+
+    public void setShipmentId(String shipmentId) {
+        this.shipmentId = shipmentId;
+    }
+
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
+    }
+
+    public double getRecordedTemperature() {
+        return recordedTemperature;
+    }
+
+    public void setRecordedTemperature(double recordedTemperature) {
+        this.recordedTemperature = recordedTemperature;
+    }
+
+    public double getMinAllowedTemp() {
+        return minAllowedTemp;
+    }
+
+    public void setMinAllowedTemp(double minAllowedTemp) {
+        this.minAllowedTemp = minAllowedTemp;
+    }
+
+    public double getMaxAllowedTemp() {
+        return maxAllowedTemp;
+    }
+
+    public void setMaxAllowedTemp(double maxAllowedTemp) {
+        this.maxAllowedTemp = maxAllowedTemp;
+    }
+
+    public LocalDateTime getBreachTime() {
+        return breachTime;
+    }
+
+    public void setBreachTime(LocalDateTime breachTime) {
+        this.breachTime = breachTime;
+    }
+
+    public boolean isResolved() {
+        return resolved;
+    }
+
+    public void setResolved(boolean resolved) {
+        this.resolved = resolved;
     }
 }
