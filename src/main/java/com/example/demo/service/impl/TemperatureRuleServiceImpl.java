@@ -1,38 +1,50 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.TemperatureRule;
-import com.example.demo.repository.TemperatureRuleRepository;
-import com.example.demo.service.TemperatureRuleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import com.example.demo.entity.TemperatureRule;
+import com.example.demo.exception.BadRequestException;
+import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.repository.TemperatureRuleRepository;
+import com.example.demo.service.TemperatureRuleService;
 
 @Service
 public class TemperatureRuleServiceImpl implements TemperatureRuleService {
 
-    @Autowired
-    private TemperatureRuleRepository temperatureRuleRepository;
+    private final TemperatureRuleRepository repository;
+
+    public TemperatureRuleServiceImpl(TemperatureRuleRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public TemperatureRule createRule(TemperatureRule rule) {
-        return temperatureRuleRepository.save(rule);
+        if (rule.getMinTemp() >= rule.getMaxTemp()) {
+            throw new BadRequestException(
+                    "Minimum temperature must be less than maximum temperature");
+        }
+        return repository.save(rule);
     }
 
     @Override
     public List<TemperatureRule> getActiveRules() {
-        return temperatureRuleRepository.findByActiveTrue();
+        return repository.findByActiveTrue();
     }
+
+    import java.util.Optional;
+
+@Override
+public Optional<TemperatureRule> getRuleForProduct(String productType) {
+    TemperatureRule rule = ruleRepository.findByProductType(productType); // your repo call
+    return Optional.ofNullable(rule); // wrap in Optional
+}
+
 
     @Override
     public List<TemperatureRule> getAllRules() {
-        return temperatureRuleRepository.findAll();
-    }
-
-    @Override
-    public Optional<TemperatureRule> getRuleForProduct(String productType) {
-        // Ensure we return Optional, not TemperatureRule directly
-        return temperatureRuleRepository.findByProductType(productType);
+        return repository.findAll();
     }
 }
