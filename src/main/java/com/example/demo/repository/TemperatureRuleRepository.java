@@ -9,18 +9,18 @@ import org.springframework.data.repository.query.Param;
 
 import com.example.demo.entity.TemperatureRule;
 
-public interface TemperatureRuleRepository
-        extends JpaRepository<TemperatureRule, Long> {
+public interface TemperatureRuleRepository extends JpaRepository<TemperatureRule, Long> {
 
+    // Find all active rules
     List<TemperatureRule> findByActiveTrue();
 
+    // Find the applicable rule for a product on a specific date
     @Query("""
         SELECT t FROM TemperatureRule t
         WHERE t.productType = :productType
           AND t.active = true
           AND :date BETWEEN t.effectiveFrom AND t.effectiveTo
     """)
-   TemperatureRule findApplicableRule(String productType);
-
-    );
+    TemperatureRule findApplicableRule(@Param("productType") String productType,
+                                       @Param("date") LocalDate date);
 }
