@@ -8,10 +8,6 @@ public class AuthResponse {
     private String role;
     
 
-    public AuthResponse(String token) {
-        this.token = token;
-    }
-
     public String getBody() {
         return token;
     }
