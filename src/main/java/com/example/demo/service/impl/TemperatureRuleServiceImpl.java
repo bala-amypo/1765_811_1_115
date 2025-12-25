@@ -23,7 +23,21 @@ public class TemperatureRuleServiceImpl implements TemperatureRuleService {
         List<TemperatureRule> rules = repository
             .findByProductTypeAndEffectiveFromLessThanEqualAndEffectiveToGreaterThanEqual(
                 productType, date, date);
-
         return rules.isEmpty() ? Optional.empty() : Optional.of(rules.get(0));
+    }
+
+    @Override
+    public TemperatureRule createRule(TemperatureRule rule) {
+        return repository.save(rule);
+    }
+
+    @Override
+    public List<TemperatureRule> getActiveRules() {
+        return repository.findByActiveTrue();
+    }
+
+    @Override
+    public Optional<TemperatureRule> getRuleForProduct(String productType, LocalDate date) {
+        return findApplicableRule(productType, date);
     }
 }
