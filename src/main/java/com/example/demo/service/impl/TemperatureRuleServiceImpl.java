@@ -1,13 +1,12 @@
 package com.example.demo.service.impl;
 
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.TemperatureRule;
 import com.example.demo.exception.BadRequestException;
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.TemperatureRuleRepository;
 import com.example.demo.service.TemperatureRuleService;
 
@@ -34,14 +33,11 @@ public class TemperatureRuleServiceImpl implements TemperatureRuleService {
         return repository.findByActiveTrue();
     }
 
-    import java.util.Optional;
-
-@Override
-public Optional<TemperatureRule> getRuleForProduct(String productType) {
-    TemperatureRule rule = ruleRepository.findByProductType(productType); // your repo call
-    return Optional.ofNullable(rule); // wrap in Optional
-}
-
+    @Override
+    public Optional<TemperatureRule> getRuleForProduct(String productType) {
+        TemperatureRule rule = repository.findByProductType(productType).orElse(null);
+        return Optional.ofNullable(rule);
+    }
 
     @Override
     public List<TemperatureRule> getAllRules() {
