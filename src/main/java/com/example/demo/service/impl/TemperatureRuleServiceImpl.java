@@ -5,7 +5,9 @@ import com.example.demo.repository.TemperatureRuleRepository;
 import com.example.demo.service.TemperatureRuleService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TemperatureRuleServiceImpl implements TemperatureRuleService {
@@ -17,17 +19,23 @@ public class TemperatureRuleServiceImpl implements TemperatureRuleService {
     }
 
     @Override
-    public TemperatureRule save(TemperatureRule rule) {
+    public TemperatureRule createRule(TemperatureRule rule) {
+        if (rule.getMinTemp() >= rule.getMaxTemp()) {
+            throw new IllegalArgumentException(
+                    "minTemp must be less than maxTemp");
+        }
         return repository.save(rule);
     }
 
     @Override
-    public List<TemperatureRule> getAllRules() {
-        return repository.findAll();
+    public Optional<TemperatureRule> getRuleForProduct(
+            String productType, LocalDate date) {
+
+        return repository.findApplicableRule(productType, date);
     }
 
     @Override
-    public TemperatureRule getRuleForProduct(String productType) {
-        return repository.getRuleForProduct(productType);
+    public List<TemperatureRule> getActiveRules() {
+        return repository.findByActiveTrue();
     }
 }
