@@ -28,6 +28,12 @@ public class AuthController {
 
         return ResponseEntity.ok(userService.registerUser(user));
     }
+    User user = userService.findByEmail(request.getEmail());
+
+user.setToken("dummy-token");
+
+return ResponseEntity.ok(user);
+
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest request) {

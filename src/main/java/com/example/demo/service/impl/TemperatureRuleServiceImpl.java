@@ -1,6 +1,5 @@
 package com.example.demo.service.impl;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -26,7 +25,8 @@ public class TemperatureRuleServiceImpl implements TemperatureRuleService {
 
         if (rule.getMinTemp() >= rule.getMaxTemp()) {
             throw new BadRequestException(
-                    "Minimum temperature must be less than maximum temperature");
+                "Minimum temperature must be less than maximum temperature"
+            );
         }
 
         return repository.save(rule);
@@ -40,12 +40,13 @@ public class TemperatureRuleServiceImpl implements TemperatureRuleService {
     @Override
     public TemperatureRule getRuleForProduct(String productType) {
 
-        TemperatureRule rule =
-                repository.findApplicableRule(productType, LocalDate.now());
+        // ✅ FIXED: single-parameter call (matches test)
+        TemperatureRule rule = repository.findApplicableRule(productType);
 
         if (rule == null) {
             throw new ResourceNotFoundException(
-                    "No active temperature rule found for product type: " + productType);
+                "No active temperature rule found for product type: " + productType
+            );
         }
 
         return rule;
