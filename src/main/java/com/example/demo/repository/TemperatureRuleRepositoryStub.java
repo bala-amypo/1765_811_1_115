@@ -25,9 +25,7 @@ public class TemperatureRuleRepositoryStub implements TemperatureRuleRepository 
     public List<TemperatureRule> findByActiveTrue() {
         List<TemperatureRule> activeRules = new ArrayList<>();
         for (TemperatureRule r : rules) {
-            if (r.isActive()) {
-                activeRules.add(r);
-            }
+            if (r.isActive()) activeRules.add(r);
         }
         return activeRules;
     }
@@ -35,9 +33,7 @@ public class TemperatureRuleRepositoryStub implements TemperatureRuleRepository 
     @Override
     public TemperatureRule findByProductType(String productType) {
         for (TemperatureRule r : rules) {
-            if (r.getProductType() != null && r.getProductType().equals(productType)) {
-                return r;
-            }
+            if (r.getProductType() != null && r.getProductType().equals(productType)) return r;
         }
         return null;
     }

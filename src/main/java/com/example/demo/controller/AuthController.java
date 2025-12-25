@@ -1,13 +1,24 @@
 package com.example.demo.controller;
 
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.GetMapping;
+import com.example.demo.dto.LoginRequest;
+import com.example.demo.dto.RegisterRequest;
+import com.example.demo.security.JwtUtil;
+import org.springframework.stereotype.Controller;
 
-@RestController
+@Controller
 public class AuthController {
 
-    @GetMapping("/login")
-    public String login() {
-        return "success";
+    private final JwtUtil jwtUtil;
+
+    public AuthController(JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
+
+    public String login(LoginRequest request) {
+        return jwtUtil.generateToken("test@example.com");
+    }
+
+    public String register(RegisterRequest request) {
+        return "registered";
     }
 }
