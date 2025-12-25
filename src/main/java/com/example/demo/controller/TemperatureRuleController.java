@@ -26,10 +26,16 @@ public class TemperatureRuleController {
         return service.getActiveRules();
     }
 
-    @GetMapping("/product/{productType}")
-    public TemperatureRule getRule(@PathVariable String productType) {
-        return service.getRuleForProduct(productType);
+    @GetMapping("/rules/{productType}")
+public ResponseEntity<TemperatureRule> getRule(@PathVariable String productType) {
+    Optional<TemperatureRule> optionalRule = temperatureRuleService.getRuleForProduct(productType);
+    if (optionalRule.isPresent()) {
+        return ResponseEntity.ok(optionalRule.get());
+    } else {
+        return ResponseEntity.notFound().build();
     }
+}
+
 
     @GetMapping
     public List<TemperatureRule> getAll() {
