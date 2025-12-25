@@ -19,20 +19,11 @@ public class TemperatureRuleServiceImpl implements TemperatureRuleService {
     }
 
     @Override
-    public Optional<TemperatureRule> findApplicableRule(
-            String productType,
-            LocalDate date
-    ) {
-        List<TemperatureRule> rules =
-                repository.findByProductTypeAndEffectiveFromLessThanEqualAndEffectiveToGreaterThanEqual(
-                        productType,
-                        date,
-                        date
-                );
+    public Optional<TemperatureRule> findApplicableRule(String productType, LocalDate date) {
+        List<TemperatureRule> rules = repository
+            .findByProductTypeAndEffectiveFromLessThanEqualAndEffectiveToGreaterThanEqual(
+                productType, date, date);
 
-        // ✅ Convert List → Optional (TEST-FRIENDLY)
-        return rules.isEmpty()
-                ? Optional.empty()
-                : Optional.of(rules.get(0));
+        return rules.isEmpty() ? Optional.empty() : Optional.of(rules.get(0));
     }
 }
