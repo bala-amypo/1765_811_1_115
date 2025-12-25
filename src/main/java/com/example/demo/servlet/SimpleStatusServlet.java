@@ -32,4 +32,10 @@ public class SimpleStatusServlet extends HttpServlet {
         );
         resp.getWriter().flush();
     }
+    // SimpleStatusServlet.java
+@Override
+public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    // existing code
+}
+
 }
