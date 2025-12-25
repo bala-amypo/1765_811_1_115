@@ -40,7 +40,6 @@ public class AlertRecord {
     public Long getBreachId() { return breachId; }
     public void setBreachId(Long breachId) { this.breachId = breachId; }
 
-    private boolean acknowledged;
 
 public boolean isAcknowledged() {
     return acknowledged;
