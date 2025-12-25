@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "temperature_sensor_logs")
 public class TemperatureSensorLog {
 
     @Id
@@ -11,28 +12,72 @@ public class TemperatureSensorLog {
     private Long id;
 
     private Long shipmentId;
-    private double temperature;
-    private LocalDateTime loggedAt;
+    private String sensorId;
+
+    private Double temperatureValue;
+
+    private LocalDateTime recordedAt;
+
+    private String location;
 
     public TemperatureSensorLog() {}
 
-    public TemperatureSensorLog(Long id, Long shipmentId,
-                                      double temperature, LocalDateTime loggedAt) {
-        this.id = id;
+    public TemperatureSensorLog(Long shipmentId, Double temperatureValue,
+                                LocalDateTime recordedAt, String location) {
         this.shipmentId = shipmentId;
-        this.temperature = temperature;
-        this.loggedAt = loggedAt;
+        this.temperatureValue = temperatureValue;
+        this.recordedAt = recordedAt;
+        this.location = location;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    @PrePersist
+    public void prePersist() {
+        if (this.recordedAt == null) {
+            this.recordedAt = LocalDateTime.now();
+        }
+    }
 
-    public Long getShipmentId() { return shipmentId; }
-    public void setShipmentId(Long shipmentId) { this.shipmentId = shipmentId; }
+    public Long getId() {
+        return id;
+    }
 
-    public double getTemperature() { return temperature; }
-    public void setTemperature(double temperature) { this.temperature = temperature; }
-
-    public LocalDateTime getLoggedAt() { return loggedAt; }
-    public void setLoggedAt(LocalDateTime loggedAt) { this.loggedAt = loggedAt; }
+    public Long getShipmentId() {
+        return shipmentId;
+    }
+    
+    public void setShipmentId(Long shipmentId) {
+        this.shipmentId = shipmentId;
+    }
+    
+    public String getSensorId() {
+        return sensorId;
+    }
+    
+    public void setSensorId(String sensorId) {
+        this.sensorId = sensorId;
+    }
+    
+    public Double getTemperatureValue() {
+        return temperatureValue;
+    }
+    
+    public void setTemperatureValue(Double temperatureValue) {
+        this.temperatureValue = temperatureValue;
+    }
+    
+    public LocalDateTime getRecordedAt() {
+        return recordedAt;
+    }
+    
+    public void setRecordedAt(LocalDateTime recordedAt) {
+        this.recordedAt = recordedAt;
+    }
+    
+    public String getLocation() {
+        return location;
+    }
+    
+    public void setLocation(String location) {
+        this.location = location;
+    }
 }
