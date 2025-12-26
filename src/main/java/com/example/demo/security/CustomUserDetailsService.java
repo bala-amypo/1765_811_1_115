@@ -1,34 +1,33 @@
-// package com.example.demo.security;
+package com.example.demo.security;
 
-// import com.example.demo.entity.User;
-// import com.example.demo.repository.UserRepository;
-// import org.springframework.security.core.userdetails.UserDetails;
-// import org.springframework.security.core.userdetails.UserDetailsService;
-// import org.springframework.security.core.userdetails.UsernameNotFoundException;
-// import org.springframework.stereotype.Service;
+import com.example.demo.entity.User;
+import com.example.demo.repository.UserRepository;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
-// @Service
-// public class CustomUserDetailsService implements UserDetailsService {
+import java.util.Collections;
 
-//     private final UserRepository userRepository;
+@Service
+public class CustomUserDetailsService implements UserDetailsService {
 
-//     public CustomUserDetailsService(UserRepository userRepository) {
-//         this.userRepository = userRepository;
-//     }
+    private final UserRepository userRepository;
 
-//     @Override
-//     public UserDetails loadUserByUsername(String email)
-//             throws UsernameNotFoundException {
+    public CustomUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
-//         User user = userRepository.findByEmail(email)
-//                 .orElseThrow(() ->
-//                         new UsernameNotFoundException("User not found"));
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-//         return org.springframework.security.core.userdetails.User
-//                 .withUsername(user.getEmail())
-//                 .password(user.getPassword())
-//                 .authorities(user.getRole())
-//                 .build();
-//     }
-// }
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
+        return new org.springframework.security.core.userdetails.User(
+                user.getEmail(),
+                user.getPassword(),
+                Collections.emptyList()
+        );
+    }
+}

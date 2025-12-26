@@ -1,44 +1,42 @@
-// File: src/main/java/com/example/demo/service/impl/AlertServiceImpl.java
 package com.example.demo.service.impl;
 
+import java.util.List;
+import org.springframework.stereotype.Service;
 import com.example.demo.entity.AlertRecord;
 import com.example.demo.repository.AlertRecordRepository;
 import com.example.demo.service.AlertService;
-import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 public class AlertServiceImpl implements AlertService {
 
-    private final AlertRecordRepository repo;
+    private final AlertRecordRepository repository;
 
-    // Constructor injection - exact signature (AlertRecordRepository)
-    public AlertServiceImpl(AlertRecordRepository repo) {
-        this.repo = repo;
+    public AlertServiceImpl(AlertRecordRepository repository) {
+        this.repository = repository;
     }
 
-    @Override
     public AlertRecord triggerAlert(AlertRecord alert) {
-        return repo.save(alert);
+        return repository.save(alert);
     }
 
-    @Override
     public AlertRecord acknowledgeAlert(Long id) {
-        AlertRecord a = repo.findById(id).orElse(null);
-        if (a != null) {
-            a.setAcknowledged(true);
-            repo.save(a);
+        AlertRecord alert = repository.findById(id).orElse(null);
+        if (alert != null) {
+            alert.setAcknowledged(true);
+            return repository.save(alert);
         }
-        return a;
+        return null;
     }
 
-    @Override
+    public AlertRecord getAlertById(Long id) {
+        return repository.findById(id).orElse(null);
+    }
+
     public List<AlertRecord> getAlertsByShipment(Long shipmentId) {
-        return repo.findByShipmentId(shipmentId);
+        return repository.findByShipmentId(shipmentId);
     }
 
-    @Override
     public List<AlertRecord> getAllAlerts() {
-        return repo.findAll();
+        return repository.findAll();
     }
 }
