@@ -8,6 +8,6 @@ import java.util.List;
 @Repository
 public interface TemperatureSensorLogRepository extends JpaRepository<TemperatureSensorLog, Long> {
 
-    // Add this method for fetching logs by shipmentId
+   
     List<TemperatureSensorLog> findByShipmentId(Long shipmentId);
 }
