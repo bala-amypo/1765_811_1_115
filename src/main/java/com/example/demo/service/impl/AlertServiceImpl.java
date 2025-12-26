@@ -3,34 +3,23 @@ package com.example.demo.service.impl;
 import com.example.demo.entity.AlertRecord;
 import com.example.demo.repository.AlertRecordRepository;
 import com.example.demo.service.AlertService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
-@Service
-@RequiredArgsConstructor
 public class AlertServiceImpl implements AlertService {
 
-    private final AlertRecordRepository alertRecordRepository;
+    private final AlertRecordRepository repo;
 
-    @Override
-    public List<AlertRecord> getAllAlerts() {
-        return alertRecordRepository.findAll();
+    public AlertServiceImpl(AlertRecordRepository repo) {
+        this.repo = repo;
     }
 
     @Override
-    public AlertRecord getAlertById(Long id) {
-        return alertRecordRepository.findById(id).orElse(null);
+    public AlertRecord triggerAlert(AlertRecord alert) {
+        return repo.save(alert);
     }
 
     @Override
-    public AlertRecord createAlert(AlertRecord alertRecord) {
-        return alertRecordRepository.save(alertRecord);
-    }
-
-    @Override
-    public void deleteAlert(Long id) {
-        alertRecordRepository.deleteById(id);
+    public List<AlertRecord> getAlertsByShipment(Long shipmentId) {
+        return repo.findByShipmentId(shipmentId);
     }
 }
