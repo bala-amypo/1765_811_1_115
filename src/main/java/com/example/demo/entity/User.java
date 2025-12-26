@@ -20,6 +20,16 @@ public class User {
     private String role;
     private LocalDateTime createdAt;
 
+
+public String getFullName() {
+    return fullName;
+}
+
+public void setFullName(String fullName) {
+    this.fullName = fullName;
+}
+
+
     public User() {}
 
     public User(Long id, String fullName, String email, String password, String role) {
