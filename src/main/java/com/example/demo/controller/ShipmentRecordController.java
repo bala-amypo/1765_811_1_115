@@ -1,54 +1,69 @@
-package com.example.demo.controller;
-
-import com.example.demo.entity.ShipmentRecord;
-import com.example.demo.service.ShipmentRecordService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
-
-@RestController
-@RequestMapping("/api/shipments")
-@Tag(name = "Shipments", description = "Manage shipment records")
-public class ShipmentRecordController {
-
-    private final ShipmentRecordService service;
-
-    public ShipmentRecordController(ShipmentRecordService service) {
-        this.service = service;
+package com.example.demo.security;
+ 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+ 
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+ 
+   
+    @Bean
+    public JwtUtil jwtUtil(
+            @Value("${jwt.secret}") String secret,
+            @Value("${jwt.expiration}") long expiration
+    ) {
+        return new JwtUtil(secret, expiration);
     }
-
-    @Operation(summary = "Create shipment")
-    @PostMapping("/")
-    public ResponseEntity<ShipmentRecord> createShipment(@RequestBody ShipmentRecord shipment) {
-        return ResponseEntity.ok(service.createShipment(shipment));
+ 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
-
-    @Operation(summary = "Update shipment status")
-    @PutMapping("/{id}/status")
-    public ResponseEntity<ShipmentRecord> updateStatus(@PathVariable Long id,
-                                                       @RequestParam String status) {
-        return ResponseEntity.ok(service.updateShipmentStatus(id, status));
+ 
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter(JwtUtil jwtUtil) {
+        return new JwtAuthenticationFilter(jwtUtil);
     }
-
-    @Operation(summary = "Find shipment by code")
-    @GetMapping("/code/{shipmentCode}")
-    public ResponseEntity<Optional<ShipmentRecord>> getByCode(@PathVariable String shipmentCode) {
-        return ResponseEntity.ok(service.getShipmentByCode(shipmentCode));
+ 
+    @Bean
+    public SecurityFilterChain securityFilterChain(
+            HttpSecurity http,
+            JwtAuthenticationFilter jwtFilter
+    ) throws Exception {
+ 
+        http
+            .csrf(csrf -> csrf.disable())
+            .sessionManagement(session ->
+                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(auth -> auth
+                    .requestMatchers(
+                            "/auth/login",        
+                            "/auth/register",    
+                            "/auth/**",          
+                            "/swagger-ui/**",
+                            "/v3/api-docs/**",
+                            "/hello-servlet"
+                    ).permitAll()
+                    .anyRequest().authenticated()
+            )
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        return http.build();
     }
-
-    @Operation(summary = "Get shipment by id")
-    @GetMapping("/{id}")
-    public ResponseEntity<ShipmentRecord> getById(@PathVariable Long id) {
-        return ResponseEntity.of(service.getShipmentByCode(id.toString())); // Minimal; adjust if you add repo.findById in service
-    }
-
-    @Operation(summary = "List all shipments")
-    @GetMapping("/")
-    public ResponseEntity<List<ShipmentRecord>> getAll() {
-        return ResponseEntity.ok(service.getAllShipments());
+   
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)
+            throws Exception {
+        return configuration.getAuthenticationManager();
     }
 }

@@ -1,46 +1,69 @@
-package com.example.demo.controller;
-
-import com.example.demo.entity.AlertRecord;
-import com.example.demo.service.AlertService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
-@RestController
-@RequestMapping("/api/alerts")
-@Tag(name = "Alerts", description = "Trigger and acknowledge alerts for breaches")
-public class AlertRecordController {
-
-    private final AlertService service;
-
-    public AlertRecordController(AlertService service) {
-        this.service = service;
+package com.example.demo.security;
+ 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+ 
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+ 
+   
+    @Bean
+    public JwtUtil jwtUtil(
+            @Value("${jwt.secret}") String secret,
+            @Value("${jwt.expiration}") long expiration
+    ) {
+        return new JwtUtil(secret, expiration);
     }
-
-    @Operation(summary = "Trigger alert")
-    @PostMapping("/")
-    public ResponseEntity<AlertRecord> trigger(@RequestBody AlertRecord alert) {
-        return ResponseEntity.ok(service.triggerAlert(alert));
+ 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
-
-    @Operation(summary = "Acknowledge alert by id")
-    @PutMapping("/{id}/acknowledge")
-    public ResponseEntity<AlertRecord> acknowledge(@PathVariable Long id) {
-        return ResponseEntity.of(java.util.Optional.ofNullable(service.acknowledgeAlert(id)));
+ 
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter(JwtUtil jwtUtil) {
+        return new JwtAuthenticationFilter(jwtUtil);
     }
-
-    @Operation(summary = "Get alerts by shipment")
-    @GetMapping("/shipment/{shipmentId}")
-    public ResponseEntity<List<AlertRecord>> byShipment(@PathVariable Long shipmentId) {
-        return ResponseEntity.ok(service.getAlertsByShipment(shipmentId));
+ 
+    @Bean
+    public SecurityFilterChain securityFilterChain(
+            HttpSecurity http,
+            JwtAuthenticationFilter jwtFilter
+    ) throws Exception {
+ 
+        http
+            .csrf(csrf -> csrf.disable())
+            .sessionManagement(session ->
+                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(auth -> auth
+                    .requestMatchers(
+                            "/auth/login",        
+                            "/auth/register",    
+                            "/auth/**",          
+                            "/swagger-ui/**",
+                            "/v3/api-docs/**",
+                            "/hello-servlet"
+                    ).permitAll()
+                    .anyRequest().authenticated()
+            )
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        return http.build();
     }
-
-    @Operation(summary = "List all alerts")
-    @GetMapping("/")
-    public ResponseEntity<List<AlertRecord>> all() {
-        return ResponseEntity.ok(service.getAllAlerts());
+   
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)
+            throws Exception {
+        return configuration.getAuthenticationManager();
     }
 }

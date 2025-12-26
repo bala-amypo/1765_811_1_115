@@ -1,52 +1,69 @@
-package com.example.demo.controller;
-
-import com.example.demo.entity.BreachRecord;
-import com.example.demo.service.BreachDetectionService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
-@RestController
-@RequestMapping("/api/breaches")
-@Tag(name = "Breaches", description = "Log and resolve temperature breaches")
-public class BreachRecordController {
-
-    private final BreachDetectionService service;
-
-    public BreachRecordController(BreachDetectionService service) {
-        this.service = service;
+package com.example.demo.security;
+ 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+ 
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+ 
+   
+    @Bean
+    public JwtUtil jwtUtil(
+            @Value("${jwt.secret}") String secret,
+            @Value("${jwt.expiration}") long expiration
+    ) {
+        return new JwtUtil(secret, expiration);
     }
-
-    @Operation(summary = "Log breach (manual)")
-    @PostMapping("/")
-    public ResponseEntity<BreachRecord> log(@RequestBody BreachRecord breach) {
-        return ResponseEntity.ok(service.logBreach(breach));
+ 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
-
-    @Operation(summary = "Resolve breach by id")
-    @PutMapping("/{id}/resolve")
-    public ResponseEntity<BreachRecord> resolve(@PathVariable Long id) {
-        return ResponseEntity.ok(service.resolveBreach(id));
+ 
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter(JwtUtil jwtUtil) {
+        return new JwtAuthenticationFilter(jwtUtil);
     }
-
-    @Operation(summary = "Get breaches by shipment")
-    @GetMapping("/shipment/{shipmentId}")
-    public ResponseEntity<List<BreachRecord>> byShipment(@PathVariable Long shipmentId) {
-        return ResponseEntity.ok(service.getBreachesByShipment(shipmentId));
+ 
+    @Bean
+    public SecurityFilterChain securityFilterChain(
+            HttpSecurity http,
+            JwtAuthenticationFilter jwtFilter
+    ) throws Exception {
+ 
+        http
+            .csrf(csrf -> csrf.disable())
+            .sessionManagement(session ->
+                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(auth -> auth
+                    .requestMatchers(
+                            "/auth/login",        
+                            "/auth/register",    
+                            "/auth/**",          
+                            "/swagger-ui/**",
+                            "/v3/api-docs/**",
+                            "/hello-servlet"
+                    ).permitAll()
+                    .anyRequest().authenticated()
+            )
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        return http.build();
     }
-
-    @Operation(summary = "Get breach by id")
-    @GetMapping("/{id}")
-    public ResponseEntity<BreachRecord> byId(@PathVariable Long id) {
-        return ResponseEntity.of(java.util.Optional.ofNullable(service.getBreachById(id)));
-    }
-
-    @Operation(summary = "List all breaches")
-    @GetMapping("/")
-    public ResponseEntity<List<BreachRecord>> all() {
-        return ResponseEntity.ok(service.getAllBreaches());
+   
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)
+            throws Exception {
+        return configuration.getAuthenticationManager();
     }
 }
