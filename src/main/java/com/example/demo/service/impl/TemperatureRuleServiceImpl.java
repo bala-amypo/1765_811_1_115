@@ -1,6 +1,6 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.TemperatureRule;
+import com.example.demo.model.TemperatureRule;
 import com.example.demo.repository.TemperatureRuleRepository;
 import com.example.demo.service.TemperatureRuleService;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.TemperatureRule;
+import com.example.demo.model.TemperatureRule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

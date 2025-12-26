@@ -1,6 +1,6 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.BreachRecord;
+import com.example.demo.model.BreachRecord;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.BreachRecordRepository;
 import com.example.demo.service.BreachDetectionService;
