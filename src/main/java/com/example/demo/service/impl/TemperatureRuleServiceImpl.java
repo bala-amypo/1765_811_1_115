@@ -1,47 +1,40 @@
+// File: src/main/java/com/example/demo/service/impl/TemperatureRuleServiceImpl.java
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.TemperatureRule;
 import com.example.demo.repository.TemperatureRuleRepository;
 import com.example.demo.service.TemperatureRuleService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-@Service
 public class TemperatureRuleServiceImpl implements TemperatureRuleService {
 
     private final TemperatureRuleRepository repo;
-       @Override
-    public TemperatureRule createRule(TemperatureRule rule) {
-        return repo.save(rule);
-    }
 
-    @Override
-    public TemperatureRule updateRule(Long id, TemperatureRule rule) {
-        TemperatureRule existingRule = repo.findById(id)
-            .orElseThrow(() -> new RuntimeException("Rule not found"));
-        existingRule.setMinTemp(rule.getMinTemp());
-        existingRule.setMaxTemp(rule.getMaxTemp());
-        // set other fields
-        return repo.save(existingRule);
-    }
-
-    @Override
-    public TemperatureRule getRuleForProduct(String productName, LocalDate date) {
-        return repo.findByProductNameAndDate(productName, date)
-            .orElseThrow(() -> new RuntimeException("Rule not found"));
-    }
-    @Autowired
+    // Constructor injection - exact signature (TemperatureRuleRepository)
     public TemperatureRuleServiceImpl(TemperatureRuleRepository repo) {
         this.repo = repo;
     }
 
     @Override
-    public List<TemperatureRule> getAllRules() {
-        return repo.findAll();
+    public TemperatureRule createRule(TemperatureRule rule) {
+        if (rule.getMinTemp() == null || rule.getMaxTemp() == null ||
+            rule.getMinTemp() >= rule.getMaxTemp()) {
+            throw new IllegalArgumentException("minTemp must be less than maxTemp");
+        }
+        if (rule.getEffectiveFrom() != null && rule.getEffectiveTo() != null &&
+            !rule.getEffectiveTo().isAfter(rule.getEffectiveFrom())) {
+            throw new IllegalArgumentException("effectiveTo must be after effectiveFrom");
+        }
+        return repo.save(rule);
+    }
+
+    @Override
+    public TemperatureRule updateRule(Long id, TemperatureRule rule) {
+        rule.setId(id);
+        return createRule(rule); // reuse validation, then save
     }
 
     @Override
@@ -50,22 +43,12 @@ public class TemperatureRuleServiceImpl implements TemperatureRuleService {
     }
 
     @Override
-    public Optional<TemperatureRule> getApplicableRule(String productType, LocalDate date) {
+    public Optional<TemperatureRule> getRuleForProduct(String productType, LocalDate date) {
         return repo.findApplicableRule(productType, date);
     }
 
     @Override
-    public TemperatureRule saveRule(TemperatureRule rule) {
-        return repo.save(rule);
-    }
-
-    @Override
-    public Optional<TemperatureRule> getRuleById(Long id) {
-        return repo.findById(id);
-    }
-
-    @Override
-    public void deleteRule(Long id) {
-        repo.deleteById(id);
+    public List<TemperatureRule> getAllRules() {
+        return repo.findAll();
     }
 }

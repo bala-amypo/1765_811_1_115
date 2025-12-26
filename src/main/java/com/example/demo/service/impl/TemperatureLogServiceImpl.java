@@ -1,18 +1,17 @@
+// File: src/main/java/com/example/demo/service/impl/TemperatureLogServiceImpl.java
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.TemperatureSensorLog;
 import com.example.demo.repository.TemperatureSensorLogRepository;
 import com.example.demo.service.TemperatureLogService;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
-@Service
 public class TemperatureLogServiceImpl implements TemperatureLogService {
 
     private final TemperatureSensorLogRepository repo;
 
+    // Constructor injection - exact signature (TemperatureSensorLogRepository)
     public TemperatureLogServiceImpl(TemperatureSensorLogRepository repo) {
         this.repo = repo;
     }
@@ -28,8 +27,8 @@ public class TemperatureLogServiceImpl implements TemperatureLogService {
     }
 
     @Override
-    public Optional<TemperatureSensorLog> getLogById(Long id) {
-        return repo.findById(id);
+    public TemperatureSensorLog getLogById(Long id) {
+        return repo.findById(id).orElse(null);
     }
 
     @Override

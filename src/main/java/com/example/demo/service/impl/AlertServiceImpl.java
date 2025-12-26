@@ -1,18 +1,17 @@
+// File: src/main/java/com/example/demo/service/impl/AlertServiceImpl.java
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.AlertRecord;
 import com.example.demo.repository.AlertRecordRepository;
 import com.example.demo.service.AlertService;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
-@Service
 public class AlertServiceImpl implements AlertService {
 
     private final AlertRecordRepository repo;
 
+    // Constructor injection - exact signature (AlertRecordRepository)
     public AlertServiceImpl(AlertRecordRepository repo) {
         this.repo = repo;
     }
@@ -24,20 +23,17 @@ public class AlertServiceImpl implements AlertService {
 
     @Override
     public AlertRecord acknowledgeAlert(Long id) {
-        AlertRecord alert = repo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Alert not found"));
-        alert.setAcknowledged(true);
-        return repo.save(alert);
+        AlertRecord a = repo.findById(id).orElse(null);
+        if (a != null) {
+            a.setAcknowledged(true);
+            repo.save(a);
+        }
+        return a;
     }
 
     @Override
     public List<AlertRecord> getAlertsByShipment(Long shipmentId) {
         return repo.findByShipmentId(shipmentId);
-    }
-
-    @Override
-    public Optional<AlertRecord> getAlertById(Long id) {
-        return repo.findById(id);
     }
 
     @Override
