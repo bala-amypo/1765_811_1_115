@@ -5,6 +5,7 @@ import com.example.demo.repository.TemperatureSensorLogRepository;
 import com.example.demo.service.TemperatureLogService;
 import org.springframework.stereotype.Service; 
 import java.util.List;
+
 @Service
 public class TemperatureLogServiceImpl implements TemperatureLogService {
 
