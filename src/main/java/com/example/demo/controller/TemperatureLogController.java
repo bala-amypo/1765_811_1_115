@@ -1,9 +1,10 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.TemperatureSensorLog;
+import com.example.demo.entity.TemperatureSensorLog;
 import com.example.demo.service.TemperatureLogService;
 import org.springframework.web.bind.annotation.*;
-import java.util.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/logs")
@@ -21,7 +22,7 @@ public class TemperatureLogController {
     }
 
     @GetMapping("/shipment/{shipmentId}")
-    public List<TemperatureSensorLog> getLogs(@PathVariable Long shipmentId) {
+    public List<TemperatureSensorLog> getByShipment(@PathVariable Long shipmentId) {
         return service.getLogsByShipment(shipmentId);
     }
 }

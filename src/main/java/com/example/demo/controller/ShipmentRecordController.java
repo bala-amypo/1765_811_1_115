@@ -1,9 +1,11 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.ShipmentRecord;
+import com.example.demo.entity.ShipmentRecord;
 import com.example.demo.service.ShipmentRecordService;
 import org.springframework.web.bind.annotation.*;
-import java.util.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/shipments")
@@ -16,7 +18,7 @@ public class ShipmentRecordController {
     }
 
     @PostMapping
-    public ShipmentRecord createShipment(@RequestBody ShipmentRecord shipment) {
+    public ShipmentRecord create(@RequestBody ShipmentRecord shipment) {
         return service.createShipment(shipment);
     }
 
