@@ -3,7 +3,7 @@
 
     <test name="Demo Application Tests">
         <packages>
-            <!-- scans all TestNG tests under this package -->
+         
             <package name="com.example.demo"/>
         </packages>
     </test>
