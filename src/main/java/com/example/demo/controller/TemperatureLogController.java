@@ -7,22 +7,22 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/temperature-logs")
+@RequestMapping("/logs")
 public class TemperatureLogController {
 
-    private final TemperatureLogService service;
+    private final TemperatureLogService logService;
 
-    public TemperatureLogController(TemperatureLogService service) {
-        this.service = service;
+    public TemperatureLogController(TemperatureLogService logService) {
+        this.logService = logService;
     }
 
     @PostMapping
-    public TemperatureSensorLog record(@RequestBody TemperatureSensorLog log) {
-        return service.recordLog(log);
+    public TemperatureSensorLog recordLog(@RequestBody TemperatureSensorLog log) {
+        return logService.recordLog(log);
     }
 
     @GetMapping("/shipment/{shipmentId}")
-    public List<TemperatureSensorLog> getByShipment(@PathVariable Long shipmentId) {
-        return service.getLogsByShipment(shipmentId);
+    public List<TemperatureSensorLog> getLogsByShipment(@PathVariable Long shipmentId) {
+        return logService.getLogsByShipment(shipmentId);
     }
 }

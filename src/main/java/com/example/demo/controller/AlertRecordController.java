@@ -10,19 +10,19 @@ import java.util.List;
 @RequestMapping("/alerts")
 public class AlertRecordController {
 
-    private final AlertService service;
+    private final AlertService alertService;
 
-    public AlertRecordController(AlertService service) {
-        this.service = service;
+    public AlertRecordController(AlertService alertService) {
+        this.alertService = alertService;
     }
 
     @PostMapping
-    public AlertRecord trigger(@RequestBody AlertRecord alert) {
-        return service.triggerAlert(alert);
+    public AlertRecord triggerAlert(@RequestBody AlertRecord alert) {
+        return alertService.triggerAlert(alert);
     }
 
     @GetMapping("/shipment/{shipmentId}")
-    public List<AlertRecord> getByShipment(@PathVariable Long shipmentId) {
-        return service.getAlertsByShipment(shipmentId);
+    public List<AlertRecord> getAlertsByShipment(@PathVariable Long shipmentId) {
+        return alertService.getAlertsByShipment(shipmentId);
     }
 }

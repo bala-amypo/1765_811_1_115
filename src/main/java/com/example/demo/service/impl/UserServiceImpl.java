@@ -15,13 +15,14 @@ public class UserServiceImpl implements UserService {
         this.encoder = encoder;
     }
 
-    public User registerUser(User user) {
-        if (repo.existsByEmail(user.getEmail()))
-            throw new RuntimeException();
-        user.setPassword(encoder.encode(user.getPassword()));
-        return repo.save(user);
+    @Override
+    public User registerUser(User u) {
+        if (repo.existsByEmail(u.getEmail())) throw new RuntimeException();
+        u.setPassword(encoder.encode(u.getPassword()));
+        return repo.save(u);
     }
 
+    @Override
     public User findByEmail(String email) {
         return repo.findByEmail(email).orElseThrow();
     }

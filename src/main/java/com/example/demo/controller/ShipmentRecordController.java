@@ -11,30 +11,29 @@ import java.util.Optional;
 @RequestMapping("/shipments")
 public class ShipmentRecordController {
 
-    private final ShipmentRecordService service;
+    private final ShipmentRecordService shipmentService;
 
-    public ShipmentRecordController(ShipmentRecordService service) {
-        this.service = service;
+    public ShipmentRecordController(ShipmentRecordService shipmentService) {
+        this.shipmentService = shipmentService;
     }
 
     @PostMapping
-    public ShipmentRecord create(@RequestBody ShipmentRecord shipment) {
-        return service.createShipment(shipment);
+    public ShipmentRecord createShipment(@RequestBody ShipmentRecord shipment) {
+        return shipmentService.createShipment(shipment);
     }
 
     @PutMapping("/{id}/status")
-    public ShipmentRecord updateStatus(@PathVariable Long id,
-                                       @RequestParam String status) {
-        return service.updateShipmentStatus(id, status);
+    public ShipmentRecord updateShipmentStatus(@PathVariable Long id, @RequestParam String status) {
+        return shipmentService.updateShipmentStatus(id, status);
     }
 
     @GetMapping("/{code}")
-    public Optional<ShipmentRecord> getByCode(@PathVariable String code) {
-        return service.getShipmentByCode(code);
+    public Optional<ShipmentRecord> getShipmentByCode(@PathVariable String code) {
+        return shipmentService.getShipmentByCode(code);
     }
 
     @GetMapping
-    public List<ShipmentRecord> getAll() {
-        return service.getAllShipments();
+    public List<ShipmentRecord> getAllShipments() {
+        return shipmentService.getAllShipments();
     }
 }

@@ -6,32 +6,33 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/temperature-rules")
+@RequestMapping("/rules")
 public class TemperatureRuleController {
 
-    private final TemperatureRuleService service;
+    private final TemperatureRuleService ruleService;
 
-    public TemperatureRuleController(TemperatureRuleService service) {
-        this.service = service;
+    public TemperatureRuleController(TemperatureRuleService ruleService) {
+        this.ruleService = ruleService;
     }
 
     @PostMapping
-    public TemperatureRule create(@RequestBody TemperatureRule rule) {
-        return service.createRule(rule);
-    }
-
-    @GetMapping("/product/{productType}")
-    public TemperatureRule getForProduct(@PathVariable String productType,
-                                         @RequestParam(required = false) String date) {
-        LocalDate d = (date == null) ? LocalDate.now() : LocalDate.parse(date);
-        return service.getRuleForProduct(productType, d)
-                .orElseThrow(() -> new RuntimeException("No rule found for product " + productType));
+    public TemperatureRule createRule(@RequestBody TemperatureRule rule) {
+        return ruleService.createRule(rule);
     }
 
     @GetMapping("/active")
     public List<TemperatureRule> getActiveRules() {
-        return service.getActiveRules();
+        return ruleService.getActiveRules();
+    }
+
+    @GetMapping("/product/{productType}")
+    public Optional<TemperatureRule> getRuleForProduct(
+            @PathVariable String productType,
+            @RequestParam LocalDate date
+    ) {
+        return ruleService.getRuleForProduct(productType, date);
     }
 }
