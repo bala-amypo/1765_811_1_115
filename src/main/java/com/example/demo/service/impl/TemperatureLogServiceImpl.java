@@ -5,7 +5,7 @@ import com.example.demo.repository.TemperatureSensorLogRepository;
 import com.example.demo.service.TemperatureLogService;
 
 import java.util.List;
-
+@Service
 public class TemperatureLogServiceImpl implements TemperatureLogService {
 
     private final TemperatureSensorLogRepository logRepo;

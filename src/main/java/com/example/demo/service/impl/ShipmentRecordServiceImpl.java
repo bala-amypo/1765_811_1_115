@@ -7,7 +7,7 @@ import com.example.demo.service.ShipmentRecordService;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class ShipmentRecordServiceImpl implements ShipmentRecordService {
 
     private final ShipmentRecordRepository shipmentRepo;
