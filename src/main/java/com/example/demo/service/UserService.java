@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    User saveUser(User user);
+
+    User registerUser(User user);
     Optional<User> findByUsername(String username);
     Optional<User> findByEmail(String email); // Use Optional
     List<User> getAllUsers();
