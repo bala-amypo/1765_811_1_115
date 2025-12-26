@@ -79,7 +79,7 @@ import org.springframework.web.bind.annotation.*;
         "https://9336.pro604cr.amypo.ai",
         "http://localhost:8080",
         "http://127.0.0.1:8080"
-    }, // <-- origins MUST be Strings; no booleans or variables here
+    }, // ✅ Strings only
     allowedHeaders = {
         "Authorization",
         "Content-Type",
@@ -87,9 +87,9 @@ import org.springframework.web.bind.annotation.*;
         "Origin",
         "Cache-Control",
         "X-Requested-With"
-    },
-    methods = { RequestMethod.POST, RequestMethod.OPTIONS },
-    allowCredentials = false // <-- this is boolean (correct type)
+    }, // ✅ Strings only
+    methods = { RequestMethod.POST, RequestMethod.OPTIONS }, // ✅ Enums
+    allowCredentials = false // ✅ Boolean (correct type)
 )
 @RestController
 @RequestMapping("/auth")
