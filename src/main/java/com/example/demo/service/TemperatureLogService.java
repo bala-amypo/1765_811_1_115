@@ -11,4 +11,3 @@ public interface TemperatureLogService {
     TemperatureSensorLog getLogById(Long id);
     List<TemperatureSensorLog> getAllLogs();
 }
-``
