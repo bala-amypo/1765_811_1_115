@@ -15,3 +15,4 @@ public interface TemperatureLogService {
 
     List<TemperatureSensorLog> getAllLogs();
 }
+
