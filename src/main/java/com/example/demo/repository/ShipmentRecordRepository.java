@@ -1,11 +1,10 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.*;
+import com.example.demo.entity.ShipmentRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.time.LocalDate;
-import java.util.*;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ShipmentRecordRepository extends JpaRepository<ShipmentRecord, Long> {
-    Optional<ShipmentRecord> findByShipmentCode(String shipmentCode);
+    // Custom queries if needed
 }
