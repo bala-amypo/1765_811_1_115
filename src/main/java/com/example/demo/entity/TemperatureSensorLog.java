@@ -1,28 +1,44 @@
+// File: src/main/java/com/example/demo/entity/TemperatureSensorLog.java
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "temperature_sensor_logs")
 public class TemperatureSensorLog {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long shipmentId;
+
     private String sensorId;
+
     private LocalDateTime recordedAt;
+
     private Double temperatureValue;
+
+    @Column(nullable = true)
     private String location;
+
+    public TemperatureSensorLog() {}
+
+    public TemperatureSensorLog(Long shipmentId, Double temperatureValue, LocalDateTime recordedAt, String location) {
+        this.shipmentId = shipmentId;
+        this.temperatureValue = temperatureValue;
+        this.recordedAt = recordedAt;
+        this.location = location;
+    }
 
     @PrePersist
     public void prePersist() {
-        recordedAt = LocalDateTime.now();
+        if (recordedAt == null) recordedAt = LocalDateTime.now();
     }
 
-    // getters & setters
+    // getters/setters
     public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
     public Long getShipmentId() { return shipmentId; }
     public void setShipmentId(Long shipmentId) { this.shipmentId = shipmentId; }
 
@@ -30,6 +46,7 @@ public class TemperatureSensorLog {
     public void setSensorId(String sensorId) { this.sensorId = sensorId; }
 
     public LocalDateTime getRecordedAt() { return recordedAt; }
+    public void setRecordedAt(LocalDateTime recordedAt) { this.recordedAt = recordedAt; }
 
     public Double getTemperatureValue() { return temperatureValue; }
     public void setTemperatureValue(Double temperatureValue) { this.temperatureValue = temperatureValue; }

@@ -1,24 +1,41 @@
+// File: src/main/java/com/example/demo/entity/TemperatureRule.java
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "temperature_rules")
 public class TemperatureRule {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String productType;
+
     private Double minTemp;
     private Double maxTemp;
+
     private Boolean active;
+
     private LocalDate effectiveFrom;
     private LocalDate effectiveTo;
 
-    // getters & setters
+    public TemperatureRule() {}
+
+    public TemperatureRule(
+            String productType, Double minTemp, Double maxTemp,
+            boolean active, LocalDate effectiveFrom, LocalDate effectiveTo) {
+        this.productType = productType;
+        this.minTemp = minTemp;
+        this.maxTemp = maxTemp;
+        this.active = active;
+        this.effectiveFrom = effectiveFrom;
+        this.effectiveTo = effectiveTo;
+    }
+
+    // getters/setters
     public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public String getProductType() { return productType; }
     public void setProductType(String productType) { this.productType = productType; }

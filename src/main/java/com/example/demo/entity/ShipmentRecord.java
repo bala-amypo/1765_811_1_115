@@ -1,13 +1,13 @@
+// File: src/main/java/com/example/demo/entity/ShipmentRecord.java
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "shipment_records")
 public class ShipmentRecord {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true)
@@ -15,19 +15,25 @@ public class ShipmentRecord {
 
     private String origin;
     private String destination;
+
     private String productType;
+
     private LocalDateTime startDate;
     private LocalDateTime expectedDelivery;
-    private String status;
+
+    private String status; // defaults to IN_TRANSIT
+
     private LocalDateTime createdAt;
+
+    public ShipmentRecord() {}
 
     @PrePersist
     public void prePersist() {
-        if (status == null) status = "IN_TRANSIT";
-        createdAt = LocalDateTime.now();
+        if (status == null || status.isBlank()) status = "IN_TRANSIT";
+        if (createdAt == null) createdAt = LocalDateTime.now();
     }
 
-    // getters & setters
+    // getters/setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -53,4 +59,5 @@ public class ShipmentRecord {
     public void setStatus(String status) { this.status = status; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 }
