@@ -10,10 +10,10 @@ import java.util.Optional;
 
 public class TemperatureRuleServiceImpl implements TemperatureRuleService {
 
-    private final TemperatureRuleRepository repo;
+    private final TemperatureRuleRepository ruleRepo;
 
-    public TemperatureRuleServiceImpl(TemperatureRuleRepository repo) {
-        this.repo = repo;
+    public TemperatureRuleServiceImpl(TemperatureRuleRepository ruleRepo) {
+        this.ruleRepo = ruleRepo;
     }
 
     @Override
@@ -21,16 +21,16 @@ public class TemperatureRuleServiceImpl implements TemperatureRuleService {
         if (rule.getMinTemp() >= rule.getMaxTemp()) {
             throw new IllegalArgumentException("minTemp must be less than maxTemp");
         }
-        return repo.save(rule);
+        return ruleRepo.save(rule);
     }
 
     @Override
     public Optional<TemperatureRule> getRuleForProduct(String productType, LocalDate date) {
-        return repo.findApplicableRule(productType, date);
+        return ruleRepo.findApplicableRule(productType, date);
     }
 
     @Override
     public List<TemperatureRule> getActiveRules() {
-        return repo.findByActiveTrue();
+        return ruleRepo.findByActiveTrue();
     }
 }

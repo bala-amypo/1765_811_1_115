@@ -1,10 +1,10 @@
 package com.example.demo.service;
 
-import com.example.demo.model.*;
-import java.time.LocalDate;
-import java.util.*;
+import com.example.demo.entity.User;
 
 public interface UserService {
+
     User registerUser(User user);
+
     User findByEmail(String email);
 }

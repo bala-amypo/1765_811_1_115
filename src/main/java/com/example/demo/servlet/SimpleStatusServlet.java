@@ -1,19 +1,15 @@
 package com.example.demo.servlet;
 
 import jakarta.servlet.http.*;
-import jakarta.servlet.ServletException;
 import java.io.IOException;
 
 public class SimpleStatusServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("text/plain");
-        resp.getWriter().write(
-            "Cold Chain Temperature Breach Alert System is running"
-        );
-        resp.getWriter().flush();
+        var writer = resp.getWriter();
+        writer.write("Cold Chain Temperature Breach Alert System is running");
+        writer.flush();
     }
 }
