@@ -15,10 +15,11 @@ public class AlertServiceImpl implements AlertService {
 
     private final AlertRecordRepository alertRecordRepository;
 
-    @Override
-    public AlertRecord saveAlert(AlertRecord alertRecord) {
-        return alertRecordRepository.save(alertRecord);
-    }
+   @Override
+public AlertRecord createAlert(AlertRecord alert) {
+    return alertRepository.save(alert);
+}
+
 
     @Override
     public List<AlertRecord> getAllAlerts() {

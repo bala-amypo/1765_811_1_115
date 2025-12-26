@@ -20,9 +20,12 @@ public class AlertRecordController {
     }
 
     @GetMapping("/{id}")
-    public AlertRecord getAlert(@PathVariable Long id) {
-        return alertService.getAlertById(id);
-    }
+public ResponseEntity<AlertRecord> getAlert(@PathVariable Long id) {
+    AlertRecord alert = alertService.getAlertById(id)
+                                    .orElseThrow(() -> new RuntimeException("Alert not found"));
+    return ResponseEntity.ok(alert);
+}
+
 
     @PostMapping
     public AlertRecord createAlert(@RequestBody AlertRecord alertRecord) {
