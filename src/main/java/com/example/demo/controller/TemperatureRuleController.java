@@ -34,6 +34,23 @@ public class TemperatureRuleController {
     public List<TemperatureRule> getActive() {
         return service.getActiveRules();
     }
+    @PostMapping
+    public ResponseEntity<TemperatureRule> createRule(@RequestBody TemperatureRule rule) {
+        return ResponseEntity.ok(service.createRule(rule));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<TemperatureRule> updateRule(@PathVariable Long id,
+                                                      @RequestBody TemperatureRule rule) {
+        return ResponseEntity.ok(service.updateRule(id, rule));
+    }
+
+    @GetMapping("/product/{productName}")
+    public ResponseEntity<TemperatureRule> getRuleForProduct(
+            @PathVariable String productName,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        return ResponseEntity.ok(service.getRuleForProduct(productName, date));
+    }
 
     @GetMapping("/product/{productType}")
     public Optional<TemperatureRule> getByProduct(@PathVariable String productType) {
