@@ -3,10 +3,12 @@ package com.example.demo.service.impl;
 import com.example.demo.entity.TemperatureSensorLog;
 import com.example.demo.repository.TemperatureSensorLogRepository;
 import com.example.demo.service.TemperatureLogService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class TemperatureLogServiceImpl implements TemperatureLogService {
 
     private final TemperatureSensorLogRepository repo;
