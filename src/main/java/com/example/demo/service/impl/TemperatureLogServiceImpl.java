@@ -3,7 +3,7 @@ package com.example.demo.service.impl;
 import com.example.demo.entity.TemperatureSensorLog;
 import com.example.demo.repository.TemperatureSensorLogRepository;
 import com.example.demo.service.TemperatureLogService;
-import org.springframework.stereotype.Service; 
+import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
@@ -16,7 +16,7 @@ public class TemperatureLogServiceImpl implements TemperatureLogService {
     }
 
     @Override
-    public TemperatureSensorLog recordLog(TemperatureSensorLog log) {
+    public TemperatureSensorLog saveLog(TemperatureSensorLog log) {
         return logRepo.save(log);
     }
 
