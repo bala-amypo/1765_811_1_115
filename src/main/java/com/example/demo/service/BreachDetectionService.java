@@ -1,14 +1,17 @@
-// File: src/main/java/com/example/demo/service/BreachDetectionService.java
 package com.example.demo.service;
 
+import java.util.List;
 import com.example.demo.entity.BreachRecord;
 
-import java.util.List;
-
 public interface BreachDetectionService {
+
     BreachRecord logBreach(BreachRecord breach);
-    BreachRecord resolveBreach(Long id);
+
     List<BreachRecord> getBreachesByShipment(Long shipmentId);
+
+    BreachRecord resolveBreach(Long id);
+
     BreachRecord getBreachById(Long id);
+
     List<BreachRecord> getAllBreaches();
 }

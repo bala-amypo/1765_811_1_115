@@ -1,55 +1,50 @@
-// File: src/main/java/com/example/demo/service/impl/TemperatureRuleServiceImpl.java
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.TemperatureRule;
-import com.example.demo.repository.TemperatureRuleRepository;
-import com.example.demo.service.TemperatureRuleService;
-import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
+import com.example.demo.entity.TemperatureRule;
+import com.example.demo.repository.TemperatureRuleRepository;
+import com.example.demo.service.TemperatureRuleService;
+
 @Service
 public class TemperatureRuleServiceImpl implements TemperatureRuleService {
 
-    private final TemperatureRuleRepository repo;
+    private final TemperatureRuleRepository repository;
 
-    // Constructor injection - exact signature (TemperatureRuleRepository)
-    public TemperatureRuleServiceImpl(TemperatureRuleRepository repo) {
-        this.repo = repo;
+    public TemperatureRuleServiceImpl(TemperatureRuleRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public TemperatureRule createRule(TemperatureRule rule) {
-        if (rule.getMinTemp() == null || rule.getMaxTemp() == null ||
-            rule.getMinTemp() >= rule.getMaxTemp()) {
+        if (rule.getMinTemp() >= rule.getMaxTemp()) {
             throw new IllegalArgumentException("minTemp must be less than maxTemp");
         }
-        if (rule.getEffectiveFrom() != null && rule.getEffectiveTo() != null &&
-            !rule.getEffectiveTo().isAfter(rule.getEffectiveFrom())) {
-            throw new IllegalArgumentException("effectiveTo must be after effectiveFrom");
-        }
-        return repo.save(rule);
+        return repository.save(rule);
     }
 
     @Override
     public TemperatureRule updateRule(Long id, TemperatureRule rule) {
         rule.setId(id);
-        return createRule(rule); // reuse validation, then save
+        return repository.save(rule);
     }
 
     @Override
     public List<TemperatureRule> getActiveRules() {
-        return repo.findByActiveTrue();
+        return repository.findByActiveTrue();
     }
 
     @Override
     public Optional<TemperatureRule> getRuleForProduct(String productType, LocalDate date) {
-        return repo.findApplicableRule(productType, date);
+        return repository.findApplicableRule(productType, date);
     }
 
     @Override
     public List<TemperatureRule> getAllRules() {
-        return repo.findAll();
+        return repository.findAll();
     }
 }
