@@ -1,8 +1,3 @@
-package com.example.demo.entity;
-
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
-
 @Entity
 @Table(name = "breaches")
 public class BreachRecord {
@@ -15,6 +10,11 @@ public class BreachRecord {
     private String description;
     private boolean resolved;
     private LocalDateTime timestamp;
+
+    @PrePersist
+    public void prePersist() {
+        this.timestamp = LocalDateTime.now();
+    }
 
     // Getters and setters
     public Long getId() { return id; }

@@ -15,6 +15,11 @@ public class TemperatureSensorLog {
     private double temperature;
     private LocalDateTime timestamp;
 
+    @PrePersist
+    public void prePersist() {
+        this.timestamp = LocalDateTime.now();
+    }
+
     // Getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
