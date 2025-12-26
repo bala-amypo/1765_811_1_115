@@ -46,7 +46,11 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
 
-        User user = new User();
+        Optional<User> userOpt = userService.findByEmail(email);
+if(userOpt.isEmpty()) {
+    throw new RuntimeException("User not found");
+}
+User user = userOpt.get();
         user.setFullName(request.getFullName());
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
