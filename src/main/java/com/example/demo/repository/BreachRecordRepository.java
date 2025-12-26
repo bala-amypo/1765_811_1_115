@@ -1,14 +1,9 @@
 package com.example.demo.repository;
 
-import com.example.demo.model.BreachRecord;
+import com.example.demo.entity.*;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
-
-@Repository
-public interface BreachRecordRepository
-        extends JpaRepository<BreachRecord, Long> {
-
+import java.time.LocalDate;
+import java.util.*;
+public interface BreachRecordRepository extends JpaRepository<BreachRecord, Long> {
     List<BreachRecord> findByShipmentId(Long shipmentId);
 }
