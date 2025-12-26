@@ -70,22 +70,27 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
-
-// ✅ Add this annotation to allow cross-origin calls directly to /auth/**
 @CrossOrigin(
     origins = {
         "https://9336.pro604cr.amypo.ai",
-        "https://9336.pro6046cr.amypo.ai",
         "http://localhost:8080",
         "http://127.0.0.1:8080"
+    }, // <-- origins MUST be Strings; no booleans or variables here
+    allowedHeaders = {
+        "Authorization",
+        "Content-Type",
+        "Accept",
+        "Origin",
+        "Cache-Control",
+        "X-Requested-With"
     },
-    allowedHeaders = {"Authorization","Content-Type","Accept","Origin","Cache-Control","X-Requested-With"},
-    methods = {RequestMethod.POST, RequestMethod.OPTIONS},
-    allowCredentials = false // JWT via header; cookies not needed
+    methods = { RequestMethod.POST, RequestMethod.OPTIONS },
+    allowCredentials = false // <-- this is boolean (correct type)
 )
 @RestController
 @RequestMapping("/auth")
 @Tag(name = "Authentication", description = "User registration and login")
+
 public class AuthController {
 
     private final UserService userService;
