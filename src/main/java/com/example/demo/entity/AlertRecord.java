@@ -1,28 +1,31 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "alert_records")
 public class AlertRecord {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long shipmentId;
     private Long breachId;
-
-    private String alertType;
-    private String message;
-
+    private boolean acknowledged;
     private LocalDateTime sentAt;
 
-    private Boolean acknowledged; // defaults to false
+    public AlertRecord() {
+    }
 
-    public AlertRecord() {}
-
-    public AlertRecord(Long shipmentId, Long breachId, boolean acknowledged, LocalDateTime sentAt) {
+    public AlertRecord(Long shipmentId, Long breachId,
+                       boolean acknowledged, LocalDateTime sentAt) {
         this.shipmentId = shipmentId;
         this.breachId = breachId;
         this.acknowledged = acknowledged;
@@ -31,29 +34,54 @@ public class AlertRecord {
 
     @PrePersist
     public void prePersist() {
-        if (acknowledged == null) acknowledged = false;
-        if (sentAt == null) sentAt = LocalDateTime.now();
+        this.acknowledged = false;
+        this.sentAt = LocalDateTime.now();
     }
 
-    // Getters & Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    // GETTERS
+    public Long getId() {
+        return id;
+    }
 
-    public Long getShipmentId() { return shipmentId; }
-    public void setShipmentId(Long shipmentId) { this.shipmentId = shipmentId; }
+    public Long getShipmentId() {
+        return shipmentId;
+    }
 
-    public Long getBreachId() { return breachId; }
-    public void setBreachId(Long breachId) { this.breachId = breachId; }
+    public Long getBreachId() {
+        return breachId;
+    }
 
-    public String getAlertType() { return alertType; }
-    public void setAlertType(String alertType) { this.alertType = alertType; }
+    public boolean isAcknowledged() {
+        return acknowledged;
+    }
 
-    public String getMessage() { return message; }
-    public void setMessage(String message) { this.message = message; }
+    // REQUIRED BY TESTS
+    public boolean getAcknowledged() {
+        return acknowledged;
+    }
 
-    public LocalDateTime getSentAt() { return sentAt; }
-    public void setSentAt(LocalDateTime sentAt) { this.sentAt = sentAt; }
+    public LocalDateTime getSentAt() {
+        return sentAt;
+    }
 
-    public Boolean getAcknowledged() { return acknowledged; }
-    public void setAcknowledged(Boolean acknowledged) { this.acknowledged = acknowledged; }
+    // SETTERS
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setShipmentId(Long shipmentId) {
+        this.shipmentId = shipmentId;
+    }
+
+    public void setBreachId(Long breachId) {
+        this.breachId = breachId;
+    }
+
+    public void setAcknowledged(boolean acknowledged) {
+        this.acknowledged = acknowledged;
+    }
+
+    public void setSentAt(LocalDateTime sentAt) {
+        this.sentAt = sentAt;
+    }
 }

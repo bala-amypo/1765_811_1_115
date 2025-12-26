@@ -1,69 +1,41 @@
-package com.example.demo.security;
- 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
- 
-@Configuration
-@EnableWebSecurity
-public class SecurityConfig {
- 
-   
-    @Bean
-    public JwtUtil jwtUtil(
-            @Value("${jwt.secret}") String secret,
-            @Value("${jwt.expiration}") long expiration
-    ) {
-        return new JwtUtil(secret, expiration);
+package com.example.demo.controller;
+
+import java.util.List;
+import org.springframework.web.bind.annotation.*;
+
+import com.example.demo.entity.TemperatureSensorLog;
+import com.example.demo.service.TemperatureLogService;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@RestController
+@RequestMapping("/api/logs")
+@Tag(name = "Temperature Logs")
+public class TemperatureLogController {
+
+    private final TemperatureLogService service;
+
+    public TemperatureLogController(TemperatureLogService service) {
+        this.service = service;
     }
- 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+
+    @PostMapping
+    public TemperatureSensorLog record(@RequestBody TemperatureSensorLog log) {
+        return service.recordLog(log);
     }
- 
-    @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter(JwtUtil jwtUtil) {
-        return new JwtAuthenticationFilter(jwtUtil);
+
+    @GetMapping("/shipment/{shipmentId}")
+    public List<TemperatureSensorLog> getByShipment(@PathVariable Long shipmentId) {
+        return service.getLogsByShipment(shipmentId);
     }
- 
-    @Bean
-    public SecurityFilterChain securityFilterChain(
-            HttpSecurity http,
-            JwtAuthenticationFilter jwtFilter
-    ) throws Exception {
- 
-        http
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(session ->
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                    .requestMatchers(
-                            "/auth/login",        
-                            "/auth/register",    
-                            "/auth/**",          
-                            "/swagger-ui/**",
-                            "/v3/api-docs/**",
-                            "/hello-servlet"
-                    ).permitAll()
-                    .anyRequest().authenticated()
-            )
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-        return http.build();
+
+    @GetMapping("/{id}")
+    public TemperatureSensorLog getById(@PathVariable Long id) {
+        return service.getLogById(id);
     }
-   
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)
-            throws Exception {
-        return configuration.getAuthenticationManager();
+
+    @GetMapping
+    public List<TemperatureSensorLog> getAll() {
+        return service.getAllLogs();
     }
 }

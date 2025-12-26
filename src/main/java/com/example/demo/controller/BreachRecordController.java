@@ -1,69 +1,46 @@
-package com.example.demo.security;
- 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
- 
-@Configuration
-@EnableWebSecurity
-public class SecurityConfig {
- 
-   
-    @Bean
-    public JwtUtil jwtUtil(
-            @Value("${jwt.secret}") String secret,
-            @Value("${jwt.expiration}") long expiration
-    ) {
-        return new JwtUtil(secret, expiration);
+package com.example.demo.controller;
+
+import java.util.List;
+import org.springframework.web.bind.annotation.*;
+
+import com.example.demo.entity.BreachRecord;
+import com.example.demo.service.BreachDetectionService;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@RestController
+@RequestMapping("/api/breaches")
+@Tag(name = "Breach Records")
+public class BreachRecordController {
+
+    private final BreachDetectionService service;
+
+    public BreachRecordController(BreachDetectionService service) {
+        this.service = service;
     }
- 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+
+    @PostMapping
+    public BreachRecord logBreach(@RequestBody BreachRecord breach) {
+        return service.logBreach(breach);
     }
- 
-    @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter(JwtUtil jwtUtil) {
-        return new JwtAuthenticationFilter(jwtUtil);
+
+    @PutMapping("/{id}/resolve")
+    public BreachRecord resolve(@PathVariable Long id) {
+        return service.resolveBreach(id);
     }
- 
-    @Bean
-    public SecurityFilterChain securityFilterChain(
-            HttpSecurity http,
-            JwtAuthenticationFilter jwtFilter
-    ) throws Exception {
- 
-        http
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(session ->
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                    .requestMatchers(
-                            "/auth/login",        
-                            "/auth/register",    
-                            "/auth/**",          
-                            "/swagger-ui/**",
-                            "/v3/api-docs/**",
-                            "/hello-servlet"
-                    ).permitAll()
-                    .anyRequest().authenticated()
-            )
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-        return http.build();
+
+    @GetMapping("/shipment/{shipmentId}")
+    public List<BreachRecord> getByShipment(@PathVariable Long shipmentId) {
+        return service.getBreachesByShipment(shipmentId);
     }
-   
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)
-            throws Exception {
-        return configuration.getAuthenticationManager();
+
+    @GetMapping("/{id}")
+    public BreachRecord getById(@PathVariable Long id) {
+        return service.getBreachById(id);
+    }
+
+    @GetMapping
+    public List<BreachRecord> getAll() {
+        return service.getAllBreaches();
     }
 }

@@ -1,69 +1,76 @@
-package com.example.demo.security;
- 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+package com.example.demo.controller;
+
+import com.example.demo.dto.JwtResponse;
+import com.example.demo.dto.LoginRequest;
+import com.example.demo.dto.RegisterRequest;
+import com.example.demo.entity.User;
+import com.example.demo.security.JwtUtil;
+import com.example.demo.service.UserService;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
- 
-@Configuration
-@EnableWebSecurity
-public class SecurityConfig {
- 
-   
-    @Bean
-    public JwtUtil jwtUtil(
-            @Value("${jwt.secret}") String secret,
-            @Value("${jwt.expiration}") long expiration
-    ) {
-        return new JwtUtil(secret, expiration);
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/auth")
+public class AuthController {
+
+    private final UserService userService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtUtil jwtUtil;
+
+    public AuthController(
+            UserService userService,
+            AuthenticationManager authenticationManager,
+            JwtUtil jwtUtil) {
+
+        this.userService = userService;
+        this.authenticationManager = authenticationManager;
+        this.jwtUtil = jwtUtil;
     }
- 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+
+    @PostMapping("/login")
+    public ResponseEntity<JwtResponse> login(@RequestBody LoginRequest request) {
+
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()
+                )
+        );
+
+        User user = userService.findByEmail(request.getEmail());
+
+        String token = jwtUtil.generateToken(
+                user.getId(),
+                user.getEmail(),
+                user.getRole()
+        );
+
+        return ResponseEntity.ok(
+                new JwtResponse(token, user.getId(), user.getEmail(), user.getRole())
+        );
     }
- 
-    @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter(JwtUtil jwtUtil) {
-        return new JwtAuthenticationFilter(jwtUtil);
-    }
- 
-    @Bean
-    public SecurityFilterChain securityFilterChain(
-            HttpSecurity http,
-            JwtAuthenticationFilter jwtFilter
-    ) throws Exception {
- 
-        http
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(session ->
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                    .requestMatchers(
-                            "/auth/login",        
-                            "/auth/register",    
-                            "/auth/**",          
-                            "/swagger-ui/**",
-                            "/v3/api-docs/**",
-                            "/hello-servlet"
-                    ).permitAll()
-                    .anyRequest().authenticated()
-            )
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-        return http.build();
-    }
-   
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)
-            throws Exception {
-        return configuration.getAuthenticationManager();
+
+    @PostMapping("/register")
+    public ResponseEntity<JwtResponse> register(@RequestBody RegisterRequest request) {
+
+        User user = new User();
+        user.setFullName(request.getFullName());
+        user.setEmail(request.getEmail());
+        user.setPassword(request.getPassword());
+
+        User saved = userService.registerUser(user);
+
+        String token = jwtUtil.generateToken(
+                saved.getId(),
+                saved.getEmail(),
+                saved.getRole()
+        );
+
+        return ResponseEntity.ok(
+                new JwtResponse(token, saved.getId(), saved.getEmail(), saved.getRole())
+        );
     }
 }

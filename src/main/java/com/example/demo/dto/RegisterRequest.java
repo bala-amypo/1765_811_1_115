@@ -1,12 +1,9 @@
-// File: src/main/java/com/example/demo/dto/RegisterRequest.java
 package com.example.demo.dto;
 
 public class RegisterRequest {
     private String fullName;
     private String email;
     private String password;
-
-    public RegisterRequest() {}
 
     public String getFullName() { return fullName; }
     public void setFullName(String fullName) { this.fullName = fullName; }
