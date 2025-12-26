@@ -26,7 +26,8 @@ public class TemperatureRuleController {
     public TemperatureRule getForProduct(@PathVariable String productType,
                                          @RequestParam(required = false) String date) {
         LocalDate d = (date == null) ? LocalDate.now() : LocalDate.parse(date);
-        return service.getRuleForProduct(productType, d);
+        return service.getRuleForProduct(productType, d)
+                .orElseThrow(() -> new RuntimeException("No rule found for product " + productType));
     }
 
     @GetMapping("/active")
