@@ -9,4 +9,3 @@ public class TemperatureLogController {
         this.service = service;
     }
 }
-``
