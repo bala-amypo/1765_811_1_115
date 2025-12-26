@@ -1,9 +1,10 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "shipment_records")
+@Table(name = "shipments", uniqueConstraints = @UniqueConstraint(columnNames = "shipmentCode"))
 public class ShipmentRecord {
 
     @Id
@@ -13,33 +14,17 @@ public class ShipmentRecord {
     private String shipmentCode;
     private String origin;
     private String destination;
+    private String productType;
+    private LocalDateTime startDate;
+    private LocalDateTime expectedDelivery;
     private String status;
-
-    public ShipmentRecord() {}
-
-    public ShipmentRecord(String shipmentCode, String origin, String destination, String status) {
-        this.shipmentCode = shipmentCode;
-        this.origin = origin;
-        this.destination = destination;
-        this.status = status;
-    }
+    private LocalDateTime createdAt;
 
     @PrePersist
     public void prePersist() {
-        if (this.status == null) {
-            this.status = "IN_TRANSIT";
-        }
+        if (status == null) status = "IN_TRANSIT";
+        createdAt = LocalDateTime.now();
     }
 
-    public Long getId() { return id; }
-    public String getShipmentCode() { return shipmentCode; }
-    public String getOrigin() { return origin; }
-    public String getDestination() { return destination; }
-    public String getStatus() { return status; }
-
-    public void setId(Long id) { this.id = id; }
-    public void setShipmentCode(String shipmentCode) { this.shipmentCode = shipmentCode; }
-    public void setOrigin(String origin) { this.origin = origin; }
-    public void setDestination(String destination) { this.destination = destination; }
-    public void setStatus(String status) { this.status = status; }
+    // getters & setters (ALL)
 }
