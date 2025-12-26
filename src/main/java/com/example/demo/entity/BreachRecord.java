@@ -1,3 +1,14 @@
+package com.example.demo.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.PrePersist;
+
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "breaches")
 public class BreachRecord {
@@ -16,7 +27,6 @@ public class BreachRecord {
         this.timestamp = LocalDateTime.now();
     }
 
-    // Getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
