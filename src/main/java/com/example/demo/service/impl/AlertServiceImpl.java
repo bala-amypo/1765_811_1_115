@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service  // This is crucial!
+@Service  
 public class AlertServiceImpl implements AlertService {
 
     private final AlertRecordRepository alertRecordRepository;
