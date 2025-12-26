@@ -4,7 +4,9 @@ import com.example.demo.entity.BreachRecord;
 import com.example.demo.repository.BreachRecordRepository;
 import com.example.demo.service.BreachDetectionService;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BreachDetectionServiceImpl implements BreachDetectionService {
@@ -16,8 +18,19 @@ public class BreachDetectionServiceImpl implements BreachDetectionService {
     }
 
     @Override
-    public BreachRecord recordBreach(BreachRecord breach) {
+    public BreachRecord logBreach(BreachRecord breach) {
         return breachRepo.save(breach);
+    }
+
+    @Override
+    public BreachRecord resolveBreach(Long id) {
+        Optional<BreachRecord> opt = breachRepo.findById(id);
+        if (opt.isPresent()) {
+            BreachRecord breach = opt.get();
+            breach.setResolved(true);
+            return breachRepo.save(breach);
+        }
+        throw new RuntimeException("Breach not found");
     }
 
     @Override

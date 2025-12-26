@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.*;
+import com.example.demo.dto.AuthResponse;
+import com.example.demo.dto.LoginRequest;
+import com.example.demo.dto.RegisterRequest;
 import com.example.demo.entity.User;
 import com.example.demo.security.JwtUtil;
 import com.example.demo.service.UserService;
@@ -35,41 +37,33 @@ public class AuthController {
                         request.getEmail(), request.getPassword())
         );
 
-        // findByEmail returns Optional<User>
-        User user = userService.findByEmail(request.getEmail())
-                               .orElseThrow(() -> new RuntimeException("User not found with email: " + request.getEmail()));
+        Optional<User> userOpt = userService.findByEmail(request.getEmail());
+        if (userOpt.isEmpty()) {
+            throw new RuntimeException("User not found");
+        }
+        User user = userOpt.get();
 
-        String token = jwtUtil.generateToken(
-                user.getId(), user.getEmail(), user.getRole());
+        String token = jwtUtil.generateToken(user.getId(), user.getEmail(), user.getRole());
 
-        return ResponseEntity.ok(
-                new AuthResponse(token, user.getId(), user.getEmail(), user.getRole())
-        );
+        return ResponseEntity.ok(new AuthResponse(token, user.getId(), user.getEmail(), user.getRole()));
     }
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
 
-        // Check if user already exists
-        Optional<User> existingUser = userService.findByEmail(request.getEmail());
-        if (existingUser.isPresent()) {
-            throw new RuntimeException("User already exists with email: " + request.getEmail());
+        if (userService.existsByEmail(request.getEmail())) {
+            throw new RuntimeException("User already exists");
         }
 
-        // Create new user
         User user = new User();
         user.setFullName(request.getFullName());
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
-        user.setRole("USER"); // default role
 
         User saved = userService.registerUser(user);
 
-        String token = jwtUtil.generateToken(
-                saved.getId(), saved.getEmail(), saved.getRole());
+        String token = jwtUtil.generateToken(saved.getId(), saved.getEmail(), saved.getRole());
 
-        return ResponseEntity.ok(
-                new AuthResponse(token, saved.getId(), saved.getEmail(), saved.getRole())
-        );
+        return ResponseEntity.ok(new AuthResponse(token, saved.getId(), saved.getEmail(), saved.getRole()));
     }
 }

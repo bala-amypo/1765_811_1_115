@@ -19,16 +19,13 @@ public class ShipmentRecordController {
 
     @PostMapping
     public ShipmentRecord create(@RequestBody ShipmentRecord shipment) {
-        // createShipment should return ShipmentRecord
         return service.createShipment(shipment);
     }
 
     @PutMapping("/{id}/status")
-    public String updateStatus(@PathVariable Long id,
-                               @RequestParam String status) {
-        // updateShipmentStatus returns void, so return a message
-        service.updateShipmentStatus(id, status);
-        return "Shipment status updated successfully";
+    public ShipmentRecord updateStatus(@PathVariable Long id,
+                                       @RequestParam String status) {
+        return service.updateShipmentStatus(id, status);
     }
 
     @GetMapping("/{code}")

@@ -6,10 +6,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/rules")
+@RequestMapping("/temperature-rules")
 public class TemperatureRuleController {
 
     private final TemperatureRuleService service;
@@ -23,14 +22,15 @@ public class TemperatureRuleController {
         return service.createRule(rule);
     }
 
-    @GetMapping("/active")
-    public List<TemperatureRule> getActive() {
-        return service.getActiveRules();
+    @GetMapping("/product/{productType}")
+    public TemperatureRule getForProduct(@PathVariable String productType,
+                                         @RequestParam(required = false) String date) {
+        LocalDate d = (date == null) ? LocalDate.now() : LocalDate.parse(date);
+        return service.getRuleForProduct(productType, d);
     }
 
-    @GetMapping("/product/{productType}")
-    public Optional<TemperatureRule> getRule(@PathVariable String productType,
-                                             @RequestParam LocalDate date) {
-        return service.getRuleForProduct(productType, date);
+    @GetMapping("/active")
+    public List<TemperatureRule> getActiveRules() {
+        return service.getActiveRules();
     }
 }
