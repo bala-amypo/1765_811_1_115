@@ -13,8 +13,6 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    // Removed InvalidRequestException since it’s not used in your project/tests
-
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleAll(Exception ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
