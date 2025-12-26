@@ -4,7 +4,7 @@ import com.example.demo.entity.BreachRecord;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.BreachRecordRepository;
 import com.example.demo.service.BreachDetectionService;
-
+import org.springframework.stereotype.Service; 
 import java.util.List;
 @Service
 public class BreachDetectionServiceImpl implements BreachDetectionService {
