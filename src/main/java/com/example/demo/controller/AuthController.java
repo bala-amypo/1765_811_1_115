@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.JwtResponse;
+import com.example.demo.dto.AuthResponse;
 import com.example.demo.dto.LoginRequest;
 import com.example.demo.dto.RegisterRequest;
 import com.example.demo.entity.User;
@@ -32,7 +32,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<JwtResponse> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
 
         User user = new User();
         user.setEmail(request.getEmail());
@@ -47,11 +47,11 @@ public class AuthController {
                 saved.getRole()
         );
 
-        return ResponseEntity.ok(new JwtResponse(token));
+        return ResponseEntity.ok(new AuthResponse(token));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtResponse> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -68,6 +68,6 @@ public class AuthController {
                 user.getRole()
         );
 
-        return ResponseEntity.ok(new JwtResponse(token));
+        return ResponseEntity.ok(new AuthResponse(token));
     }
 }
