@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TemperatureRuleService {
+    TemperatureRule createRule(TemperatureRule rule);
     List<TemperatureRule> getActiveRules();
-    Optional<TemperatureRule> getApplicableRule(String productType, LocalDate date);
+    Optional<TemperatureRule> getRuleForProduct(String productType, LocalDate date);
 }
-    

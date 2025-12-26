@@ -16,8 +16,16 @@ public class BreachDetectionServiceImpl implements BreachDetectionService {
     }
 
     @Override
-    public BreachRecord recordBreach(BreachRecord breach) {
+    public BreachRecord logBreach(BreachRecord breach) {
         return breachRepo.save(breach);
+    }
+
+    @Override
+    public void resolveBreach(Long breachId) {
+        breachRepo.findById(breachId).ifPresent(b -> {
+            b.setResolved(true);
+            breachRepo.save(b);
+        });
     }
 
     @Override

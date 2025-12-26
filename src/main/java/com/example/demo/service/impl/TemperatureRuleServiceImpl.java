@@ -18,12 +18,17 @@ public class TemperatureRuleServiceImpl implements TemperatureRuleService {
     }
 
     @Override
+    public TemperatureRule createRule(TemperatureRule rule) {
+        return ruleRepo.save(rule);
+    }
+
+    @Override
     public List<TemperatureRule> getActiveRules() {
         return ruleRepo.findByActiveTrue();
     }
 
     @Override
-    public Optional<TemperatureRule> getApplicableRule(String productType, LocalDate date) {
+    public Optional<TemperatureRule> getRuleForProduct(String productType, LocalDate date) {
         return ruleRepo.findApplicableRule(productType, date);
     }
 }

@@ -16,7 +16,7 @@ public class TemperatureLogServiceImpl implements TemperatureLogService {
     }
 
     @Override
-    public TemperatureSensorLog saveLog(TemperatureSensorLog log) {
+    public TemperatureSensorLog recordLog(TemperatureSensorLog log) {
         return logRepo.save(log);
     }
 
