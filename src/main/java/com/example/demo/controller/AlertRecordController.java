@@ -2,38 +2,45 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.AlertRecord;
 import com.example.demo.service.AlertService;
-import lombok.RequiredArgsConstructor;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/alerts")
-@RequiredArgsConstructor
+@RequestMapping("/api/alerts")
+@Tag(name = "Alerts")
 public class AlertRecordController {
 
-    private final AlertService alertService;
+    private final AlertService service;
 
-    @GetMapping
-    public List<AlertRecord> getAllAlerts() {
-        return alertService.getAllAlerts();
+    public AlertRecordController(AlertService service) {
+        this.service = service;
+    }
+
+    @PostMapping
+    public AlertRecord create(@RequestBody AlertRecord alert) {
+        return service.triggerAlert(alert);
+    }
+
+    @PutMapping("/{id}/acknowledge")
+    public AlertRecord acknowledge(@PathVariable Long id) {
+        return service.acknowledgeAlert(id);
+    }
+
+    @GetMapping("/shipment/{shipmentId}")
+    public List<AlertRecord> getByShipment(@PathVariable Long shipmentId) {
+        return service.getAlertsByShipment(shipmentId);
     }
 
     @GetMapping("/{id}")
-public ResponseEntity<AlertRecord> getAlert(@PathVariable Long id) {
-    AlertRecord alert = alertService.getAlertById(id)
-                                    .orElseThrow(() -> new RuntimeException("Alert not found"));
-    return ResponseEntity.ok(alert);
-}
-
-
-    @PostMapping
-    public AlertRecord createAlert(@RequestBody AlertRecord alertRecord) {
-        return alertService.createAlert(alertRecord);
+    public Optional<AlertRecord> getById(@PathVariable Long id) {
+        return service.getAlertById(id);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteAlert(@PathVariable Long id) {
-        alertService.deleteAlert(id);
+    @GetMapping
+    public List<AlertRecord> getAll() {
+        return service.getAllAlerts();
     }
 }
