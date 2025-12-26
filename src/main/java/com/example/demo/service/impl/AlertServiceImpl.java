@@ -7,22 +7,22 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Service  // This is crucial!
 public class AlertServiceImpl implements AlertService {
 
-    private final AlertRecordRepository alertRepo;
+    private final AlertRecordRepository alertRecordRepository;
 
-    public AlertServiceImpl(AlertRecordRepository alertRepo) {
-        this.alertRepo = alertRepo;
+    public AlertServiceImpl(AlertRecordRepository alertRecordRepository) {
+        this.alertRecordRepository = alertRecordRepository;
     }
 
     @Override
     public AlertRecord triggerAlert(AlertRecord alert) {
-        return alertRepo.save(alert);
+        return alertRecordRepository.save(alert);
     }
 
     @Override
     public List<AlertRecord> getAlertsByShipment(Long shipmentId) {
-        return alertRepo.findByShipmentId(shipmentId);
+        return alertRecordRepository.findByShipmentId(shipmentId);
     }
 }
