@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TemperatureRuleService {
-
+ TemperatureRule createRule(TemperatureRule rule);
+    TemperatureRule updateRule(Long id, TemperatureRule rule);
+    TemperatureRule getRuleForProduct(String productName, LocalDate date);
     // Get all temperature rules
     List<TemperatureRule> getAllRules();
 
@@ -22,6 +24,7 @@ public interface TemperatureRuleService {
 
     // Find rule by ID
     Optional<TemperatureRule> getRuleById(Long id);
+    
 
     // Delete a rule by ID
     void deleteRule(Long id);
