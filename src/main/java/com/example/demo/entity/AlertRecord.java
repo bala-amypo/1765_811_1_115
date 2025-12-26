@@ -4,27 +4,28 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "alerts")
+@Table(name = "alert_records")
 public class AlertRecord {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Long shipmentId;
-    private String message;
-    private LocalDateTime timestamp;
+    private Long breachId;
+    private Boolean acknowledged;
+    private LocalDateTime sentAt;
 
-    // Getters and setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    @PrePersist
+    public void prePersist() {
+        if (acknowledged == null) acknowledged = false;
+        if (sentAt == null) sentAt = LocalDateTime.now();
+    }
 
+    // getters & setters
     public Long getShipmentId() { return shipmentId; }
     public void setShipmentId(Long shipmentId) { this.shipmentId = shipmentId; }
-
-    public String getMessage() { return message; }
-    public void setMessage(String message) { this.message = message; }
-
-    public LocalDateTime getTimestamp() { return timestamp; }
-    public void setTimestamp(LocalDateTime timestamp) { this.timestamp = timestamp; }
+    public Long getBreachId() { return breachId; }
+    public void setBreachId(Long breachId) { this.breachId = breachId; }
+    public Boolean getAcknowledged() { return acknowledged; }
+    public void setAcknowledged(Boolean acknowledged) { this.acknowledged = acknowledged; }
+    public LocalDateTime getSentAt() { return sentAt; }
 }

@@ -4,32 +4,33 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "temperature_logs")
+@Table(name = "temperature_sensor_logs")
 public class TemperatureSensorLog {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Long shipmentId;
-    private double temperature;
-    private LocalDateTime timestamp;
+    private Double temperatureValue;
+    private LocalDateTime recordedAt;
+    private String location;
 
-    @PrePersist
-    public void prePersist() {
-        this.timestamp = LocalDateTime.now();
+    public TemperatureSensorLog() {}
+
+    public TemperatureSensorLog(Long shipmentId, Double temperatureValue, LocalDateTime recordedAt, String location) {
+        this.shipmentId = shipmentId;
+        this.temperatureValue = temperatureValue;
+        this.recordedAt = recordedAt;
+        this.location = location;
     }
 
-    // Getters and setters
+    // getters & setters
     public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
     public Long getShipmentId() { return shipmentId; }
     public void setShipmentId(Long shipmentId) { this.shipmentId = shipmentId; }
-
-    public double getTemperature() { return temperature; }
-    public void setTemperature(double temperature) { this.temperature = temperature; }
-
-    public LocalDateTime getTimestamp() { return timestamp; }
-    public void setTimestamp(LocalDateTime timestamp) { this.timestamp = timestamp; }
+    public Double getTemperatureValue() { return temperatureValue; }
+    public void setTemperatureValue(Double temperatureValue) { this.temperatureValue = temperatureValue; }
+    public LocalDateTime getRecordedAt() { return recordedAt; }
+    public void setRecordedAt(LocalDateTime recordedAt) { this.recordedAt = recordedAt; }
+    public String getLocation() { return location; }
+    public void setLocation(String location) { this.location = location; }
 }
