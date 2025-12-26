@@ -14,7 +14,26 @@ import java.util.Optional;
 public class TemperatureRuleServiceImpl implements TemperatureRuleService {
 
     private final TemperatureRuleRepository repo;
+       @Override
+    public TemperatureRule createRule(TemperatureRule rule) {
+        return repo.save(rule);
+    }
 
+    @Override
+    public TemperatureRule updateRule(Long id, TemperatureRule rule) {
+        TemperatureRule existingRule = repo.findById(id)
+            .orElseThrow(() -> new RuntimeException("Rule not found"));
+        existingRule.setMinTemp(rule.getMinTemp());
+        existingRule.setMaxTemp(rule.getMaxTemp());
+        // set other fields
+        return repo.save(existingRule);
+    }
+
+    @Override
+    public TemperatureRule getRuleForProduct(String productName, LocalDate date) {
+        return repo.findByProductNameAndDate(productName, date)
+            .orElseThrow(() -> new RuntimeException("Rule not found"));
+    }
     @Autowired
     public TemperatureRuleServiceImpl(TemperatureRuleRepository repo) {
         this.repo = repo;
