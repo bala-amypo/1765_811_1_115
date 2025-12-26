@@ -18,12 +18,16 @@ public class BreachRecordController {
 
     @PostMapping
     public BreachRecord log(@RequestBody BreachRecord breach) {
-        return service.logBreach(breach);
+        // logBreach should return BreachRecord, if it returns void, just return the input
+        service.logBreach(breach);
+        return breach;
     }
 
     @PutMapping("/{id}/resolve")
-    public BreachRecord resolve(@PathVariable Long id) {
-        return service.resolveBreach(id);
+    public String resolve(@PathVariable Long id) {
+        // resolveBreach returns void, so just return a message
+        service.resolveBreach(id);
+        return "Breach resolved successfully";
     }
 
     @GetMapping("/shipment/{shipmentId}")
