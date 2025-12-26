@@ -1,3 +1,4 @@
+// File: src/main/java/com/example/demo/service/ShipmentRecordService.java
 package com.example.demo.service;
 
 import com.example.demo.entity.ShipmentRecord;
@@ -6,14 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ShipmentRecordService {
-
     ShipmentRecord createShipment(ShipmentRecord shipment);
-
-    ShipmentRecord updateShipmentStatus(Long id, String status);
-
-    Optional<ShipmentRecord> getShipmentById(Long id);
-
+    ShipmentRecord updateShipmentStatus(Long id, String newStatus);
     Optional<ShipmentRecord> getShipmentByCode(String shipmentCode);
-
     List<ShipmentRecord> getAllShipments();
 }
