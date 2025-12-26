@@ -13,10 +13,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(InvalidRequestException.class)
-    public ResponseEntity<String> handleInvalidRequest(InvalidRequestException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
-    }
+    // Removed InvalidRequestException since it’s not used in your project/tests
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleAll(Exception ex) {
