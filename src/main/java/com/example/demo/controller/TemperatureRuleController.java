@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.TemperatureRule;
+import com.example.demo.model.TemperatureRule;
 import com.example.demo.service.TemperatureRuleService;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
