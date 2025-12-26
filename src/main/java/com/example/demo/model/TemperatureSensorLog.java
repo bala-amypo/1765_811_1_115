@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "temperature_sensor_logs")
+@Table(name = "temperature_logs")
 public class TemperatureSensorLog {
 
     @Id
@@ -12,29 +12,33 @@ public class TemperatureSensorLog {
     private Long id;
 
     private Long shipmentId;
-    private Double temperatureValue;
+    private String sensorId;
     private LocalDateTime recordedAt;
+    private Double temperatureValue;
     private String location;
 
     public TemperatureSensorLog() {}
 
-    public TemperatureSensorLog(Long shipmentId, Double temperatureValue,
-                                LocalDateTime recordedAt, String location) {
-        this.shipmentId = shipmentId;
-        this.temperatureValue = temperatureValue;
-        this.recordedAt = recordedAt;
-        this.location = location;
+    @PrePersist
+    public void prePersist() {
+        recordedAt = LocalDateTime.now();
     }
 
     public Long getId() { return id; }
-    public Long getShipmentId() { return shipmentId; }
-    public Double getTemperatureValue() { return temperatureValue; }
-    public LocalDateTime getRecordedAt() { return recordedAt; }
-    public String getLocation() { return location; }
-
     public void setId(Long id) { this.id = id; }
+
+    public Long getShipmentId() { return shipmentId; }
     public void setShipmentId(Long shipmentId) { this.shipmentId = shipmentId; }
-    public void setTemperatureValue(Double temperatureValue) { this.temperatureValue = temperatureValue; }
+
+    public String getSensorId() { return sensorId; }
+    public void setSensorId(String sensorId) { this.sensorId = sensorId; }
+
+    public LocalDateTime getRecordedAt() { return recordedAt; }
     public void setRecordedAt(LocalDateTime recordedAt) { this.recordedAt = recordedAt; }
+
+    public Double getTemperatureValue() { return temperatureValue; }
+    public void setTemperatureValue(Double temperatureValue) { this.temperatureValue = temperatureValue; }
+
+    public String getLocation() { return location; }
     public void setLocation(String location) { this.location = location; }
 }
