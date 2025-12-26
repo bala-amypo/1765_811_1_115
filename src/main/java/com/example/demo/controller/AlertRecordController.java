@@ -2,27 +2,35 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.AlertRecord;
 import com.example.demo.service.AlertService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/alerts")
+@RequiredArgsConstructor
 public class AlertRecordController {
 
     private final AlertService alertService;
 
-    public AlertRecordController(AlertService alertService) {
-        this.alertService = alertService;
+    @GetMapping
+    public List<AlertRecord> getAllAlerts() {
+        return alertService.getAllAlerts();
+    }
+
+    @GetMapping("/{id}")
+    public AlertRecord getAlert(@PathVariable Long id) {
+        return alertService.getAlertById(id);
     }
 
     @PostMapping
-    public AlertRecord triggerAlert(@RequestBody AlertRecord alert) {
-        return alertService.triggerAlert(alert);
+    public AlertRecord createAlert(@RequestBody AlertRecord alertRecord) {
+        return alertService.createAlert(alertRecord);
     }
 
-    @GetMapping("/shipment/{shipmentId}")
-    public List<AlertRecord> getAlertsByShipment(@PathVariable Long shipmentId) {
-        return alertService.getAlertsByShipment(shipmentId);
+    @DeleteMapping("/{id}")
+    public void deleteAlert(@PathVariable Long id) {
+        alertService.deleteAlert(id);
     }
 }
