@@ -1,4 +1,3 @@
-// File: src/main/java/com/example/demo/entity/AlertRecord.java
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
@@ -7,6 +6,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "alert_records")
 public class AlertRecord {
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -18,7 +18,7 @@ public class AlertRecord {
 
     private LocalDateTime sentAt;
 
-    private Boolean acknowledged;
+    private Boolean acknowledged; // defaults to false
 
     public AlertRecord() {}
 
@@ -35,7 +35,7 @@ public class AlertRecord {
         if (sentAt == null) sentAt = LocalDateTime.now();
     }
 
-    // getters/setters
+    // Getters & Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
