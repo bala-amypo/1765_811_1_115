@@ -7,7 +7,7 @@ import com.example.demo.repository.BreachRecordRepository;
 import com.example.demo.service.BreachDetectionService;
 
 import java.util.List;
-
+@Service
 public class BreachDetectionServiceImpl implements BreachDetectionService {
 
     private final BreachRecordRepository repo;
