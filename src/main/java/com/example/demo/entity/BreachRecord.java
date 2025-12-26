@@ -1,9 +1,10 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "breach_records")
+@Table(name = "breaches")
 public class BreachRecord {
 
     @Id
@@ -11,36 +12,23 @@ public class BreachRecord {
     private Long id;
 
     private Long shipmentId;
-    private Long logId;
-    private Double breachValue;
-    private String severity;
-    private Boolean resolved;
+    private String description;
+    private boolean resolved;
+    private LocalDateTime timestamp;
 
-    public BreachRecord() {}
-
-    @PrePersist
-    public void prePersist() {
-        if (this.resolved == null) {
-            this.resolved = false;
-        }
-    }
-
-    // getters & setters
+    // Getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
     public Long getShipmentId() { return shipmentId; }
     public void setShipmentId(Long shipmentId) { this.shipmentId = shipmentId; }
 
-    public Long getLogId() { return logId; }
-    public void setLogId(Long logId) { this.logId = logId; }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
-    public Double getBreachValue() { return breachValue; }
-    public void setBreachValue(Double breachValue) { this.breachValue = breachValue; }
+    public boolean isResolved() { return resolved; }
+    public void setResolved(boolean resolved) { this.resolved = resolved; }
 
-    public String getSeverity() { return severity; }
-    public void setSeverity(String severity) { this.severity = severity; }
-
-    public Boolean getResolved() { return resolved; }
-    public void setResolved(Boolean resolved) { this.resolved = resolved; }
+    public LocalDateTime getTimestamp() { return timestamp; }
+    public void setTimestamp(LocalDateTime timestamp) { this.timestamp = timestamp; }
 }

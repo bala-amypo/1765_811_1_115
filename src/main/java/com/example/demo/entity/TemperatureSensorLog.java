@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "temperature_sensor_logs")
+@Table(name = "temperature_logs")
 public class TemperatureSensorLog {
 
     @Id
@@ -12,33 +12,19 @@ public class TemperatureSensorLog {
     private Long id;
 
     private Long shipmentId;
-    private Double temperatureValue;
-    private LocalDateTime recordedAt;
-    private String location;
+    private double temperature;
+    private LocalDateTime timestamp;
 
-    public TemperatureSensorLog() {}
-
-    public TemperatureSensorLog(Long shipmentId, Double temperatureValue,
-                                LocalDateTime recordedAt, String location) {
-        this.shipmentId = shipmentId;
-        this.temperatureValue = temperatureValue;
-        this.recordedAt = recordedAt;
-        this.location = location;
-    }
-
-    // getters & setters
+    // Getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
     public Long getShipmentId() { return shipmentId; }
     public void setShipmentId(Long shipmentId) { this.shipmentId = shipmentId; }
 
-    public Double getTemperatureValue() { return temperatureValue; }
-    public void setTemperatureValue(Double temperatureValue) { this.temperatureValue = temperatureValue; }
+    public double getTemperature() { return temperature; }
+    public void setTemperature(double temperature) { this.temperature = temperature; }
 
-    public LocalDateTime getRecordedAt() { return recordedAt; }
-    public void setRecordedAt(LocalDateTime recordedAt) { this.recordedAt = recordedAt; }
-
-    public String getLocation() { return location; }
-    public void setLocation(String location) { this.location = location; }
+    public LocalDateTime getTimestamp() { return timestamp; }
+    public void setTimestamp(LocalDateTime timestamp) { this.timestamp = timestamp; }
 }
