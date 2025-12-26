@@ -8,13 +8,21 @@ import java.util.Optional;
 
 public interface TemperatureRuleService {
 
-    TemperatureRule createRule(TemperatureRule rule);
+    // Get all temperature rules
+    List<TemperatureRule> getAllRules();
 
-    TemperatureRule updateRule(Long id, TemperatureRule rule);
-
+    // Get all active rules
     List<TemperatureRule> getActiveRules();
 
-    Optional<TemperatureRule> getRuleForProduct(String productType, LocalDate date);
+    // Get applicable rule for a product on a given date
+    Optional<TemperatureRule> getApplicableRule(String productType, LocalDate date);
 
-    List<TemperatureRule> getAllRules();
+    // Save a new temperature rule
+    TemperatureRule saveRule(TemperatureRule rule);
+
+    // Find rule by ID
+    Optional<TemperatureRule> getRuleById(Long id);
+
+    // Delete a rule by ID
+    void deleteRule(Long id);
 }
