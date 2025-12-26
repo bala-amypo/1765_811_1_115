@@ -9,6 +9,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -33,7 +35,9 @@ public class AuthController {
                         request.getEmail(), request.getPassword())
         );
 
-        User user = userService.findByEmail(request.getEmail());
+        // findByEmail returns Optional<User>
+        User user = userService.findByEmail(request.getEmail())
+                               .orElseThrow(() -> new RuntimeException("User not found with email: " + request.getEmail()));
 
         String token = jwtUtil.generateToken(
                 user.getId(), user.getEmail(), user.getRole());
@@ -46,14 +50,18 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
 
-        Optional<User> userOpt = userService.findByEmail(email);
-if(userOpt.isEmpty()) {
-    throw new RuntimeException("User not found");
-}
-User user = userOpt.get();
+        // Check if user already exists
+        Optional<User> existingUser = userService.findByEmail(request.getEmail());
+        if (existingUser.isPresent()) {
+            throw new RuntimeException("User already exists with email: " + request.getEmail());
+        }
+
+        // Create new user
+        User user = new User();
         user.setFullName(request.getFullName());
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
+        user.setRole("USER"); // default role
 
         User saved = userService.registerUser(user);
 
