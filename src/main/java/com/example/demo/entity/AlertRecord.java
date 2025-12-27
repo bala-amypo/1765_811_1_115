@@ -38,7 +38,7 @@ public class AlertRecord {
         this.sentAt = LocalDateTime.now();
     }
 
-    // GETTERS
+   
     public Long getId() {
         return id;
     }
@@ -55,7 +55,6 @@ public class AlertRecord {
         return acknowledged;
     }
 
-    // REQUIRED BY TESTS
     public boolean getAcknowledged() {
         return acknowledged;
     }
@@ -64,7 +63,7 @@ public class AlertRecord {
         return sentAt;
     }
 
-    // SETTERS
+    
     public void setId(Long id) {
         this.id = id;
     }
