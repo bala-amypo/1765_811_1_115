@@ -43,7 +43,8 @@ public class SecurityConfig {
                     "/simple-status",
                     "/api/**"      // ✅ CHANGED HERE
                 ).permitAll()
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
+
             );
 
         return http.build();
