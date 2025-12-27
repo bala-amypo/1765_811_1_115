@@ -31,7 +31,7 @@ public class TemperatureRule {
         this.effectiveTo = effectiveTo;
     }
 
-    // GETTERS
+    
     public Long getId() { return id; }
     public String getProductType() { return productType; }
     public Double getMinTemp() { return minTemp; }
@@ -40,7 +40,7 @@ public class TemperatureRule {
     public LocalDate getEffectiveFrom() { return effectiveFrom; }
     public LocalDate getEffectiveTo() { return effectiveTo; }
 
-    // SETTERS
+    
     public void setId(Long id) { this.id = id; }
     public void setProductType(String productType) { this.productType = productType; }
     public void setMinTemp(Double minTemp) { this.minTemp = minTemp; }

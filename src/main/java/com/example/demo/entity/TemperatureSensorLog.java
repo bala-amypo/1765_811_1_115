@@ -33,14 +33,14 @@ public class TemperatureSensorLog {
         }
     }
 
-    // GETTERS
+
     public Long getId() { return id; }
     public Long getShipmentId() { return shipmentId; }
     public Double getTemperatureValue() { return temperatureValue; }
     public LocalDateTime getRecordedAt() { return recordedAt; }
     public String getLocation() { return location; }
 
-    // SETTERS (REQUIRED BY TESTS)
+    
     public void setId(Long id) { this.id = id; }
     public void setShipmentId(Long shipmentId) { this.shipmentId = shipmentId; }
     public void setTemperatureValue(Double temperatureValue) { this.temperatureValue = temperatureValue; }

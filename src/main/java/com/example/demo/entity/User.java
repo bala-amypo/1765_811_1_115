@@ -19,7 +19,7 @@ public class User {
 
     public User() {}
 
-    // REQUIRED BY TESTS
+   
     public User(Long id, String fullName, String email,
                 String password, String role) {
         this.id = id;
@@ -37,7 +37,7 @@ public class User {
         this.createdAt = LocalDateTime.now();
     }
 
-    // GETTERS
+ 
     public Long getId() { return id; }
     public String getFullName() { return fullName; }
     public String getEmail() { return email; }
@@ -45,7 +45,7 @@ public class User {
     public String getRole() { return role; }
     public LocalDateTime getCreatedAt() { return createdAt; }
 
-    // SETTERS
+   
     public void setId(Long id) { this.id = id; }
     public void setFullName(String fullName) { this.fullName = fullName; }
     public void setEmail(String email) { this.email = email; }
