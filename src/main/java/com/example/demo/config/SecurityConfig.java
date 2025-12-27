@@ -44,7 +44,6 @@ public class SecurityConfig {
                     "/api/**"      // ✅ CHANGED HERE
                 ).permitAll()
                 .anyRequest().authenticated()
-
             );
 
         return http.build();
